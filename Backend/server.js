@@ -1,67 +1,82 @@
 const express = require('express');
 const dotenv = require('dotenv');
-const path = require('path');
-const fs = require('fs');
-const multer = require('multer');
+const cors = require('cors');
 const connectDB = require('./config/db');
+const User = require('./models/User');
 
 dotenv.config();
 connectDB();
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 
-// 1. Garante que a pasta 'uploads' existe fisicamente
-const uploadsFolder = path.join(__dirname, 'uploads');
-if (!fs.existsSync(uploadsFolder)) {
-  fs.mkdirSync(uploadsFolder);
-}
+// 1. CADASTRO DE USUÁRIO
+app.post('/api/auth/register', async (req, res) => {
+  try {
+    const { nomeInstituicao, email, senha, perfil, cidade, estado } = req.body;
 
-// 2. Libera a pasta /uploads para o navegador conseguir baixar/visualizar os arquivos 3D
-app.use('/uploads', express.static(uploadsFolder));
+    if (!nomeInstituicao || !email || !senha || !perfil || !cidade || !estado) {
+      return res.status(400).json({ erro: 'Preencha todos os campos.' });
+    }
 
-// 3. Configuração do Multer para salvar os arquivos .stl com nome único na pasta /uploads
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, uploadsFolder);
-  },
-  filename: (req, file, cb) => {
-    // Ex: 1729512345678-minaprotese.stl
-    const nomeUnico = `${Date.now()}-${file.originalname.replace(/\s+/g, '_')}`;
-    cb(null, nomeUnico);
+    const existe = await User.findOne({ email });
+    if (existe) {
+      return res.status(400).json({ erro: 'E-mail já cadastrado.' });
+    }
+
+    const usuario = await User.create({
+      nomeInstituicao,
+      email,
+      senha,
+      perfil,
+      cidade,
+      estado
+    });
+
+    res.status(201).json({
+      sucesso: true,
+      usuario: {
+        id: usuario._id,
+        nomeInstituicao: usuario.nomeInstituicao,
+        email: usuario.email,
+        perfil: usuario.perfil
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ erro: error.message });
   }
 });
 
-const upload = multer({
-  storage,
-  limits: { fileSize: 50 * 1024 * 1024 } // Limite de 50MB
-});
+// 2. LOGIN DE USUÁRIO
+app.post('/api/auth/login', async (req, res) => {
+  try {
+    const { email, senha } = req.body;
 
-// 4. Rota de Teste de Upload
-app.post('/api/upload-stl', upload.single('arquivoStl'), (req, res) => {
-  if (!req.file) {
-    return res.status(400).json({ erro: 'Nenhum arquivo enviado.' });
+    if (!email || !senha) {
+      return res.status(400).json({ erro: 'Informe e-mail e senha.' });
+    }
+
+    const usuario = await User.findOne({ email, senha });
+    if (!usuario) {
+      return res.status(401).json({ erro: 'E-mail ou senha incorretos.' });
+    }
+
+    res.json({
+      sucesso: true,
+      usuario: {
+        id: usuario._id,
+        nomeInstituicao: usuario.nomeInstituicao,
+        email: usuario.email,
+        perfil: usuario.perfil,
+        cidade: usuario.cidade,
+        estado: usuario.estado
+      }
+    });
+  } catch (error) {
+    res.status(500).json({ erro: error.message });
   }
-
-  // Gera a URL pública para o arquivo
-  const fileUrl = `http://localhost:${process.env.PORT || 5000}/uploads/${req.file.filename}`;
-
-  console.log(`📂 Arquivo salvo em disco: ${req.file.path}`);
-  console.log(`🔗 URL pública gerada: ${fileUrl}`);
-
-  res.json({
-    sucesso: true,
-    mensagem: 'Arquivo .stl enviado com sucesso!',
-    nomeArquivo: req.file.filename,
-    url: fileUrl
-  });
-});
-
-app.get('/', (req, res) => {
-  res.send('API do PrintBridge rodando!');
 });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`🚀 Servidor rodando na porta ${PORT}`);
-});
+app.listen(PORT, () => console.log(`🚀 Servidor rodando na porta ${PORT}`));
