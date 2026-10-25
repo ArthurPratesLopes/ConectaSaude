@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastrar laboratório – Print-Bridge</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/fablab.css">
+</head>
+<body class="pagina-fablab">
+
+  <header class="menu">
+    <a href="../index.html" class="logo">
+      <img src="../img/logo-printbridge.png" alt="">
+      <span>Print-Bridge</span>
+    </a>
+    <nav class="usuario">
+      <span class="avatar" aria-hidden="true">FU</span>
+      <span class="usuario-nome">FabLab Universitário</span>
+      <a href="../index.html" class="btn-sair" id="sair"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>Sair</a>
+    </nav>
+  </header>
+
+  <main class="fb">
+    <nav class="trilha" aria-label="Você está em">
+      <a href="../index.html">Início</a> / <span>Cadastro de laboratório</span>
+    </nav>
+
+    <div class="fb-topo">
+      <div>
+        <h1>Cadastre seu laboratório e suas impressoras 3D</h1>
+        <p>Conecte a capacidade ociosa do seu laboratório à produção de próteses e órteses sob medida para a AACD.</p>
+      </div>
+      <div class="demanda"><small>Pedidos em espera</small><strong>142 órteses</strong></div>
+    </div>
+
+    <p class="aviso"><strong>100% gratuito e sem taxas.</strong> Todo o processo segue as normas técnicas de tecnologia assistiva.</p>
+
+    <form id="form-fablab" class="fb-grid" novalidate>
+      <div class="coluna">
+
+        <!-- Dados do laboratório -->
+        <section class="cartao" aria-labelledby="t-dados">
+          <h2 id="t-dados">Dados do laboratório</h2>
+          <p class="sub">Informações institucionais e do responsável técnico.</p>
+
+          <label for="nome">Nome do laboratório *</label>
+          <input id="nome" type="text" required placeholder="Ex: Laboratório de Prototipagem – Poli USP">
+
+          <label for="instituicao">Instituição de vínculo *</label>
+          <input id="instituicao" type="text" required placeholder="Ex: Universidade de São Paulo">
+
+          <div class="linha">
+            <div><label for="cidade">Cidade *</label><input id="cidade" type="text" required></div>
+            <div><label for="estado">Estado *</label>
+              <select id="estado" required>
+                <option value="">Selecione</option>
+                <option>SP</option><option>RJ</option><option>MG</option><option>PR</option>
+                <option>RS</option><option>SC</option><option>BA</option><option>PE</option><option>Outro</option>
+              </select>
+            </div>
+          </div>
+
+          <label for="email">E-mail institucional *</label>
+          <input id="email" type="email" required placeholder="lab@instituicao.edu.br">
+          <small class="ajuda">Usado para avisar sobre novos pedidos.</small>
+
+          <div class="linha">
+            <div><label for="resp">Responsável técnico *</label><input id="resp" type="text" required></div>
+            <div><label for="tel">WhatsApp *</label><input id="tel" type="text" required placeholder="(11) 90000-0000"></div>
+          </div>
+        </section>
+
+        <!-- Equipamento -->
+        <section class="cartao" aria-labelledby="t-equip">
+          <h2 id="t-equip">Equipamento 3D</h2>
+          <p class="sub">Propriedades usadas para combinar o laboratório com os pedidos.</p>
+
+          <div class="linha">
+            <div><label for="marca">Marca *</label><input id="marca" type="text" placeholder="Ex: Prusa, Creality"></div>
+            <div><label for="modelo">Modelo *</label><input id="modelo" type="text" placeholder="Ex: i3 MK4"></div>
+          </div>
+
+          <fieldset class="opcoes cols-2">
+            <legend>Tecnologia *</legend>
+            <label class="op"><input type="radio" name="tec" value="FDM" checked><span><b>FDM</b><small>Filamento</small></span></label>
+            <label class="op"><input type="radio" name="tec" value="SLA"><span><b>SLA</b><small>Resina</small></span></label>
+          </fieldset>
+
+          <fieldset class="opcoes cols-3">
+            <legend>Disponibilidade *</legend>
+            <label class="op"><input type="radio" name="disp" value="Disponível" checked><span>Disponível</span></label>
+            <label class="op"><input type="radio" name="disp" value="Uso acadêmico"><span>Uso acadêmico</span></label>
+            <label class="op"><input type="radio" name="disp" value="Limitada"><span>Capacidade limitada</span></label>
+          </fieldset>
+
+          <fieldset class="medidas">
+            <legend>Volume útil de impressão (mm) *</legend>
+            <label>X <input id="vx" type="number" min="1" placeholder="250"></label>
+            <label>Y <input id="vy" type="number" min="1" placeholder="210"></label>
+            <label>Z <input id="vz" type="number" min="1" placeholder="210"></label>
+          </fieldset>
+
+          <fieldset class="chips">
+            <legend>Materiais que o laboratório imprime *</legend>
+            <label class="chip"><input type="checkbox" name="mat" value="PLA"><span>PLA</span></label>
+            <label class="chip"><input type="checkbox" name="mat" value="PETG"><span>PETG</span></label>
+            <label class="chip"><input type="checkbox" name="mat" value="TPU"><span>TPU (flexível)</span></label>
+            <label class="chip"><input type="checkbox" name="mat" value="ABS"><span>ABS</span></label>
+            <label class="chip"><input type="checkbox" name="mat" value="Nylon"><span>Nylon</span></label>
+            <label class="chip"><input type="checkbox" name="mat" value="Resina"><span>Resina</span></label>
+          </fieldset>
+
+          <div class="linha">
+            <div><label for="bico">Diâmetro do bico</label>
+              <select id="bico"><option>0,4 mm</option><option>0,6 mm</option><option>0,25 mm</option></select></div>
+            <div><label for="camada">Menor camada</label>
+              <select id="camada"><option>0,15 mm</option><option>0,10 mm</option><option>0,20 mm</option></select></div>
+          </div>
+
+          <label for="obs">Recursos adicionais</label>
+          <textarea id="obs" rows="3" placeholder="Ex: câmara fechada, dupla extrusão, cama nivelada a laser"></textarea>
+
+          <p class="erro" id="erro-imp" role="alert"></p>
+          <button type="button" class="botao-sec" id="add-imp">Adicionar esta impressora</button>
+        </section>
+      </div>
+
+      <aside class="coluna">
+        <section class="cartao" aria-labelledby="t-parque">
+          <h2 id="t-parque">Seu parque de impressoras <span class="contador" id="contador">0</span></h2>
+          <ul class="parque" id="parque" aria-live="polite"></ul>
+          <p class="vazio" id="vazio">Nenhuma impressora ainda. Preencha o equipamento e clique em “Adicionar”.</p>
+        </section>
+
+        <section class="cartao destaque">
+          <h2>Requisitos da AACD</h2>
+          <p>Peças infantis exigem boa precisão dimensional (tolerância de até ±0,3 mm) e preenchimento mínimo de 40%.</p>
+          <a href="#">Baixar guia de protocolos (PDF)</a>
+        </section>
+
+        <section class="cartao">
+          <label class="termo"><input type="checkbox" id="termo">
+            <span>Declaro que li e aceito o termo de responsabilidade e me comprometo a higienizar as peças antes do envio.</span></label>
+          <p class="erro" id="erro" role="alert"></p>
+          <button type="submit" class="botao-prim">Finalizar cadastro</button>
+          <button type="button" class="botao-sec" id="rascunho">Salvar rascunho</button>
+        </section>
+      </aside>
+    </form>
+  </main>
+
+  <script src="../js/fablab.js"></script>
+</body>
+</html>

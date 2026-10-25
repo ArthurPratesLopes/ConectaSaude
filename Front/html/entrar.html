@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Entrar | Print-Bridge</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/entrar.css">
+</head>
+
+<body>
+
+  <header class="menu">
+    <a href="../index.html" class="logo">
+      <img src="../img/logo-printbridge.png" alt="Logo do Print-Bridge">
+      <span>Print-Bridge</span>
+    </a>
+  </header>
+
+  <main class="cadastro">
+    <form class="form-cadastro" id="formEntrar">
+      <h1>Entrar</h1>
+
+      <label for="email">E-mail institucional</label>
+      <input type="email" id="email" name="email" required>
+
+      <label for="senha">Senha</label>
+      <input type="password" id="senha" name="senha" required>
+
+      <p class="erro" id="erro" role="alert"></p>
+      <p class="sucesso" id="sucesso" role="status"></p>
+
+      <button type="submit" class="botao" id="btnEntrar">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"
+          stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" />
+          <path d="M10 17l5-5-5-5" />
+          <path d="M15 12H3" />
+        </svg>
+        Entrar
+      </button>
+
+      <script src="../js/contas.js"></script>
+      <script src="../js/entrar.js"></script>
+</body>
+
+</html>

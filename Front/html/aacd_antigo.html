@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel da AACD | Print-Bridge</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/aacd.css">
+</head>
+<body class="painel">
+
+  <header class="menu">
+    <a href="../index.html" class="logo">
+      <img src="../img/logo-printbridge.png" alt="">
+      <span>Print-Bridge</span>
+    </a>
+    <nav class="usuario">
+      <span class="avatar" id="avatar" aria-hidden="true">A</span>
+      <span class="usuario-nome" id="nomeUsuario">AACD</span>
+      <a href="../index.html" class="btn-sair" id="sair"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>Sair</a>
+    </nav>
+  </header>
+
+  <main class="ap">
+    <h1>Pedidos de peças</h1>
+    <p class="ap-sub">Registre a necessidade de um paciente e acompanhe cada pedido até a entrega.</p>
+
+    <ul class="resumo" aria-label="Resumo dos pedidos">
+      <li><strong id="nAbertos">0</strong><span>Aguardando laboratório</span></li>
+      <li><strong id="nImpressao">0</strong><span>Em impressão</span></li>
+      <li><strong id="nEntregues">0</strong><span>Entregues</span></li>
+    </ul>
+
+    <div class="ap-grid">
+
+      <!-- lista -->
+      <section class="cartao" aria-labelledby="t-lista">
+        <div class="cab">
+          <h2 id="t-lista">Acompanhar pedidos</h2>
+          <label class="filtro">Mostrar
+            <select id="filtro">
+              <option value="todos">Todos</option>
+              <option value="0">Registrados</option>
+              <option value="1">Aceitos</option>
+              <option value="2">Em impressão</option>
+              <option value="3">Entregues</option>
+            </select>
+          </label>
+        </div>
+        <ul class="pedidos" id="pedidos" aria-live="polite"></ul>
+        <p class="vazio" id="vazio" hidden>Nenhum pedido nesse filtro.</p>
+      </section>
+
+      <!-- formulário -->
+      <section class="cartao" aria-labelledby="t-form">
+        <h2 id="t-form">Registrar necessidade</h2>
+        <form id="formPedido" novalidate>
+          <label for="paciente">Código do paciente *</label>
+          <input id="paciente" type="text" placeholder="Ex: P-0234" required>
+          <small>Use o código interno. Não digite o nome do paciente.</small>
+
+          <label for="peca">Tipo de peça *</label>
+          <select id="peca" required>
+            <option value="">Selecione</option>
+            <option>Órtese de punho</option>
+            <option>Órtese de mão</option>
+            <option>Tala de repouso</option>
+            <option>Prótese de dedo</option>
+            <option>Adaptador de talher</option>
+            <option>Outro</option>
+          </select>
+
+          <div class="linha">
+            <div>
+              <label for="material">Material *</label>
+              <select id="material" required>
+                <option value="">Selecione</option>
+                <option>PLA</option><option>PETG</option><option>TPU</option><option>Nylon</option><option>Resina</option>
+              </select>
+            </div>
+            <div>
+              <label for="prazo">Prazo desejado *</label>
+              <input id="prazo" type="date" required>
+            </div>
+          </div>
+
+          <label for="medidas">Medidas</label>
+          <input id="medidas" type="text" placeholder="Ex: punho 15 cm, dedo indicador">
+
+          <fieldset class="urgencia">
+            <legend>Urgência</legend>
+            <label><input type="radio" name="urgencia" value="Normal" checked> Normal</label>
+            <label><input type="radio" name="urgencia" value="Urgente"> Urgente</label>
+          </fieldset>
+
+          <label for="lab">Laboratório</label>
+          <select id="lab">
+            <option>A definir</option>
+            <option>FabLab Poli USP</option>
+            <option>FabLab da Mauá</option>
+          </select>
+
+          <label for="obs">Observações</label>
+          <textarea id="obs" rows="3" placeholder="Detalhes clínicos ou de uso relevantes para a impressão"></textarea>
+
+          <p class="erro" id="erro" role="alert"></p>
+          <p class="sucesso" id="sucesso" role="status"></p>
+          <button type="submit" class="botao-prim">Registrar necessidade</button>
+        </form>
+      </section>
+
+    </div>
+  </main>
+
+  <script src="../js/pedidos.js"></script>
+  <script src="../js/aacd.js"></script>
+</body>
+</html>
