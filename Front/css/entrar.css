@@ -1,0 +1,4 @@
+.sucesso { min-height: 1.4em; margin-top: 12px; color: #1b6e3c; font-weight: 700; font-size: .95rem; }
+.form-cadastro .botao:disabled { opacity: .6; cursor: default; }
+.teste { margin-top: 18px; padding: 10px 12px; font-size: .85rem; color: var(--texto-suave); background: var(--papel); border-radius: 6px; text-align: center; }
+.form-cadastro .botao { display: flex; align-items: center; justify-content: center; gap: 8px; }
