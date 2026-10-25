@@ -1,10 +1,194 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-    <meta charset="UTF-8">
-    <title>ConectaSaude</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Conecta Saúde</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="css/home.css">
 </head>
+
 <body>
-    <h1>ConectaSaude</h1>
+  <header>
+    <a href="index.html" class="marca">
+      <img src="img/logo-printbridge.png" alt="">
+      <span>Conecta Saúde</span>
+    </a>
+
+    <nav>
+      <a href="index.html">Início</a>
+      <a href="pages/aacd.html">Pedidos AACD</a>
+      <a href="../Projeto Integrador - 2° Semestre (1)/pages/fablab-novo.html">Pedidos para Laboratórios</a>
+    </nav>
+
+    <a href="#acesso" class="botao-acessar">Acessar</a>
+  </header>
+  <main>
+    <section class="hero">
+      <div class="hero-texto">
+        <span class="sobretitulo">Tecnologia que transforma</span>
+        <h1>Conectando necessidades a soluções que devolvem autonomia.</h1>
+        <p>A Conecta Saúde aproxima profissionais da AACD e laboratórios FabLab para tornar órteses e próteses mais
+          acessíveis.</p>
+        <a href="#acesso" class="botao-principal">Começar agora</a>
+      </div>
+      <div class="hero-visual">
+        <img src="img/fablab.jpeg" alt="Impressora 3D em funcionamento em um laboratório de fabricação digital">
+        <section class="acesso" id="acesso">
+          <span class="sobretitulo">Área segura</span>
+          <h2 id="titulo-acesso">Acesse a plataforma</h2>
+          <p>Entre para acompanhar pedidos e produções.</p>
+          <div class="abas">
+            <button type="button" class="ativa" data-modo="login">Entrar</button>
+            <button type="button" data-modo="cadastro">Criar conta</button>
+          </div>
+          <!-- TEMPORÁRIO: leva à página da AACD sem login. Apagar o action quando o login funcionar. -->
+<form id="form-acesso" action="pages/aacd.html">
+            <fieldset class="perfis">
+              <legend>Seu perfil</legend>
+              <div class="perfis-opcoes">
+                <label class="perfil">
+                  <input type="radio" name="perfil" value="aacd" checked>
+                  <span class="perfil-corpo">
+                    <img src="img/predioaacd.png" alt="" class="icone">
+                    <span class="perfil-texto"><b>AACD</b><small>Solicitar peças</small></span>
+                  </span>
+                </label>
+                <label class="perfil">
+                  <input type="radio" name="perfil" value="fablab">
+                  <span class="perfil-corpo">
+                    <img src="img/frascolab.png" alt="" class="icone">
+                    <span class="perfil-texto"><b>Laboratório</b><small>Produzir peças</small></span>
+                  </span>
+                </label>
+              </div>
+            </fieldset>
+            <div class="campo" id="campo-nome" hidden>
+              <label for="nome" id="rotulo-nome">Nome da unidade da AACD</label>
+              <input type="text" id="nome">
+            </div>
+
+            <div class="campo">
+              <label for="email">E-mail</label>
+              <input type="email" id="email" placeholder="nome@instituicao.org.br">
+            </div>
+
+            <div class="campo">
+              <label for="senha">Senha</label>
+              <input type="password" id="senha" placeholder="Mínimo de 8 caracteres">
+            </div>
+
+            <button type="button" class="link-esqueci">Esqueci minha senha</button>
+
+            <label class="termo" id="campo-termo" hidden>
+              <input type="checkbox" id="aceite">
+              <span>Concordo com os <a href="#termos">Termos de Uso</a> e a <a href="#privacidade">Política de
+                  Privacidade</a>.</span>
+            </label>
+            <button type="submit" class="botao-entrar" id="botao-acesso">Entrar</button>
+          </form>
+        </section>
+      </div>
+    </section>
+    <section class="secao" id="como-funciona">
+      <div class="secao-topo">
+        <div>
+          <span class="sobretitulo">Simples e transparente</span>
+          <h2>Da necessidade à entrega, passo a passo</h2>
+        </div>
+        <p>Cada etapa é acompanhada pelos dois perfis, com informações claras e status sempre visível.</p>
+      </div>
+
+      <ol class="passos">
+        <li>
+          <span class="passo-numero">01</span>
+          <h3>AACD registra</h3>
+          <p>A equipe informa medidas, material, prazo e detalhes da necessidade.</p>
+        </li>
+        <li>
+          <span class="passo-numero">02</span>
+          <h3>Laboratório aceita</h3>
+          <p>Um FabLab compatível avalia a capacidade e confirma o pedido.</p>
+        </li>
+        <li>
+          <span class="passo-numero">03</span>
+          <h3>Produção acompanhada</h3>
+          <p>As equipes acompanham a impressão e registram atualizações.</p>
+        </li>
+        <li>
+          <span class="passo-numero">04</span>
+          <h3>Entrega confirmada</h3>
+          <p>A peça é entregue à AACD e o ciclo é concluído com segurança.</p>
+        </li>
+      </ol>
+    </section>
+    <section class="secao contato" id="contato">
+      <div>
+        <span class="sobretitulo">Fale com a equipe</span>
+        <h2>Precisa de ajuda?</h2>
+        <p>Nossa equipe está disponível para apoiar você no uso da plataforma.</p>
+      </div>
+
+      <div class="contato-links">
+        <a href="mailto:conectasaude@gmail.com">
+          <small>E-mail</small>
+          <b>conectasaude@gmail.com</b>
+        </a>
+        <a href="tel:+551142393000">
+          <small>Telefone</small>
+          <b>(11) 4239-3000</b>
+        </a>
+      </div>
+    </section>
+  </main>
+  <footer class="rodape">
+    <div class="rodape-interno">
+      <div class="rodape-linha">
+        <div class="rodape-marca">
+          <img src="img/logo-printbridge.png" alt="">
+          <div>
+            <b>Conecta Saúde</b>
+            <p>Uma iniciativa do Instituto Mauá de Tecnologia em parceria com a AACD.</p>
+          </div>
+        </div>
+        <nav aria-label="Links do rodapé">
+          <a href="#privacidade">Privacidade</a>
+          <a href="#termos">Termos de uso</a>
+        </nav>
+      </div>
+      <p class="rodape-copy">© 2026 Instituto Mauá de Tecnologia</p>
+    </div>
+  </footer>
+  <div class="janela" id="termos" role="dialog" aria-labelledby="titulo-termos">
+    <div class="janela-caixa">
+      <h2 id="titulo-termos">Termos de Uso</h2>
+      <ul>
+        <li>A plataforma conecta profissionais da AACD e laboratórios FabLab para a solicitação e a produção de órteses
+          e próteses.</li>
+        <li>O cadastro é destinado a profissionais da AACD e a laboratórios parceiros, e as informações fornecidas devem
+          ser verdadeiras.</li>
+        <li>Cada pessoa é responsável por manter a sua senha em sigilo.</li>
+        <li>Os pedidos devem conter apenas as informações necessárias para a produção da peça.</li>
+        <li>Esta plataforma é um projeto acadêmico do Instituto Mauá de Tecnologia.</li>
+      </ul>
+      <a href="#acesso" class="botao-principal">Fechar</a>
+    </div>
+  </div>
+
+  <div class="janela" id="privacidade" role="dialog" aria-labelledby="titulo-privacidade">
+    <div class="janela-caixa">
+      <h2 id="titulo-privacidade">Política de Privacidade</h2>
+      <ul>
+        <li>Dados coletados: nome da unidade ou do laboratório, e-mail, perfil e senha.</li>
+        <li>Finalidade: criar a sua conta, permitir o acesso e acompanhar pedidos e produções.</li>
+        <li>Os dados são usados somente dentro da plataforma.</li>
+        <li>Para pedir a correção ou a exclusão dos seus dados, escreva para conectasaude@maua.br, conforme a LGPD.</li>
+      </ul>
+      <a href="#acesso" class="botao-principal">Fechar</a>
+    </div>
+  </div>
 </body>
+
 </html>
