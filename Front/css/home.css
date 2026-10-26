@@ -251,12 +251,9 @@ h1 {
 .passos li {
   position: relative; min-height: 230px; padding: 24px;
   background: #fff; border: 1px solid var(--line); border-radius: 12px;
-  transition: border-color .2s, transform .2s, box-shadow .2s;
 }
-.passos li:hover { border-color: #8cbaba; transform: translateY(-3px); box-shadow: var(--shadow); }
 .passos li:not(:last-child)::after { content: ''; position: absolute; top: 52px; right: -17px; width: 18px; border-top: 1px dashed #8cbaba; }
-.passo-topo { display: flex; justify-content: space-between; align-items: center; color: var(--petrol); }
-.passo-numero { color: #8a9696; font-size: 12px; font-weight: 800; }
+.passo-numero { display: block; color: #8a9696; font-size: 12px; font-weight: 800; }
 .passos h3 { margin: 28px 0 10px; color: var(--ink); font-size: 16px; }
 .passos p { margin: 0; color: var(--muted); font-size: 13px; }
 
@@ -311,8 +308,9 @@ h1 {
 
 @media (max-width: 900px) {
   header { flex-wrap: wrap; height: auto; min-height: 64px; gap: 4px 16px; padding: 10px 20px 0; }
-  nav { order: 3; width: 100%; gap: 20px; overflow-x: auto; align-self: auto; }
-  header nav a { min-height: 44px; white-space: nowrap; }
+  header nav { order: 3; width: 100%; gap: 8px; align-self: auto; }
+  header nav.logado a { flex: 1 1 0; justify-content: center; min-height: 48px; padding: 0 4px; text-align: center; font-size: 13px; line-height: 1.25; }
+  header nav:not(.logado) a { min-height: 48px; padding: 0 12px 0 0; }
   .hero { grid-template-columns: 1fr; min-height: 0; }
   .hero-texto { max-width: none; padding: 52px 24px; }
   .hero-visual { min-height: 0; padding: 32px 16px; }
