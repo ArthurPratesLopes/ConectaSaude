@@ -79,6 +79,22 @@
   let carregando = false;
   const tocados = new Set(); // campos que a pessoa já visitou
 
+
+  /* ---------- menu: na home só existe "Início" ----------
+     Os pedidos ficam nas páginas internas (js/menu.js), depois do login.
+     Aqui só o botão do canto muda: "Acessar" sem sessão, "Sair" com sessão. */
+  const lerSessao = () => {
+    try { return JSON.parse(sessionStorage.getItem(CHAVE_SESSAO)); } catch { return null; }
+  };
+  const sessaoAtiva = () => !!lerSessao();
+  function atualizarMenu() {
+    if (el.abrirAcesso) {
+      const logado = sessaoAtiva();
+      el.abrirAcesso.textContent = logado ? 'Sair' : 'Acessar';
+      el.abrirAcesso.setAttribute('href', logado ? '#' : '#acesso');
+    }
+  }
+
   /* ---------- helpers ---------- */
   const perfilAtual = () => form.querySelector('input[name="perfil"]:checked').value;
   const emailValido = (v) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
@@ -275,7 +291,13 @@
 
   // "Acessar" (cabeçalho): rola até o cartão e foca o primeiro campo útil
   if (el.abrirAcesso) {
-    el.abrirAcesso.addEventListener('click', () => {
+    el.abrirAcesso.addEventListener('click', (e) => {
+      if (sessaoAtiva()) {
+        e.preventDefault();
+        try { sessionStorage.removeItem(CHAVE_SESSAO); } catch { /* ignora */ }
+        atualizarMenu();
+        return;
+      }
       setTimeout(() => (modo === 'cadastro' ? el.nome : el.email).focus({ preventScroll: true }), 350);
     });
   }
@@ -298,4 +320,8 @@
 
   definirPerfil();
   definirModo('login');
+  atualizarMenu();
+
+  // voltar pelo histórico (cache) também reflete o estado da sessão
+  window.addEventListener('pageshow', atualizarMenu);
 })();
