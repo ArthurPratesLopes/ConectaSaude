@@ -309,8 +309,7 @@ h1 {
 @media (max-width: 900px) {
   header { flex-wrap: wrap; height: auto; min-height: 64px; gap: 4px 16px; padding: 10px 20px 0; }
   header nav { order: 3; width: 100%; gap: 8px; align-self: auto; }
-  header nav.logado a { flex: 1 1 0; justify-content: center; min-height: 48px; padding: 0 4px; text-align: center; font-size: 13px; line-height: 1.25; }
-  header nav:not(.logado) a { min-height: 48px; padding: 0 12px 0 0; }
+  header nav a { min-height: 48px; padding-right: 12px; }
   .hero { grid-template-columns: 1fr; min-height: 0; }
   .hero-texto { max-width: none; padding: 52px 24px; }
   .hero-visual { min-height: 0; padding: 32px 16px; }
