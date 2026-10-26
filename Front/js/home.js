@@ -26,6 +26,10 @@
     campoTermo: $('#campo-termo'),
     aceite: $('#aceite'),
     erro: $('#erro-acesso'),
+    verSenha: $('#ver-senha'),
+    textoBotao: $('#botao-acesso .botao-texto'),
+    abrirAcesso: $('#abrir-acesso'),
+    cartao: $('#acesso'),
     botao: $('#botao-acesso'),
     comecar: $('#comecar'),
   };
@@ -72,6 +76,7 @@
   const UFS = ['AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA','PB','PR','PE','PI','RJ','RN','RS','RO','RR','SC','SP','SE','TO'];
 
   let modo = 'login';
+  let carregando = false;
   const tocados = new Set(); // campos que a pessoa já visitou
 
   /* ---------- helpers ---------- */
@@ -103,21 +108,26 @@
     return lista;
   }
 
-  function mostrarErro(msg) {
+  // Aviso geral (erros do servidor, recuperação de senha etc.). tipo: 'erro' | 'ok' | 'info'
+  function mostrarErro(msg, tipo = 'erro') {
     el.erro.textContent = msg || '';
+    el.erro.className = 'aviso' + (tipo === 'erro' ? '' : ' ' + tipo);
     el.erro.hidden = !msg;
   }
 
+  const CAMPOS = ['nome', 'cidade', 'estado', 'email', 'senha', 'aceite'];
+
   function atualizar() {
     const lista = problemas();
-    el.botao.disabled = lista.length > 0;
+    el.botao.disabled = lista.length > 0 || carregando;
 
-    // só reclama de campos que a pessoa já tocou
-    const primeiro = lista.find((p) => tocados.has(p.campo));
-    mostrarErro(primeiro ? primeiro.msg : '');
-    ['nome', 'cidade', 'estado', 'email', 'senha'].forEach((id) => {
-      const invalido = lista.some((p) => p.campo === id) && tocados.has(id);
-      el[id].setAttribute('aria-invalid', invalido ? 'true' : 'false');
+    // cada campo mostra o próprio erro, mas só depois de a pessoa visitá-lo
+    CAMPOS.forEach((id) => {
+      const p = lista.find((x) => x.campo === id);
+      const mostrar = !!p && tocados.has(id);
+      const msg = document.getElementById('erro-' + id);
+      if (msg) { msg.textContent = mostrar ? p.msg : ''; msg.hidden = !mostrar; }
+      if (id !== 'aceite') el[id].setAttribute('aria-invalid', mostrar ? 'true' : 'false');
     });
   }
 
@@ -135,7 +145,7 @@
 
     el.titulo.textContent = t.titulo;
     el.sub.textContent = t.sub;
-    el.botao.textContent = t.botao;
+    el.textoBotao.textContent = t.botao;
     el.senha.autocomplete = t.autocomplete;
 
     el.campoNome.hidden = !cadastro;
@@ -191,7 +201,7 @@
 
     // conta criada: já entra direto
     const login = await chamar('login', { email, senha });
-    if (!login.ok) { definirModo('login'); mostrarErro('Conta criada! Entre com seu e-mail e senha.'); return; }
+    if (!login.ok) { definirModo('login'); mostrarErro('Conta criada! Entre com seu e-mail e senha.', 'ok'); return; }
     iniciarSessao(login.dados.usuario);
   }
 
@@ -212,14 +222,15 @@
   );
 
   [['nome', el.nome], ['cidade', el.cidade], ['estado', el.estado], ['email', el.email], ['senha', el.senha]].forEach(([id, campo]) => {
-    campo.addEventListener('input', atualizar);
+    campo.addEventListener('input', () => { mostrarErro(''); atualizar(); });
     campo.addEventListener('blur', () => { tocados.add(id); atualizar(); });
+    if (id === 'estado') campo.addEventListener('change', () => { tocados.add(id); atualizar(); });
   });
   el.aceite.addEventListener('change', () => { tocados.add('aceite'); atualizar(); });
 
   el.esqueci.addEventListener('click', () => {
     el.email.focus();
-    mostrarErro('A recuperação de senha ainda não está disponível. Fale com a equipe: conectasaude@maua.br.');
+    mostrarErro('A recuperação de senha ainda não está disponível. Fale com a equipe: conectasaude@maua.br.', 'info');
   });
 
   form.addEventListener('submit', async (e) => {
@@ -228,11 +239,18 @@
     atualizar();
     if (el.botao.disabled) return;
 
-    el.botao.disabled = true;
+    mostrarErro('');
+    carregando = true;
+    el.botao.classList.add('carregando');
+    el.textoBotao.textContent = modo === 'cadastro' ? 'Criando conta…' : 'Entrando…';
+    atualizar();
     try {
       await (modo === 'cadastro' ? criarConta() : entrar());
     } finally {
       // se não houve redirecionamento, libera o botão de novo
+      carregando = false;
+      el.botao.classList.remove('carregando');
+      el.textoBotao.textContent = TEXTOS[modo].botao;
       atualizar();
     }
   });
@@ -243,6 +261,28 @@
       setTimeout(() => (modo === 'cadastro' ? el.nome : el.email).focus({ preventScroll: true }), 300);
     });
   }
+
+
+  // olho para mostrar/ocultar a senha
+  el.verSenha.addEventListener('click', () => {
+    const mostrar = el.senha.type === 'password';
+    el.senha.type = mostrar ? 'text' : 'password';
+    el.verSenha.setAttribute('aria-pressed', String(mostrar));
+    el.verSenha.setAttribute('aria-label', mostrar ? 'Ocultar senha' : 'Mostrar senha');
+    el.verSenha.querySelector('use').setAttribute('href', mostrar ? '#i-eye-off' : '#i-eye');
+    el.senha.focus();
+  });
+
+  // "Acessar" (cabeçalho): rola até o cartão e foca o primeiro campo útil
+  if (el.abrirAcesso) {
+    el.abrirAcesso.addEventListener('click', () => {
+      setTimeout(() => (modo === 'cadastro' ? el.nome : el.email).focus({ preventScroll: true }), 350);
+    });
+  }
+
+  // se a foto não carregar, o degradê do CSS assume (sem ícone quebrado)
+  const foto = document.querySelector('.hero-visual > img');
+  if (foto) foto.addEventListener('error', () => foto.remove());
 
   // Esc fecha os modais de Termos/Privacidade (que abrem por :target)
   document.addEventListener('keydown', (e) => {
