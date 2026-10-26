@@ -5,105 +5,162 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Conecta Saúde</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
     rel="stylesheet">
   <link rel="stylesheet" href="css/home.css">
 </head>
 
 <body>
+  <!-- Ícones (sprite inline: não depende de arquivos externos) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="i-building" viewBox="0 0 24 24"><path d="M4 21V5l8-3 8 3v16M8 9h2m4 0h2M8 13h2m4 0h2M9 21v-4h6v4"/></symbol>
+      <symbol id="i-lab" viewBox="0 0 24 24"><path d="M9 3h6M10 3v6l-5 9a2 2 0 0 0 2 3h10a2 2 0 0 0 2-3l-5-9V3"/><path d="M8 15h8"/></symbol>
+      <symbol id="i-file" viewBox="0 0 24 24"><path d="M6 2h8l4 4v16H6z"/><path d="M14 2v5h5M9 12h6m-6 4h6"/></symbol>
+      <symbol id="i-printer" viewBox="0 0 24 24"><path d="M7 8V3h10v5M7 17H4V9h16v8h-3M7 14h10v7H7z"/><path d="M17 11h.01"/></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24"><path d="m5 12 4 4L19 6"/></symbol>
+      <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14m-5-5 5 5-5 5"/></symbol>
+      <symbol id="i-mail" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></symbol>
+      <symbol id="i-phone" viewBox="0 0 24 24"><path d="M7 3H4a1 1 0 0 0-1 1c0 9.4 7.6 17 17 17a1 1 0 0 0 1-1v-3l-4-2-2 2c-3.5-1.5-5.5-3.5-7-7l2-2-3-5Z"/></symbol>
+      <symbol id="i-lock" viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></symbol>
+      <symbol id="i-eye" viewBox="0 0 24 24"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6S2 12 2 12Z"/><circle cx="12" cy="12" r="2.5"/></symbol>
+      <symbol id="i-eye-off" viewBox="0 0 24 24"><path d="M3 3l18 18M10.6 6.1A10 10 0 0 1 12 6c6.5 0 10 6 10 6a17 17 0 0 1-3.2 3.9M6.5 7.6A16 16 0 0 0 2 12s3.5 6 10 6a9.6 9.6 0 0 0 3.5-.7M9.9 9.9a2.5 2.5 0 0 0 3.2 3.2"/></symbol>
+      <symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7h.01"/></symbol>
+    </defs>
+  </svg>
+
+  <a href="#conteudo" class="pular">Ir para o conteúdo</a>
+
   <header>
-    <a href="index.html" class="marca">
-      <img src="img/logo-conectasaude.svg" alt="" width="42" height="42">
-      <span>Conecta Saúde</span>
+    <a href="index.html" class="marca" aria-label="Conecta Saúde – início">
+      <img src="img/logo.png" alt="" width="42" height="42">
+      <span>Conecta Saúde<small>Instituto Mauá de Tecnologia</small></span>
     </a>
 
-    <nav>
-      <a href="index.html">Início</a>
+    <nav aria-label="Navegação principal">
+      <a href="index.html" aria-current="page">Início</a>
       <a href="html/aacd.html">Pedidos AACD</a>
       <a href="html/fablab.html">Pedidos para Laboratórios</a>
     </nav>
 
-    <a href="#acesso" class="botao-acessar">Acessar</a>
+    <a href="#acesso" class="botao-acessar" id="abrir-acesso">Acessar</a>
   </header>
-  <main>
+
+  <main id="conteudo">
     <section class="hero">
       <div class="hero-texto">
         <span class="sobretitulo">Tecnologia que transforma</span>
         <h1>Conectando necessidades a soluções que devolvem autonomia.</h1>
         <p>A Conecta Saúde aproxima profissionais da AACD e laboratórios FabLab para tornar órteses e próteses mais
           acessíveis.</p>
-        <a href="#acesso" class="botao-principal" id="comecar">Começar agora</a>
+        <a href="#acesso" class="botao-principal" id="comecar">Começar agora
+          <svg class="ic" aria-hidden="true"><use href="#i-arrow"/></svg>
+        </a>
       </div>
+
       <div class="hero-visual">
-        <img src="img/fablab.jpeg" alt="Impressora 3D em funcionamento em um laboratório de fabricação digital" onerror="this.remove()">
-        <section class="acesso" id="acesso">
+        <!-- Foto do FabLab: img/impressora3d.jpg -->
+        <img src="img/impressora3d.jpg"
+          alt="Impressora 3D em funcionamento em um laboratório de fabricação digital">
+
+        <section class="acesso" id="acesso" tabindex="-1" aria-labelledby="titulo-acesso">
           <span class="sobretitulo">Área segura</span>
           <h2 id="titulo-acesso">Acesse a plataforma</h2>
           <p id="sub-acesso">Entre para acompanhar pedidos e produções.</p>
-          <div class="abas">
+
+          <div class="abas" role="group" aria-label="Entrar ou criar conta">
             <button type="button" class="ativa" data-modo="login" aria-pressed="true">Entrar</button>
             <button type="button" data-modo="cadastro" aria-pressed="false">Criar conta</button>
           </div>
-<form id="form-acesso" novalidate>
+
+          <form id="form-acesso" novalidate>
             <fieldset class="perfis">
               <legend>Seu perfil</legend>
               <div class="perfis-opcoes">
                 <label class="perfil">
                   <input type="radio" name="perfil" value="aacd" checked>
                   <span class="perfil-corpo">
-                    <img src="img/icone-aacd.svg" alt="" class="icone">
+                    <svg class="icone" aria-hidden="true"><use href="#i-building"/></svg>
                     <span class="perfil-texto"><b>AACD</b><small>Solicitar peças</small></span>
                   </span>
                 </label>
                 <label class="perfil">
                   <input type="radio" name="perfil" value="fablab">
                   <span class="perfil-corpo">
-                    <img src="img/icone-lab.svg" alt="" class="icone">
+                    <svg class="icone" aria-hidden="true"><use href="#i-lab"/></svg>
                     <span class="perfil-texto"><b>Laboratório</b><small>Produzir peças</small></span>
                   </span>
                 </label>
               </div>
             </fieldset>
+
             <div class="campo" id="campo-nome" hidden>
               <label for="nome" id="rotulo-nome">Nome da unidade da AACD</label>
-              <input type="text" id="nome" autocomplete="organization">
+              <input type="text" id="nome" autocomplete="organization" aria-describedby="erro-nome">
+              <small class="campo-erro" id="erro-nome" hidden></small>
             </div>
 
             <div class="campo-duplo" id="campo-local" hidden>
               <div class="campo">
                 <label for="cidade">Cidade</label>
-                <input type="text" id="cidade" autocomplete="address-level2" placeholder="Ex.: São Caetano do Sul">
+                <input type="text" id="cidade" autocomplete="address-level2" placeholder="Ex.: São Caetano do Sul"
+                  aria-describedby="erro-cidade">
+                <small class="campo-erro" id="erro-cidade" hidden></small>
               </div>
               <div class="campo">
                 <label for="estado">UF</label>
-                <select id="estado" autocomplete="address-level1"><option value="">UF</option></select>
+                <select id="estado" autocomplete="address-level1" aria-describedby="erro-estado">
+                  <option value="">UF</option>
+                </select>
+                <small class="campo-erro" id="erro-estado" hidden></small>
               </div>
             </div>
 
             <div class="campo">
               <label for="email">E-mail</label>
-              <input type="email" id="email" placeholder="nome@instituicao.org.br" autocomplete="email" required>
+              <input type="email" id="email" placeholder="nome@instituicao.org.br" autocomplete="email" required
+                aria-describedby="erro-email">
+              <small class="campo-erro" id="erro-email" hidden></small>
             </div>
 
             <div class="campo">
               <label for="senha">Senha</label>
-              <input type="password" id="senha" placeholder="Mínimo de 8 caracteres" autocomplete="current-password" minlength="8" required>
+              <div class="campo-senha">
+                <input type="password" id="senha" placeholder="Mínimo de 8 caracteres" autocomplete="current-password"
+                  minlength="8" required aria-describedby="erro-senha">
+                <button type="button" class="ver-senha" id="ver-senha" aria-label="Mostrar senha" aria-pressed="false">
+                  <svg class="ic" aria-hidden="true"><use href="#i-eye"/></svg>
+                </button>
+              </div>
+              <small class="campo-erro" id="erro-senha" hidden></small>
             </div>
 
             <button type="button" class="link-esqueci">Esqueci minha senha</button>
 
-            <label class="termo" id="campo-termo" hidden>
-              <input type="checkbox" id="aceite">
-              <span>Concordo com os <a href="#termos">Termos de Uso</a> e a <a href="#privacidade">Política de
-                  Privacidade</a>.</span>
-            </label>
-            <p class="erro" id="erro-acesso" role="alert" hidden></p>
-            <button type="submit" class="botao-entrar" id="botao-acesso" disabled>Entrar</button>
-            <p class="lgpd">Ambiente protegido conforme a LGPD</p>
+            <div class="termo-bloco" id="campo-termo" hidden>
+              <label class="termo">
+                <input type="checkbox" id="aceite" aria-describedby="erro-aceite">
+                <span>Concordo com os <a href="#termos">Termos de Uso</a> e a <a href="#privacidade">Política de
+                    Privacidade</a>.</span>
+              </label>
+              <small class="campo-erro" id="erro-aceite" hidden></small>
+            </div>
+
+            <p class="aviso" id="erro-acesso" role="alert" hidden></p>
+
+            <button type="submit" class="botao-entrar" id="botao-acesso" disabled>
+              <span class="botao-texto">Entrar</span>
+              <svg class="ic seta" aria-hidden="true"><use href="#i-arrow"/></svg>
+              <span class="spinner" aria-hidden="true"></span>
+            </button>
+            <p class="lgpd"><svg class="ic" aria-hidden="true"><use href="#i-lock"/></svg> Ambiente protegido conforme a LGPD</p>
           </form>
         </section>
       </div>
     </section>
+
     <section class="secao" id="como-funciona">
       <div class="secao-topo">
         <div>
@@ -115,27 +172,28 @@
 
       <ol class="passos">
         <li>
-          <span class="passo-numero">01</span>
+          <div class="passo-topo"><span class="passo-numero">01</span><svg class="ic" aria-hidden="true"><use href="#i-file"/></svg></div>
           <h3>AACD registra</h3>
           <p>A equipe informa medidas, material, prazo e detalhes da necessidade.</p>
         </li>
         <li>
-          <span class="passo-numero">02</span>
+          <div class="passo-topo"><span class="passo-numero">02</span><svg class="ic" aria-hidden="true"><use href="#i-lab"/></svg></div>
           <h3>Laboratório aceita</h3>
           <p>Um FabLab compatível avalia a capacidade e confirma o pedido.</p>
         </li>
         <li>
-          <span class="passo-numero">03</span>
+          <div class="passo-topo"><span class="passo-numero">03</span><svg class="ic" aria-hidden="true"><use href="#i-printer"/></svg></div>
           <h3>Produção acompanhada</h3>
           <p>As equipes acompanham a impressão e registram atualizações.</p>
         </li>
         <li>
-          <span class="passo-numero">04</span>
+          <div class="passo-topo"><span class="passo-numero">04</span><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg></div>
           <h3>Entrega confirmada</h3>
           <p>A peça é entregue à AACD e o ciclo é concluído com segurança.</p>
         </li>
       </ol>
     </section>
+
     <section class="secao contato" id="contato">
       <div>
         <span class="sobretitulo">Fale com a equipe</span>
@@ -145,21 +203,22 @@
 
       <div class="contato-links">
         <a href="mailto:conectasaude@maua.br">
-          <small>E-mail</small>
-          <b>conectasaude@maua.br</b>
+          <svg class="ic" aria-hidden="true"><use href="#i-mail"/></svg>
+          <span><small>E-mail</small><b>conectasaude@maua.br</b></span>
         </a>
         <a href="tel:+551142393000">
-          <small>Telefone</small>
-          <b>(11) 4239-3000</b>
+          <svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg>
+          <span><small>Telefone</small><b>(11) 4239-3000</b></span>
         </a>
       </div>
     </section>
   </main>
+
   <footer class="rodape">
     <div class="rodape-interno">
       <div class="rodape-linha">
         <div class="rodape-marca">
-          <img src="img/logo-conectasaude.svg" alt="" width="42" height="42">
+          <img src="img/logo.png" alt="" width="44" height="44">
           <div>
             <b>Conecta Saúde</b>
             <p>Uma iniciativa do Instituto Mauá de Tecnologia em parceria com a AACD.</p>
@@ -173,7 +232,8 @@
       <p class="rodape-copy">© 2026 Instituto Mauá de Tecnologia</p>
     </div>
   </footer>
-  <div class="janela" id="termos" role="dialog" aria-labelledby="titulo-termos">
+
+  <div class="janela" id="termos" role="dialog" aria-modal="true" aria-labelledby="titulo-termos">
     <div class="janela-caixa">
       <h2 id="titulo-termos">Termos de Uso</h2>
       <ul>
@@ -189,7 +249,7 @@
     </div>
   </div>
 
-  <div class="janela" id="privacidade" role="dialog" aria-labelledby="titulo-privacidade">
+  <div class="janela" id="privacidade" role="dialog" aria-modal="true" aria-labelledby="titulo-privacidade">
     <div class="janela-caixa">
       <h2 id="titulo-privacidade">Política de Privacidade</h2>
       <ul>
@@ -201,6 +261,7 @@
       <a href="#acesso" class="botao-principal">Fechar</a>
     </div>
   </div>
+
   <script src="js/home.js"></script>
 </body>
 
