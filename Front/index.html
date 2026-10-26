@@ -19,8 +19,8 @@
 
     <nav>
       <a href="index.html">Início</a>
-      <a href="pages/aacd.html">Pedidos AACD</a>
-      <a href="../Projeto Integrador - 2° Semestre (1)/pages/fablab-novo.html">Pedidos para Laboratórios</a>
+      <a href="html/aacd.html">Pedidos AACD</a>
+      <a href="html/fablab.html">Pedidos para Laboratórios</a>
     </nav>
 
     <a href="#acesso" class="botao-acessar">Acessar</a>
@@ -32,20 +32,19 @@
         <h1>Conectando necessidades a soluções que devolvem autonomia.</h1>
         <p>A Conecta Saúde aproxima profissionais da AACD e laboratórios FabLab para tornar órteses e próteses mais
           acessíveis.</p>
-        <a href="#acesso" class="botao-principal">Começar agora</a>
+        <a href="#acesso" class="botao-principal" id="comecar">Começar agora</a>
       </div>
       <div class="hero-visual">
         <img src="img/fablab.jpeg" alt="Impressora 3D em funcionamento em um laboratório de fabricação digital">
         <section class="acesso" id="acesso">
           <span class="sobretitulo">Área segura</span>
           <h2 id="titulo-acesso">Acesse a plataforma</h2>
-          <p>Entre para acompanhar pedidos e produções.</p>
+          <p id="sub-acesso">Entre para acompanhar pedidos e produções.</p>
           <div class="abas">
-            <button type="button" class="ativa" data-modo="login">Entrar</button>
-            <button type="button" data-modo="cadastro">Criar conta</button>
+            <button type="button" class="ativa" data-modo="login" aria-pressed="true">Entrar</button>
+            <button type="button" data-modo="cadastro" aria-pressed="false">Criar conta</button>
           </div>
-          <!-- TEMPORÁRIO: leva à página da AACD sem login. Apagar o action quando o login funcionar. -->
-<form id="form-acesso" action="pages/aacd.html">
+<form id="form-acesso" novalidate>
             <fieldset class="perfis">
               <legend>Seu perfil</legend>
               <div class="perfis-opcoes">
@@ -67,17 +66,28 @@
             </fieldset>
             <div class="campo" id="campo-nome" hidden>
               <label for="nome" id="rotulo-nome">Nome da unidade da AACD</label>
-              <input type="text" id="nome">
+              <input type="text" id="nome" autocomplete="organization">
+            </div>
+
+            <div class="campo-duplo" id="campo-local" hidden>
+              <div class="campo">
+                <label for="cidade">Cidade</label>
+                <input type="text" id="cidade" autocomplete="address-level2" placeholder="Ex.: São Caetano do Sul">
+              </div>
+              <div class="campo">
+                <label for="estado">UF</label>
+                <select id="estado" autocomplete="address-level1"><option value="">UF</option></select>
+              </div>
             </div>
 
             <div class="campo">
               <label for="email">E-mail</label>
-              <input type="email" id="email" placeholder="nome@instituicao.org.br">
+              <input type="email" id="email" placeholder="nome@instituicao.org.br" autocomplete="email" required>
             </div>
 
             <div class="campo">
               <label for="senha">Senha</label>
-              <input type="password" id="senha" placeholder="Mínimo de 8 caracteres">
+              <input type="password" id="senha" placeholder="Mínimo de 8 caracteres" autocomplete="current-password" minlength="8" required>
             </div>
 
             <button type="button" class="link-esqueci">Esqueci minha senha</button>
@@ -87,7 +97,9 @@
               <span>Concordo com os <a href="#termos">Termos de Uso</a> e a <a href="#privacidade">Política de
                   Privacidade</a>.</span>
             </label>
-            <button type="submit" class="botao-entrar" id="botao-acesso">Entrar</button>
+            <p class="erro" id="erro-acesso" role="alert" hidden></p>
+            <button type="submit" class="botao-entrar" id="botao-acesso" disabled>Entrar</button>
+            <p class="lgpd">Ambiente protegido conforme a LGPD</p>
           </form>
         </section>
       </div>
@@ -132,9 +144,9 @@
       </div>
 
       <div class="contato-links">
-        <a href="mailto:conectasaude@gmail.com">
+        <a href="mailto:conectasaude@maua.br">
           <small>E-mail</small>
-          <b>conectasaude@gmail.com</b>
+          <b>conectasaude@maua.br</b>
         </a>
         <a href="tel:+551142393000">
           <small>Telefone</small>
@@ -189,6 +201,7 @@
       <a href="#acesso" class="botao-principal">Fechar</a>
     </div>
   </div>
+  <script src="js/home.js"></script>
 </body>
 
 </html>
