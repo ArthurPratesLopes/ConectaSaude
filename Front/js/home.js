@@ -52,6 +52,12 @@
   // Endereço do Backend (server.js, porta 5000 por padrão)
   const API = 'http://localhost:5000/api/auth';
 
+  // MODO DEMONSTRAÇÃO: com o Backend fora do ar, entrar/criar conta segue para a
+  // página do perfil escolhido, sem validar a senha. Só vale para "servidor
+  // inacessível"; e-mail ou senha errados (resposta do servidor) continuam dando erro.
+  // Troque para false quando o Backend estiver em uso.
+  const MODO_DEMO = true;
+
   // perfil da tela -> perfil do banco (Models/user.js) + textos e destino
   const PERFIS = {
     aacd: {
@@ -198,8 +204,19 @@
       const dados = await res.json().catch(() => ({}));
       return { ok: res.ok, dados };
     } catch {
-      return { ok: false, dados: { erro: 'Não foi possível falar com o servidor. Confira se o Backend está rodando.' } };
+      return { ok: false, offline: true, dados: { erro: 'Não foi possível falar com o servidor. Confira se o Backend está rodando.' } };
     }
+  }
+
+  // Sessão de demonstração (sem Backend)
+  function entrarEmDemo() {
+    iniciarSessao({
+      id: 'demo',
+      nomeInstituicao: el.nome.value.trim() || 'Usuário de demonstração',
+      email: el.email.value.trim().toLowerCase(),
+      perfil: PERFIS[perfilAtual()].banco,
+      demo: true,
+    });
   }
 
   async function criarConta() {
@@ -213,6 +230,7 @@
       cidade: el.cidade.value.trim(),
       estado: el.estado.value,
     });
+    if (cadastro.offline && MODO_DEMO) { entrarEmDemo(); return; }
     if (!cadastro.ok) { mostrarErro(cadastro.dados.erro || 'Não foi possível criar a conta.'); return; }
 
     // conta criada: já entra direto
@@ -226,6 +244,7 @@
       email: el.email.value.trim().toLowerCase(),
       senha: el.senha.value,
     });
+    if (login.offline && MODO_DEMO) { entrarEmDemo(); return; }
     if (!login.ok) { mostrarErro(login.dados.erro || 'E-mail ou senha incorretos.'); return; }
     iniciarSessao(login.dados.usuario); // o destino vem do perfil salvo no banco
   }
