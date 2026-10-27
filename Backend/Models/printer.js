@@ -1,35 +1,18 @@
 const mongoose = require('mongoose');
 
-const PrinterSchema = new mongoose.Schema({
+const printerSchema = new mongoose.Schema({
   fornecedorId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    required: [true, 'O ID do fornecedor é obrigatório']
-  },
-  cidade: {
-    type: String,
-    required: [true, 'A cidade é obrigatória'],
-    trim: true
-  },
-  estado: {
-    type: String,
-    required: [true, 'O estado é obrigatório'],
-    uppercase: true,
-    maxLength: 2
-  },
-  emailSolicitacoes: {
-    type: String,
-    required: [true, 'O e-mail para solicitações é obrigatório'],
-    lowercase: true,
-    trim: true
+    required: true
   },
   marca: {
     type: String,
-    required: [true, 'A marca é obrigatória']
+    required: true
   },
   modelo: {
     type: String,
-    required: [true, 'O modelo é obrigatório']
+    required: true
   },
   tecnologia: {
     type: String,
@@ -42,31 +25,18 @@ const PrinterSchema = new mongoose.Schema({
     default: 'Disponível'
   },
   volumeConstrucao: {
-    larguraX: { type: Number, required: true }, // em mm
-    profundidadeY: { type: Number, required: true }, // em mm
-    alturaZ: { type: Number, required: true } // em mm
+    larguraX: Number,
+    profundidadeY: Number,
+    alturaZ: Number
   },
   materiaisCompativeis: [{
-    type: String,
-    enum: [
-      'PLA',
-      'ABS',
-      'PETG',
-      'TPU',
-      'Nylon',
-      'Resina Standard',
-      'Resina Durable',
-      'Resina Flexible',
-      'Fibra de Carbono',
-      'Fibra de Vidro',
-      'ASA',
-      'PA'
-    ]
+    type: String
   }],
   descricao: {
-    type: String,
-    maxLength: 500
+    type: String
   }
-}, { timestamps: true });
+}, {
+  timestamps: true
+});
 
-module.exports = mongoose.model('Printer', PrinterSchema);
+module.exports = mongoose.model('Printer', printerSchema);

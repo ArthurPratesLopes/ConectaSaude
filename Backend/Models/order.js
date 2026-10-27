@@ -1,75 +1,58 @@
 const mongoose = require('mongoose');
 
-const OrderSchema = new mongoose.Schema({
-  // Relacionamentos por ObjectId (Referências aos outros Schemas)
+const orderSchema = new mongoose.Schema({
   clienteId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    required: [true, 'O ID do cliente solicitante é obrigatório']
+    required: true
   },
   fornecedorId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
-    required: [true, 'O ID do fornecedor/FabLab é obrigatório']
+    required: true
   },
   impressoraId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Printer',
-    required: [true, 'A impressora selecionada é obrigatória']
+    required: true
   },
-  
-  // Informações do Arquivo 3D (.stl)
   arquivoUrl: {
     type: String,
-    required: [true, 'O caminho/URL do arquivo 3D (.stl) é obrigatório']
+    required: true
   },
-  nomeArquivoOriginal: {
-    type: String
-  },
-  
-  // Especificações Técnicas da Impressão
   material: {
     type: String,
-    required: [true, 'O material de impressão é obrigatório'] // Ex: 'PLA', 'TPU', 'PETG'
+    required: true
   },
   resolucaoCamada: {
-    type: String,
-    default: '0.2 mm - Padrão'
+    type: String
   },
   quantidade: {
     type: Number,
-    required: true,
-    min: 1,
     default: 1
   },
   observacoesTecnicas: {
-    type: String,
-    trim: true // Ex: "Infill de 30%, suporte automático, cor azul"
+    type: String
   },
-  
-  // Controle de Ciclo de Vida e Status
   status: {
     type: String,
     enum: ['analise', 'aceito', 'producao', 'pronto', 'recusado'],
     default: 'analise'
   },
-  motivoRecusa: {
-    type: String,
-    trim: true
-  },
-  
-  // Controle de Qualidade / Validação Clínica (Protocolo AACD)
   validacaoClinica: {
     aprovado: {
       type: Boolean,
       default: false
     },
-    dataValidacao: Date,
-    responsavelTecnico: String,
-    observacoesProtocolo: String
+    responsavel: {
+      type: String
+    },
+    observacoes: {
+      type: String
+    }
   }
 }, {
-  timestamps: true // Cria automaticamente createdAt e updatedAt
+  timestamps: true
 });
 
-module.exports = mongoose.model('Order', OrderSchema);
+module.exports = mongoose.model('Order', orderSchema);
