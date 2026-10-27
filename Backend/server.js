@@ -3,7 +3,7 @@ const dotenv = require('dotenv');
 const cors = require('cors');
 const connectDB = require('./config/db');
 const User = require('./models/User');
-
+const Message = require('./models/Message');
 dotenv.config();
 connectDB();
 
@@ -75,6 +75,51 @@ app.post('/api/auth/login', async (req, res) => {
     });
   } catch (error) {
     res.status(500).json({ erro: error.message });
+  }
+});
+
+app.post('/api/messages', async (req, res) => {
+  try {
+    const { orderId, remetenteId, texto } = req.body;
+
+    if (!orderId || !remetenteId || !texto) {
+      return res.status(400).json({
+        erro: 'orderId, remetenteId e texto sao obrigatorios.'
+      });
+    }
+
+    const mensagem = await Message.create({
+      orderId,
+      remetenteId,
+      texto
+    });
+
+    res.status(201).json({
+      sucesso: true,
+      mensagem
+    });
+  } catch (error) {
+    res.status(500).json({
+      erro: error.message
+    });
+  }
+});
+
+
+app.get('/api/messages/:orderId', async (req, res) => {
+  try {
+    const mensagens = await Message.find({ orderId: req.params.orderId })
+      .populate('remetenteId', 'nomeInstituicao perfil')
+      .sort({ createdAt: 1 });
+
+    res.json({
+      sucesso: true,
+      mensagens
+    });
+  } catch (error) {
+    res.status(500).json({
+      erro: error.message
+    });
   }
 });
 
