@@ -11,19 +11,18 @@
 <body>
 
 <header>
-    <a href="../index.html" class="marca">
-      <img src="../img/logo-printbridge.png" alt="">
-      <span>Conecta Saúde</span>
+    <a href="../index.html" class="marca" aria-label="Conecta Saúde – início">
+      <img src="../img/logo.png" alt="" width="42" height="42">
+      <span>Conecta Saúde<small>Instituto Mauá de Tecnologia</small></span>
     </a>
 
-    <nav>
-      <a href=".../index.html">Início</a>
-      <a href="aacd.html">Pedidos AACD</a>
-      <a href="fablab.html">Pedidos para Laboratórios</a>
+    <nav aria-label="Navegação principal">
+      <a href="../index.html">Início</a>
+      <a href="aacd.html" aria-current="page">Pedidos AACD</a>
     </nav>
 
     <a href="../index.html#acesso" class="botao-acessar">Acessar</a>
-    </header>
+</header>
   <main class="painel">
     <a href="aacd.html" class="voltar">‹ Voltar para os pedidos</a>
 
@@ -78,6 +77,16 @@
           <dt>Medidas e observações</dt>
           <dd id="dado-medidas">Punho com 15 cm de circunferência, tolerância de 1 mm. Acabamento macio nas bordas.</dd>
         </div>
+                <div class="dados-largo">
+          <dt>Arquivo da peça</dt>
+          <dd>
+            <a href="#" class="arquivo" id="dado-arquivo" download>
+              <span class="arquivo-tipo">STL</span>
+              <span class="arquivo-nome" id="dado-arquivo-nome">ortese-punho.stl</span>
+              <span class="arquivo-baixar">Baixar</span>
+            </a>
+          </dd>
+        </div>
       </dl>
     </section>
         <!-- EXEMPLO: o JavaScript substitui estes dados -->
@@ -107,7 +116,7 @@
     <div class="rodape-interno">
       <div class="rodape-linha">
         <div class="rodape-marca">
-          <img src="../img/logo-printbridge.png" alt="">
+          <img src="../img/logo.png" alt="">
           <div>
             <b>Conecta Saúde</b>
             <p>Uma iniciativa do Instituto Mauá de Tecnologia em parceria com a AACD.</p>
@@ -148,5 +157,6 @@
       <a href="#rodape" class="botao-principal">Fechar</a>
     </div>
   </div>
+    <script src="../js/menu.js"></script>
 </body>
 </html>
