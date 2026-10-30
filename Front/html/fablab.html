@@ -76,7 +76,7 @@
       <div class="cadastro-conteudo">
                 <section class="form-cartao" id="dados" aria-labelledby="titulo-dados-lab">
           <div class="form-cartao-topo">
-            <span class="form-icone"><svg class="icone" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21V5l8-3 8 3v16M8 9h2m4 0h2M8 13h2m4 0h2M9 21v-4h6v4"/></svg></span>
+            <span class="form-icone"><span class="form-icone"><img class="icone" src="../img/icone-aacd.png" alt=""></span></span>
             <div>
               <h2 id="titulo-dados-lab">Dados do laboratório</h2>
               <p>Informações para identificação da instituição.</p>
@@ -166,8 +166,75 @@
             <a href="#nova-impressora" class="botao-adicionar">Adicionar outra impressora <span>+</span></a>
           </div>
         </section>
-        <!-- os cartões do formulário entram aqui, nas próximas etapas -->
-      </div>
+        <!-- ETAPA 3: Requisitos e termo -->
+        <section class="form-cartao" id="requisitos" aria-labelledby="titulo-requisitos">
+          <div class="form-cartao-topo">
+            <span class="form-icone">3</span>
+            <div>
+              <h2 id="titulo-requisitos">Requisitos e termo</h2>
+              <p>Revise as condições e confirme o aceite.</p>
+            </div>
+          </div>
+
+          <div class="form-corpo">
+            <fieldset class="grupo">
+              <legend>Confirme que o laboratório atende aos requisitos</legend>
+              <ul class="requisitos">
+                <li>
+                  <label class="requisito">
+                    <input type="checkbox" name="req" value="espaco">
+                    <span>Possui espaço adequado e seguro para operar as impressoras 3D.</span>
+                  </label>
+                </li>
+                <li>
+                  <label class="requisito">
+                    <input type="checkbox" name="req" value="funcionamento">
+                    <span>As impressoras cadastradas estão em funcionamento e com manutenção em dia.</span>
+                  </label>
+                </li>
+                <li>
+                  <label class="requisito">
+                    <input type="checkbox" name="req" value="higiene">
+                    <span>Segue boas práticas de higiene e limpeza na produção de peças para saúde.</span>
+                  </label>
+                </li>
+                <li>
+                  <label class="requisito">
+                    <input type="checkbox" name="req" value="prazo">
+                    <span>Tem disponibilidade para cumprir os prazos combinados de cada pedido.</span>
+                  </label>
+                </li>
+              </ul>
+            </fieldset>
+
+            <label class="termo">
+              <input type="checkbox" id="aceite">
+              <span>Li e aceito os <a href="#termos">Termos de Uso</a> e a <a href="#privacidade">Política de Privacidade</a>.</span>
+            </label>
+          </div>
+        </section>
+
+        <!-- SUPORTE (destino do link "Falar com o suporte") -->
+        <section class="suporte" id="suporte" aria-labelledby="titulo-suporte">
+          <h2 id="titulo-suporte">Falar com o suporte</h2>
+          <p>Nossa equipe pode orientar seu cadastro. Escolha o canal que preferir.</p>
+          <div class="suporte-canais">
+            <a href="mailto:conectasaude@maua.br">
+              <small>E-mail</small>
+              <b>conectasaude@maua.br</b>
+            </a>
+            <a href="tel:+551142393000">
+              <small>Telefone</small>
+              <b>(11) 4239-3000</b>
+            </a>
+          </div>
+        </section>
+
+        <!-- BOTÕES DO FINAL DO FORMULÁRIO -->
+        <div class="cadastro-acoes">
+          <a href="#equipamento" class="botao-contorno">Voltar</a>
+          <button type="button" class="botao-principal" id="enviar-cadastro">Enviar cadastro</button>
+        </div>      </div>
     </div>
   </main>
 
@@ -244,5 +311,32 @@
     </section>
   </div>
   <script src="../js/menu.js"></script>
+    <!-- TEXTO PROVISÓRIO vms alterar -->
+  <div class="janela" id="termos" role="dialog" aria-labelledby="titulo-termos">
+    <div class="janela-caixa">
+      <h2 id="titulo-termos">Termos de Uso</h2>
+      <ul>
+        <li>A plataforma conecta profissionais da AACD e laboratórios FabLab para a solicitação e a produção de órteses e próteses.</li>
+        <li>O cadastro é destinado a profissionais da AACD e a laboratórios parceiros, e as informações fornecidas devem ser verdadeiras.</li>
+        <li>Cada pessoa é responsável por manter a sua senha em sigilo.</li>
+        <li>Os pedidos devem conter apenas as informações necessárias para a produção da peça.</li>
+        <li>Esta plataforma é um projeto acadêmico do Instituto Mauá de Tecnologia.</li>
+      </ul>
+      <a href="#rodape" class="botao-principal">Fechar</a>
+    </div>
+  </div>
+
+  <div class="janela" id="privacidade" role="dialog" aria-labelledby="titulo-privacidade">
+    <div class="janela-caixa">
+      <h2 id="titulo-privacidade">Política de Privacidade</h2>
+      <ul>
+        <li>Dados coletados: nome da unidade ou do laboratório, e-mail, perfil e senha.</li>
+        <li>Finalidade: criar a sua conta, permitir o acesso e acompanhar pedidos e produções.</li>
+        <li>Os dados são usados somente dentro da plataforma.</li>
+        <li>Para pedir a correção ou a exclusão dos seus dados, escreva para conectasaude@maua.br, conforme a LGPD.</li>
+      </ul>
+      <a href="#rodape" class="botao-principal">Fechar</a>
+    </div>
+  </div>
 </body>
 </html>
