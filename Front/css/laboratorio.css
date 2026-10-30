@@ -314,3 +314,169 @@
   border-color: #006767;
   background: #e1f1f0;
 }
+.requisitos {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.requisito {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 14px 16px;
+  border: 1px solid #d9e3e4;
+  border-radius: 12px;
+  color: #3e4949;
+  font-size: 14px;
+  line-height: 1.5;
+  cursor: pointer;
+}
+
+.requisito:hover {
+  border-color: #006767;
+  background: #e1f1f0;
+}
+
+.requisito input,
+.termo input {
+  flex: none;
+  width: 18px;
+  height: 18px;
+  margin-top: 2px;
+  accent-color: #006767;
+}
+
+.termo {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: 22px;
+  padding-top: 22px;
+  border-top: 1px solid #d9e3e4;
+  color: #3e4949;
+  font-size: 14px;
+  line-height: 1.5;
+  cursor: pointer;
+}
+
+.termo a {
+  color: #006767;
+  font-weight: 700;
+}
+
+.suporte {
+  margin-bottom: 24px;
+  padding: 24px 28px;
+  border-radius: 16px;
+  background: #e1f1f0;
+}
+
+.suporte h2 {
+  margin: 0;
+  color: #263636;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+.suporte p {
+  margin: 4px 0 16px;
+  color: #6b7777;
+  font-size: 14px;
+}
+
+.suporte-canais {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.suporte-canais a {
+  display: grid;
+  gap: 2px;
+  padding: 12px 18px;
+  border: 1px solid #d9e3e4;
+  border-radius: 12px;
+  background: white;
+  color: #263636;
+  text-decoration: none;
+}
+
+.suporte-canais a:hover {
+  border-color: #006767;
+}
+
+.suporte-canais small {
+  color: #6b7777;
+  font-size: 12px;
+}
+
+.cadastro-acoes {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.cadastro-acoes .botao-principal {
+  margin-top: 0;
+  border: 0;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.cadastro-acoes .botao-contorno {
+  display: inline-flex;
+  align-items: center;
+  min-height: 46px;
+  padding: 0 22px;
+}
+
+@media (max-width: 900px) {
+  .cadastro {
+    grid-template-columns: 1fr;
+  }
+
+  .etapas-menu {
+    position: static;
+  }
+
+  .etapa-cartao {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+
+@media (max-width: 600px) {
+  .form-cartao-topo {
+    flex-wrap: wrap;
+    padding: 20px 18px 16px;
+  }
+
+  .form-corpo {
+    padding: 8px 18px 22px;
+  }
+
+  .suporte {
+    padding: 20px 18px;
+  }
+
+  .suporte-canais a {
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .cadastro-acoes {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .cadastro-acoes .botao-principal,
+  .cadastro-acoes .botao-contorno {
+    justify-content: center;
+  }
+}
