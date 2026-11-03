@@ -98,6 +98,22 @@
               </div>
             </div>
 
+            <div class="campo campo-logo" id="campo-logo" hidden>
+              <label for="logo">Logo da instituição <span class="opcional">(opcional)</span></label>
+              <div class="logo-upload">
+                <div class="logo-previa" id="logo-previa" aria-hidden="true"></div>
+                <div class="logo-acoes">
+                  <div class="logo-botoes">
+                    <button type="button" class="logo-botao" id="logo-escolher">Escolher imagem</button>
+                    <button type="button" class="logo-botao logo-remover" id="logo-remover" hidden>Remover</button>
+                  </div>
+                  <small class="logo-dica">PNG, JPG ou WebP, até 5 MB. Aparece ao lado do seu nome no menu.</small>
+                </div>
+              </div>
+              <input type="file" id="logo" accept="image/png,image/jpeg,image/webp" hidden aria-describedby="erro-logo">
+              <small class="campo-erro" id="erro-logo" hidden></small>
+            </div>
+
             <div class="campo">
               <label for="email">E-mail</label>
               <input type="email" id="email" placeholder="nome@instituicao.org.br" autocomplete="email" required
@@ -109,9 +125,15 @@
               <label for="senha">Senha</label>
               <div class="campo-senha">
                 <input type="password" id="senha" placeholder="Mínimo de 8 caracteres" autocomplete="current-password"
-                  minlength="8" required aria-describedby="erro-senha">
-                
+                  minlength="8" required aria-describedby="erro-senha aviso-caps">
+                <button type="button" class="ver-senha" id="ver-senha" aria-pressed="false" aria-label="Mostrar senha">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false">
+                    <g class="olho-aberto"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></g>
+                    <g class="olho-fechado" style="display:none"><path d="M17.94 17.94A10.94 10.94 0 0 1 12 19c-7 0-11-7-11-7a19.8 19.8 0 0 1 5.06-5.94M9.9 4.24A10.9 10.9 0 0 1 12 5c7 0 11 7 11 7a19.9 19.9 0 0 1-3.17 4.19M1 1l22 22"/></g>
+                  </svg>
+                </button>
               </div>
+              <small class="campo-erro" id="aviso-caps" role="status" hidden>Caps Lock está ativado.</small>
               <small class="campo-erro" id="erro-senha" hidden></small>
             </div>
 
@@ -210,36 +232,8 @@
     </div>
   </footer>
 
-  <div class="janela" id="termos" role="dialog" aria-modal="true" aria-labelledby="titulo-termos">
-    <div class="janela-caixa">
-      <h2 id="titulo-termos">Termos de Uso</h2>
-      <ul>
-        <li>A plataforma conecta profissionais da AACD e laboratórios FabLab para a solicitação e a produção de órteses
-          e próteses.</li>
-        <li>O cadastro é destinado a profissionais da AACD e a laboratórios parceiros, e as informações fornecidas devem
-          ser verdadeiras.</li>
-        <li>Cada pessoa é responsável por manter a sua senha em sigilo.</li>
-        <li>Os pedidos devem conter apenas as informações necessárias para a produção da peça.</li>
-        <li>Esta plataforma é um projeto acadêmico do Instituto Mauá de Tecnologia.</li>
-      </ul>
-      <a href="#acesso" class="botao-principal">Fechar</a>
-    </div>
-  </div>
-
-  <div class="janela" id="privacidade" role="dialog" aria-modal="true" aria-labelledby="titulo-privacidade">
-    <div class="janela-caixa">
-      <h2 id="titulo-privacidade">Política de Privacidade</h2>
-      <ul>
-        <li>Dados coletados: nome da unidade ou do laboratório, e-mail, perfil e senha.</li>
-        <li>Finalidade: criar a sua conta, permitir o acesso e acompanhar pedidos e produções.</li>
-        <li>Os dados são usados somente dentro da plataforma.</li>
-        <li>Para pedir a correção ou a exclusão dos seus dados, escreva para conectasaude@maua.br, conforme a LGPD.</li>
-      </ul>
-      <a href="#acesso" class="botao-principal">Fechar</a>
-    </div>
-  </div>
-
-  <script src="js/home.js"></script>
+<script src="js/legal.js"></script>
+<script src="js/home.js"></script>
 </body>
 
 </html>
