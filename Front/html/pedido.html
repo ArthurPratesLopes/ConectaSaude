@@ -7,23 +7,22 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/home.css">
   <link rel="stylesheet" href="../css/pedidos.css">
+  <link rel="stylesheet" href="../css/interacoes.css">
 </head>
 <body>
 
 <header>
-    <a href="../index.html" class="marca">
-      <img src="../img/logo-printbridge.png" alt="">
-      <span>Conecta Saúde</span>
+    <a href="aacd.html" class="marca" aria-label="Conecta Saúde – painel">
+      <img src="../img/logo.png" alt="" width="42" height="42">
+      <span>Conecta Saúde<small>Instituto Mauá de Tecnologia</small></span>
     </a>
 
-    <nav>
-      <a href=".../index.html">Início</a>
-      <a href="aacd.html">Pedidos AACD</a>
-      <a href="fablab.html">Pedidos para Laboratórios</a>
+    <nav aria-label="Navegação principal">
+      <a href="aacd.html" aria-current="page">Pedidos AACD</a>
     </nav>
 
-    <a href="../index.html#acesso" class="botao-acessar">Acessar</a>
-    </header>
+    <a href="../index.html" class="botao-acessar" id="botao-sair">Sair</a>
+</header>
   <main class="painel">
     <a href="aacd.html" class="voltar">‹ Voltar para os pedidos</a>
 
@@ -78,7 +77,23 @@
           <dt>Medidas e observações</dt>
           <dd id="dado-medidas">Punho com 15 cm de circunferência, tolerância de 1 mm. Acabamento macio nas bordas.</dd>
         </div>
+                <div class="dados-largo">
+          <dt>Arquivo da peça</dt>
+          <dd>
+            <a href="#" class="arquivo" id="dado-arquivo" download>
+              <span class="arquivo-tipo">STL</span>
+              <span class="arquivo-nome" id="dado-arquivo-nome">ortese-punho.stl</span>
+              <span class="arquivo-baixar">Baixar</span>
+            </a>
+          </dd>
+        </div>
       </dl>
+    </section>
+    <!-- Visualização do modelo .stl (aparece só quando o arquivo está disponível) -->
+    <section class="detalhe-cartao" id="secao-modelo" aria-labelledby="titulo-modelo" hidden>
+      <h2 id="titulo-modelo">Modelo 3D</h2>
+      <div class="visualizador" id="visualizador-stl" aria-label="Pré-visualização 3D do modelo"></div>
+      <small class="dica">Arraste para girar e role para aproximar.</small>
     </section>
         <!-- EXEMPLO: o JavaScript substitui estes dados -->
     <section class="detalhe-cartao" aria-labelledby="titulo-historico">
@@ -107,7 +122,7 @@
     <div class="rodape-interno">
       <div class="rodape-linha">
         <div class="rodape-marca">
-          <img src="../img/logo-printbridge.png" alt="">
+          <img src="../img/logo.png" alt="">
           <div>
             <b>Conecta Saúde</b>
             <p>Uma iniciativa do Instituto Mauá de Tecnologia em parceria com a AACD.</p>
@@ -121,32 +136,9 @@
       <p class="rodape-copy">© 2026 Instituto Mauá de Tecnologia</p>
     </div>
   </footer>
-      <!-- TEXTO PROVISÓRIO: o grupo deve revisar e ajustar antes da entrega -->
-  <div class="janela" id="termos" role="dialog" aria-labelledby="titulo-termos">
-    <div class="janela-caixa">
-      <h2 id="titulo-termos">Termos de Uso</h2>
-      <ul>
-        <li>A plataforma conecta profissionais da AACD e laboratórios FabLab para a solicitação e a produção de órteses e próteses.</li>
-        <li>O cadastro é destinado a profissionais da AACD e a laboratórios parceiros, e as informações fornecidas devem ser verdadeiras.</li>
-        <li>Cada pessoa é responsável por manter a sua senha em sigilo.</li>
-        <li>Os pedidos devem conter apenas as informações necessárias para a produção da peça.</li>
-        <li>Esta plataforma é um projeto acadêmico do Instituto Mauá de Tecnologia.</li>
-      </ul>
-      <a href="#rodape" class="botao-principal">Fechar</a>
-    </div>
-  </div>
-
-  <div class="janela" id="privacidade" role="dialog" aria-labelledby="titulo-privacidade">
-    <div class="janela-caixa">
-      <h2 id="titulo-privacidade">Política de Privacidade</h2>
-      <ul>
-        <li>Dados coletados: nome da unidade ou do laboratório, e-mail, perfil e senha.</li>
-        <li>Finalidade: criar a sua conta, permitir o acesso e acompanhar pedidos e produções.</li>
-        <li>Os dados são usados somente dentro da plataforma.</li>
-        <li>Para pedir a correção ou a exclusão dos seus dados, escreva para conectasaude@maua.br, conforme a LGPD.</li>
-      </ul>
-      <a href="#rodape" class="botao-principal">Fechar</a>
-    </div>
-  </div>
+<script src="../js/legal.js"></script>
+<script src="../js/menu.js"></script>
+  <script src="../js/comum.js"></script>
+  <script src="../js/pedido.js"></script>
 </body>
 </html>

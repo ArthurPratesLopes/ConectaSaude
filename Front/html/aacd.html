@@ -7,20 +7,20 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/home.css">
   <link rel="stylesheet" href="../css/pedidos.css">
+  <link rel="stylesheet" href="../css/interacoes.css">
 </head>
 <body>
     <header>
-      <a href="../index.html" class="marca" aria-label="Conecta Saúde – início">
+      <a href="aacd.html" class="marca" aria-label="Conecta Saúde – painel">
         <img src="../img/logo.png" alt="" width="42" height="42">
         <span>Conecta Saúde<small>Instituto Mauá de Tecnologia</small></span>
       </a>
   
       <nav aria-label="Navegação principal">
-        <a href="../index.html">Início</a>
         <a href="aacd.html" aria-current="page">Pedidos AACD</a>
       </nav>
   
-      <a href="../index.html#acesso" class="botao-acessar">Acessar</a>
+      <a href="../index.html" class="botao-acessar" id="botao-sair">Sair</a>
     </header>
   <main class="painel">
     <div class="painel-topo">
@@ -34,95 +34,54 @@
         <ul class="resumo" aria-label="Resumo dos pedidos">
       <li>
         <span class="resumo-rotulo">Todos os pedidos</span>
-        <strong id="nTodos">12</strong>
-        <small>+3 este mês</small>
+        <strong id="nTodos">–</strong>
+        <small>–</small>
       </li>
       <li>
         <span class="resumo-rotulo">Aguardando aceite</span>
-        <strong id="nAbertos">03</strong>
-        <small>Requer atenção</small>
+        <strong id="nAbertos">–</strong>
+        <small>–</small>
       </li>
       <li>
         <span class="resumo-rotulo">Em produção</span>
-        <strong id="nImpressao">05</strong>
-        <small>Dentro do prazo</small>
+        <strong id="nImpressao">–</strong>
+        <small>–</small>
       </li>
       <li>
         <span class="resumo-rotulo">Entregues</span>
-        <strong id="nEntregues">24</strong>
-        <small>Nos últimos 90 dias</small>
+        <strong id="nEntregues">–</strong>
+        <small>–</small>
       </li>
     </ul>
         <section class="pedidos-cartao" aria-labelledby="titulo-pedidos">
       <div class="pedidos-topo">
         <div>
           <h2 id="titulo-pedidos">Pedidos recentes</h2>
-          <small>Atualizado há poucos minutos</small>
+          <small id="atualizado">Carregando…</small>
         </div>
-        <select id="filtro" aria-label="Filtrar pedidos por status">
-          <option value="todos">Todos os status</option>
-          <option value="0">Registrado</option>
-          <option value="1">Aceito</option>
-          <option value="2">Impressão</option>
-          <option value="3">Entregue</option>
-        </select>
+        <div class="pedidos-ferramentas">
+          <input type="search" id="busca" placeholder="Buscar por código ou tipo de peça" aria-label="Buscar pedidos por código ou tipo de peça" autocomplete="off">
+          <select id="filtro" aria-label="Filtrar pedidos por status">
+            <option value="todos">Todos os status</option>
+            <option value="0">Registrado</option>
+            <option value="1">Aceito</option>
+            <option value="2">Impressão</option>
+            <option value="3">Entregue</option>
+            <option value="recusado">Recusado</option>
+          </select>
+          <select id="ordem" aria-label="Ordenar pedidos">
+            <option value="recentes">Mais recentes</option>
+            <option value="antigos">Mais antigos</option>
+            <option value="prazo">Prazo mais próximo</option>
+            <option value="codigo">Código</option>
+          </select>
+          <button type="button" class="botao-contorno botao-csv" id="exportar">Exportar CSV</button>
+        </div>
       </div>
 
-      <!-- EXEMPLO: o JavaScript substitui o conteúdo desta lista -->
+      <!-- O JavaScript (js/aacd.js) monta a lista de pedidos aqui -->
       <ul class="pedidos" id="pedidos" aria-live="polite">
-        <li class="pedido">
-          <div class="pedido-info">
-            <div class="pedido-linha1">
-              <span class="selo selo-impressao">Impressão</span>
-              <span class="pedido-codigo">CS-2026-0142</span>
-            </div>
-            <h3>Órtese de punho</h3>
-            <p>Paciente ••••4721 • PLA médico • Prazo: 18 jun 2026</p>
-          </div>
-                    <ol class="progresso" aria-label="Etapas do pedido">
-            <li class="feito"><span class="bolinha">✓</span><span class="etapa">Registrado</span></li>
-            <li class="feito"><span class="bolinha">✓</span><span class="etapa">Aceito</span></li>
-            <li class="feito"><span class="bolinha">✓</span><span class="etapa">Impressão</span></li>
-            <li><span class="bolinha">4</span><span class="etapa">Entregue</span></li>
-          </ol>
-          <a href="pedido.html" class="pedido-seta" aria-label="Ver detalhes do pedido CS-2026-0142">›</a>
-        </li>
-
-        <li class="pedido">
-          <div class="pedido-info">
-            <div class="pedido-linha1">
-              <span class="selo selo-aceito">Aceito</span>
-              <span class="pedido-codigo">CS-2026-0138</span>
-            </div>
-            <h3>Adaptador de talher</h3>
-            <p>Paciente ••••0913 • PETG • Prazo: 22 jun 2026</p>
-          </div>
-                    <ol class="progresso" aria-label="Etapas do pedido">
-            <li class="feito"><span class="bolinha">✓</span><span class="etapa">Registrado</span></li>
-            <li class="feito"><span class="bolinha">✓</span><span class="etapa">Aceito</span></li>
-            <li><span class="bolinha">3</span><span class="etapa">Impressão</span></li>
-            <li><span class="bolinha">4</span><span class="etapa">Entregue</span></li>
-          </ol>
-          <a href="pedido.html" class="pedido-seta" aria-label="Ver detalhes do pedido CS-2026-0138">›</a>
-        </li>
-
-        <li class="pedido">
-          <div class="pedido-info">
-            <div class="pedido-linha1">
-              <span class="selo selo-entregue">Entregue</span>
-              <span class="pedido-codigo">CS-2026-0129</span>
-            </div>
-            <h3>Prótese de mão</h3>
-            <p>Paciente ••••6280 • TPU + PLA • Prazo: 10 jun 2026</p>
-          </div>
-                    <ol class="progresso" aria-label="Etapas do pedido">
-            <li class="feito"><span class="bolinha">✓</span><span class="etapa">Registrado</span></li>
-            <li class="feito"><span class="bolinha">✓</span><span class="etapa">Aceito</span></li>
-            <li class="feito"><span class="bolinha">✓</span><span class="etapa">Impressão</span></li>
-            <li class="feito"><span class="bolinha">✓</span><span class="etapa">Entregue</span></li>
-          </ol>
-          <a href="pedido.html" class="pedido-seta" aria-label="Ver detalhes do pedido CS-2026-0129">›</a>
-        </li>
+        <li class="pedido-aviso">Carregando pedidos…</li>
       </ul>
 
       <p class="vazio" id="vazio" hidden>Nenhum pedido nesse filtro.</p>
@@ -188,7 +147,15 @@
           <label for="medidas">Medidas e observações</label>
           <textarea id="medidas" rows="4" placeholder="Descreva dimensões, tolerâncias e recomendações clínicas."></textarea>
         </div>
-
+        <div class="campo">
+          <label for="arquivoStl">Arquivo da peça (.stl) <em>*</em></label>
+          <input type="file" id="arquivoStl" name="arquivoStl" accept=".stl">
+          <small class="dica">Envie o modelo 3D em formato .stl.</small>
+          <div class="envio-progresso" id="envioProgresso" hidden>
+            <progress id="envioBarra" max="100" value="0" aria-label="Progresso do envio do arquivo"></progress>
+            <span id="envioTexto" role="status">0%</span>
+          </div>
+        </div>
         <fieldset class="urgencia">
           <legend>Urgência</legend>
           <div class="pilulas">
@@ -217,33 +184,9 @@
       </form>
     </section>
   </div>
-    <!-- TEXTO PROVISÓRIO: o grupo deve revisar e ajustar antes da entrega -->
-  <div class="janela" id="termos" role="dialog" aria-labelledby="titulo-termos">
-    <div class="janela-caixa">
-      <h2 id="titulo-termos">Termos de Uso</h2>
-      <ul>
-        <li>A plataforma conecta profissionais da AACD e laboratórios FabLab para a solicitação e a produção de órteses e próteses.</li>
-        <li>O cadastro é destinado a profissionais da AACD e a laboratórios parceiros, e as informações fornecidas devem ser verdadeiras.</li>
-        <li>Cada pessoa é responsável por manter a sua senha em sigilo.</li>
-        <li>Os pedidos devem conter apenas as informações necessárias para a produção da peça.</li>
-        <li>Esta plataforma é um projeto acadêmico do Instituto Mauá de Tecnologia.</li>
-      </ul>
-      <a href="#rodape" class="botao-principal">Fechar</a>
-    </div>
-  </div>
-
-  <div class="janela" id="privacidade" role="dialog" aria-labelledby="titulo-privacidade">
-    <div class="janela-caixa">
-      <h2 id="titulo-privacidade">Política de Privacidade</h2>
-      <ul>
-        <li>Dados coletados: nome da unidade ou do laboratório, e-mail, perfil e senha.</li>
-        <li>Finalidade: criar a sua conta, permitir o acesso e acompanhar pedidos e produções.</li>
-        <li>Os dados são usados somente dentro da plataforma.</li>
-        <li>Para pedir a correção ou a exclusão dos seus dados, escreva para conectasaude@maua.br, conforme a LGPD.</li>
-      </ul>
-      <a href="#rodape" class="botao-principal">Fechar</a>
-    </div>
-  </div>
-  <script src="../js/menu.js"></script>
+<script src="../js/legal.js"></script>
+<script src="../js/menu.js"></script>
+  <script src="../js/comum.js"></script>
+  <script src="../js/aacd.js"></script>
 </body>
 </html>

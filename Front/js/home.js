@@ -16,6 +16,12 @@
     abas: document.querySelectorAll('.abas button'),
     campoNome: $('#campo-nome'),
     campoLocal: $('#campo-local'),
+    campoLogo: $('#campo-logo'),
+    logo: $('#logo'),
+    logoPrevia: $('#logo-previa'),
+    logoEscolher: $('#logo-escolher'),
+    logoRemover: $('#logo-remover'),
+    erroLogo: $('#erro-logo'),
     cidade: $('#cidade'),
     estado: $('#estado'),
     rotuloNome: $('#rotulo-nome'),
@@ -27,6 +33,7 @@
     aceite: $('#aceite'),
     erro: $('#erro-acesso'),
     verSenha: $('#ver-senha'),
+    avisoCaps: $('#aviso-caps'),
     textoBotao: $('#botao-acesso .botao-texto'),
     abrirAcesso: $('#abrir-acesso'),
     cartao: $('#acesso'),
@@ -55,8 +62,9 @@
   // MODO DEMONSTRAÇÃO: com o Backend fora do ar, entrar/criar conta segue para a
   // página do perfil escolhido, sem validar a senha. Só vale para "servidor
   // inacessível"; e-mail ou senha errados (resposta do servidor) continuam dando erro.
-  // Troque para false quando o Backend estiver em uso.
-  const MODO_DEMO = true;
+  // Só fica ligado em ambiente local (localhost, 127.0.0.1 ou arquivo aberto direto).
+  // Em qualquer endereço publicado ele desliga sozinho, sem precisar lembrar de trocar.
+  const MODO_DEMO = ['localhost', '127.0.0.1', ''].includes(location.hostname);
 
   // perfil da tela -> perfil do banco (Models/user.js) + textos e destino
   const PERFIS = {
@@ -80,6 +88,95 @@
 
   const CHAVE_SESSAO = 'conecta:sessao';
   const UFS = ['AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA','PB','PR','PE','PI','RJ','RN','RS','RO','RR','SC','SP','SE','TO'];
+
+  // Com sessão ativa a tela inicial não fica acessível (nem pelo "voltar" do navegador):
+  // a única saída é o botão "Sair" das páginas internas.
+  const voltarAoPainel = () => {
+    let s = null;
+    try { s = JSON.parse(sessionStorage.getItem(CHAVE_SESSAO)); } catch { /* sem sessão */ }
+    if (!s) return false;
+    window.location.replace(DESTINOS[s.perfil] || DESTINOS.cliente);
+    return true;
+  };
+  if (voltarAoPainel()) return;
+
+  /* ---------- logo da instituição (opcional, só no cadastro) ----------
+     A imagem é reduzida no navegador (128 px) e enviada como data URL junto do cadastro. */
+  const LOGO_TAM = 128;
+  const LOGO_MAX_BYTES = 5 * 1024 * 1024;
+  const LOGO_TIPOS = /^image\/(png|jpeg|webp)$/;
+  let logoDados = '';
+
+  const PALAVRAS_LIGACAO = ['da', 'de', 'do', 'das', 'dos', 'e'];
+  const iniciais = (texto) => {
+    const p = (String(texto || '').match(/\p{L}+/gu) || []).filter((w) => !PALAVRAS_LIGACAO.includes(w.toLowerCase()));
+    return ((p[0] ? p[0][0] : '') + (p[1] ? p[1][0] : '')).toUpperCase() || '?';
+  };
+
+  function desenharPrevia() {
+    el.logoPrevia.textContent = '';
+    if (logoDados) {
+      const img = document.createElement('img');
+      img.src = logoDados;
+      img.alt = '';
+      el.logoPrevia.appendChild(img);
+    } else {
+      el.logoPrevia.textContent = iniciais(el.nome.value);
+    }
+    el.logoRemover.hidden = !logoDados;
+  }
+
+  function erroDaLogo(msg) {
+    el.erroLogo.textContent = msg || '';
+    el.erroLogo.hidden = !msg;
+  }
+
+  // reduz mantendo a proporção (sem cortar a marca), sobre fundo branco
+  function reduzirImagem(arquivo) {
+    return new Promise((ok, falha) => {
+      const url = URL.createObjectURL(arquivo);
+      const img = new Image();
+      img.onload = () => {
+        const escala = Math.min(LOGO_TAM / img.naturalWidth, LOGO_TAM / img.naturalHeight, 1);
+        const w = Math.max(1, Math.round(img.naturalWidth * escala));
+        const h = Math.max(1, Math.round(img.naturalHeight * escala));
+        const c = document.createElement('canvas');
+        c.width = c.height = LOGO_TAM;
+        const g = c.getContext('2d');
+        g.fillStyle = '#fff';
+        g.fillRect(0, 0, LOGO_TAM, LOGO_TAM);
+        g.drawImage(img, (LOGO_TAM - w) / 2, (LOGO_TAM - h) / 2, w, h);
+        URL.revokeObjectURL(url);
+        ok(c.toDataURL('image/jpeg', 0.88));
+      };
+      img.onerror = () => { URL.revokeObjectURL(url); falha(new Error('imagem inválida')); };
+      img.src = url;
+    });
+  }
+
+  async function escolherLogo() {
+    const arquivo = el.logo.files[0];
+    erroDaLogo('');
+    if (!arquivo) return;
+    if (!LOGO_TIPOS.test(arquivo.type)) { el.logo.value = ''; erroDaLogo('Use uma imagem PNG, JPG ou WebP.'); return; }
+    if (arquivo.size > LOGO_MAX_BYTES) { el.logo.value = ''; erroDaLogo('A imagem passa de 5 MB. Escolha uma menor.'); return; }
+    try {
+      logoDados = await reduzirImagem(arquivo);
+    } catch {
+      el.logo.value = '';
+      erroDaLogo('Não foi possível ler essa imagem. Tente outro arquivo.');
+      return;
+    }
+    desenharPrevia();
+  }
+
+  function removerLogo() {
+    logoDados = '';
+    el.logo.value = '';
+    erroDaLogo('');
+    desenharPrevia();
+    el.logoEscolher.focus();
+  }
 
   let modo = 'login';
   let carregando = false;
@@ -172,6 +269,7 @@
 
     el.campoNome.hidden = !cadastro;
     el.campoLocal.hidden = !cadastro;
+    el.campoLogo.hidden = !cadastro;
     el.campoTermo.hidden = !cadastro;
     el.esqueci.hidden = cadastro;
 
@@ -212,9 +310,11 @@
   function entrarEmDemo() {
     iniciarSessao({
       id: 'demo',
-      nomeInstituicao: el.nome.value.trim() || 'Usuário de demonstração',
+      nomeInstituicao: el.nome.value.trim() ||
+        (perfilAtual() === 'fablab' ? 'Laboratório (demonstração)' : 'AACD (demonstração)'),
       email: el.email.value.trim().toLowerCase(),
       perfil: PERFIS[perfilAtual()].banco,
+      logo: modo === 'cadastro' ? logoDados : '',
       demo: true,
     });
   }
@@ -229,6 +329,10 @@
       perfil: PERFIS[perfilAtual()].banco,
       cidade: el.cidade.value.trim(),
       estado: el.estado.value,
+      logo: logoDados,
+      // prova do aceite (LGPD): versão dos termos e momento do aceite
+      termoVersao: (window.CS_LEGAL && window.CS_LEGAL.versao) || '',
+      termoAceitoEm: new Date().toISOString(),
     });
     if (cadastro.offline && MODO_DEMO) { entrarEmDemo(); return; }
     if (!cadastro.ok) { mostrarErro(cadastro.dados.erro || 'Não foi possível criar a conta.'); return; }
@@ -236,7 +340,7 @@
     // conta criada: já entra direto
     const login = await chamar('login', { email, senha });
     if (!login.ok) { definirModo('login'); mostrarErro('Conta criada! Entre com seu e-mail e senha.', 'ok'); return; }
-    iniciarSessao(login.dados.usuario);
+    iniciarSessao({ ...login.dados.usuario, token: login.dados.token });
   }
 
   async function entrar() {
@@ -246,7 +350,7 @@
     });
     if (login.offline && MODO_DEMO) { entrarEmDemo(); return; }
     if (!login.ok) { mostrarErro(login.dados.erro || 'E-mail ou senha incorretos.'); return; }
-    iniciarSessao(login.dados.usuario); // o destino vem do perfil salvo no banco
+    iniciarSessao({ ...login.dados.usuario, token: login.dados.token }); // o destino vem do perfil salvo no banco
   }
 
   /* ---------- eventos ---------- */
@@ -261,11 +365,28 @@
     campo.addEventListener('blur', () => { tocados.add(id); atualizar(); });
     if (id === 'estado') campo.addEventListener('change', () => { tocados.add(id); atualizar(); });
   });
+  el.logoEscolher.addEventListener('click', () => el.logo.click());
+  el.logo.addEventListener('change', escolherLogo);
+  el.logoRemover.addEventListener('click', removerLogo);
+  el.nome.addEventListener('input', () => { if (!logoDados) desenharPrevia(); });
   el.aceite.addEventListener('change', () => { tocados.add('aceite'); atualizar(); });
 
-  el.esqueci.addEventListener('click', () => {
-    el.email.focus();
-    mostrarErro('A recuperação de senha ainda não está disponível. Fale com a equipe: conectasaude@maua.br.', 'info');
+  el.esqueci.addEventListener('click', async () => {
+    const email = el.email.value.trim().toLowerCase();
+    if (!emailValido(email)) {
+      tocados.add('email'); atualizar(); el.email.focus();
+      mostrarErro('Digite o e-mail da conta no campo acima e clique de novo em "Esqueci minha senha".', 'info');
+      return;
+    }
+    el.esqueci.disabled = true;
+    const r = await chamar('esqueci-senha', { email });
+    el.esqueci.disabled = false;
+    if (r.offline) {
+      mostrarErro('Não foi possível falar com o servidor agora. Tente de novo em instantes ou escreva para conectasaude@maua.br.', 'info');
+      return;
+    }
+    // mesma resposta exista a conta ou não (não revela quais e-mails são cadastrados)
+    mostrarErro('Se esse e-mail tiver cadastro, enviaremos as instruções para criar uma nova senha. Confira também o spam.', 'ok');
   });
 
   form.addEventListener('submit', async (e) => {
@@ -299,14 +420,28 @@
 
 
   // olho para mostrar/ocultar a senha
-  el.verSenha.addEventListener('click', () => {
-    const mostrar = el.senha.type === 'password';
-    el.senha.type = mostrar ? 'text' : 'password';
-    el.verSenha.setAttribute('aria-pressed', String(mostrar));
-    el.verSenha.setAttribute('aria-label', mostrar ? 'Ocultar senha' : 'Mostrar senha');
-    el.verSenha.querySelector('use').setAttribute('href', mostrar ? '#i-eye-off' : '#i-eye');
-    el.senha.focus();
-  });
+  if (el.verSenha) {
+    el.verSenha.addEventListener('click', () => {
+      const mostrar = el.senha.type === 'password';
+      el.senha.type = mostrar ? 'text' : 'password';
+      el.verSenha.setAttribute('aria-pressed', String(mostrar));
+      el.verSenha.setAttribute('aria-label', mostrar ? 'Ocultar senha' : 'Mostrar senha');
+      el.verSenha.querySelector('.olho-aberto').style.display = mostrar ? 'none' : '';
+      el.verSenha.querySelector('.olho-fechado').style.display = mostrar ? '' : 'none';
+      el.senha.focus();
+    });
+  }
+
+  // aviso de Caps Lock (só aparece enquanto a pessoa digita a senha)
+  if (el.avisoCaps) {
+    const checarCaps = (e) => {
+      if (typeof e.getModifierState !== 'function') return;
+      el.avisoCaps.hidden = !e.getModifierState('CapsLock');
+    };
+    el.senha.addEventListener('keydown', checarCaps);
+    el.senha.addEventListener('keyup', checarCaps);
+    el.senha.addEventListener('blur', () => { el.avisoCaps.hidden = true; });
+  }
 
   // "Acessar" (cabeçalho): rola até o cartão e foca o primeiro campo útil
   if (el.abrirAcesso) {
@@ -338,9 +473,18 @@
   UFS.forEach((uf) => el.estado.add(new Option(uf, uf)));
 
   definirPerfil();
+  desenharPrevia();
   definirModo('login');
   atualizarMenu();
 
+  // volta da expiração por inatividade (ver menu.js)
+  try {
+    if (sessionStorage.getItem('conecta:expirou')) {
+      sessionStorage.removeItem('conecta:expirou');
+      mostrarErro('Sua sessão foi encerrada por inatividade. Entre novamente para continuar.', 'info');
+    }
+  } catch { /* ignora */ }
+
   // voltar pelo histórico (cache) também reflete o estado da sessão
-  window.addEventListener('pageshow', atualizarMenu);
+  window.addEventListener('pageshow', () => { if (!voltarAoPainel()) atualizarMenu(); });
 })();
