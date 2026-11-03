@@ -8,21 +8,21 @@
   <link rel="stylesheet" href="../css/home.css">
   <link rel="stylesheet" href="../css/pedidos.css">
   <link rel="stylesheet" href="../css/laboratorio.css">
+  <link rel="stylesheet" href="../css/interacoes.css">
 </head>
 <body>
 
     <header>
-    <a href="../index.html" class="marca" aria-label="Conecta Saúde – início">
+    <a href="fablab.html" class="marca" aria-label="Conecta Saúde – painel">
       <img src="../img/logo.png" alt="" width="42" height="42">
       <span>Conecta Saúde<small>Instituto Mauá de Tecnologia</small></span>
     </a>
 
     <nav aria-label="Navegação principal">
-      <a href="../index.html">Início</a>
       <a href="fablab.html" aria-current="page">Pedidos para Laboratórios</a>
     </nav>
 
-    <a href="../index.html#acesso" class="botao-acessar">Acessar</a>
+    <a href="../index.html" class="botao-acessar" id="botao-sair">Sair</a>
     </header>
   <main class="painel">
     <div class="painel-topo">
@@ -149,18 +149,11 @@
                 <label class="pilula"><input type="checkbox" name="mat" value="Resina médica"><span>Resina médica</span></label>
               </div>
             </fieldset>
-                        <!-- EXEMPLO: o JavaScript substitui o conteúdo desta lista -->
-            <ul class="parque" id="parque" aria-live="polite">
-              <li class="impressora">
-                <span class="form-icone mini">3D</span>
-                <div>
-                  <b>Ultimaker S3</b>
-                  <small>FDM · 230 × 190 × 200 mm · PLA, PETG</small>
-                </div>
-                <a href="#nova-impressora" class="impressora-editar">Editar</a>
-                <button type="button" class="remover" aria-label="Remover a impressora Ultimaker S3">×</button>
-              </li>
-            </ul>
+            <p class="erro" id="erro-imp-inline" role="alert"></p>
+            <button type="button" class="botao-principal botao-envio" id="salvar-imp">Salvar impressora</button>
+
+            <!-- O JavaScript (js/fablab.js) monta a lista de impressoras aqui -->
+            <ul class="parque" id="parque" aria-live="polite"></ul>
             <p class="vazio" id="vazio" hidden>Nenhuma impressora ainda. Adicione a primeira.</p>
 
             <a href="#nova-impressora" class="botao-adicionar">Adicionar outra impressora <span>+</span></a>
@@ -229,6 +222,8 @@
             </a>
           </div>
         </section>
+
+        <p class="erro" id="erro-cadastro" role="alert"></p>
 
         <!-- BOTÕES DO FINAL DO FORMULÁRIO -->
         <div class="cadastro-acoes">
@@ -310,33 +305,9 @@
       </form>
     </section>
   </div>
+  <script src="../js/legal.js"></script>
   <script src="../js/menu.js"></script>
-    <!-- TEXTO PROVISÓRIO vms alterar -->
-  <div class="janela" id="termos" role="dialog" aria-labelledby="titulo-termos">
-    <div class="janela-caixa">
-      <h2 id="titulo-termos">Termos de Uso</h2>
-      <ul>
-        <li>A plataforma conecta profissionais da AACD e laboratórios FabLab para a solicitação e a produção de órteses e próteses.</li>
-        <li>O cadastro é destinado a profissionais da AACD e a laboratórios parceiros, e as informações fornecidas devem ser verdadeiras.</li>
-        <li>Cada pessoa é responsável por manter a sua senha em sigilo.</li>
-        <li>Os pedidos devem conter apenas as informações necessárias para a produção da peça.</li>
-        <li>Esta plataforma é um projeto acadêmico do Instituto Mauá de Tecnologia.</li>
-      </ul>
-      <a href="#rodape" class="botao-principal">Fechar</a>
-    </div>
-  </div>
-
-  <div class="janela" id="privacidade" role="dialog" aria-labelledby="titulo-privacidade">
-    <div class="janela-caixa">
-      <h2 id="titulo-privacidade">Política de Privacidade</h2>
-      <ul>
-        <li>Dados coletados: nome da unidade ou do laboratório, e-mail, perfil e senha.</li>
-        <li>Finalidade: criar a sua conta, permitir o acesso e acompanhar pedidos e produções.</li>
-        <li>Os dados são usados somente dentro da plataforma.</li>
-        <li>Para pedir a correção ou a exclusão dos seus dados, escreva para conectasaude@maua.br, conforme a LGPD.</li>
-      </ul>
-      <a href="#rodape" class="botao-principal">Fechar</a>
-    </div>
-  </div>
+  <script src="../js/comum.js"></script>
+  <script src="../js/fablab.js"></script>
 </body>
 </html>
