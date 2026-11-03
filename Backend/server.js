@@ -11,7 +11,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// 1. CADASTRO DE USUÁRIO
+//Área de cadastro de usuário
 app.post('/api/auth/register', async (req, res) => {
   try {
     const { nomeInstituicao, email, senha, perfil, cidade, estado } = req.body;
@@ -19,7 +19,7 @@ app.post('/api/auth/register', async (req, res) => {
     if (!nomeInstituicao || !email || !senha || !perfil || !cidade || !estado) {
       return res.status(400).json({ erro: 'Preencha todos os campos.' });
     }
-
+    //Verifica se já tem um e-mail cadastrado
     const existe = await User.findOne({ email });
     if (existe) {
       return res.status(400).json({ erro: 'E-mail já cadastrado.' });
