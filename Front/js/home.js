@@ -59,12 +59,29 @@
   // Endereço do Backend (server.js, porta 5000 por padrão)
   const API = 'http://localhost:5000/api/auth';
 
-  // MODO DEMONSTRAÇÃO: com o Backend fora do ar, entrar/criar conta segue para a
-  // página do perfil escolhido, sem validar a senha. Só vale para "servidor
-  // inacessível"; e-mail ou senha errados (resposta do servidor) continuam dando erro.
-  // Só fica ligado em ambiente local (localhost, 127.0.0.1 ou arquivo aberto direto).
-  // Em qualquer endereço publicado ele desliga sozinho, sem precisar lembrar de trocar.
-  const MODO_DEMO = ['localhost', '127.0.0.1', ''].includes(location.hostname);
+  // MODO DEMONSTRAÇÃO / MOCK ESTÁVEL:
+  // - via ?mock=1 ou localStorage['conecta:mock'] = '1' continua em mock permanente;
+  // - sem o parâmetro, a lógica antiga continua só em localhost sem depender do Backend.
+  // Isso evita excesso de requisições e permite testar a interface com dados locais.
+  function mockAtivo() {
+    try {
+      const url = new URL(window.location.href);
+      const valorParam = url.searchParams.get('mock');
+      if (valorParam === '1' || valorParam === 'true' || valorParam === 'on') {
+        localStorage.setItem('conecta:mock', '1');
+        return true;
+      }
+      if (valorParam === '0' || valorParam === 'false' || valorParam === 'off') {
+        localStorage.setItem('conecta:mock', '0');
+        return false;
+      }
+      const valor = localStorage.getItem('conecta:mock');
+      return valor === '1' || valor === 'true' || valor === 'on';
+    } catch {
+      return false;
+    }
+  }
+  const MODO_DEMO = mockAtivo() || ['localhost', '127.0.0.1', ''].includes(location.hostname);
 
   // perfil da tela -> perfil do banco (Models/user.js) + textos e destino
   const PERFIS = {
@@ -293,6 +310,9 @@
 
   // Chama a API e devolve { ok, dados }. Erros de rede viram mensagem amigável.
   async function chamar(rota, corpo) {
+    if (MODO_DEMO) {
+      return { ok: true, dados: {} };
+    }
     try {
       const res = await fetch(`${API}/${rota}`, {
         method: 'POST',
@@ -320,6 +340,7 @@
   }
 
   async function criarConta() {
+    if (MODO_DEMO) { entrarEmDemo(); return; }
     const email = el.email.value.trim().toLowerCase();
     const senha = el.senha.value;
     const cadastro = await chamar('register', {
@@ -344,6 +365,7 @@
   }
 
   async function entrar() {
+    if (MODO_DEMO) { entrarEmDemo(); return; }
     const login = await chamar('login', {
       email: el.email.value.trim().toLowerCase(),
       senha: el.senha.value,

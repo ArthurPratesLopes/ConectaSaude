@@ -9,8 +9,44 @@
   const BASE = 'http://localhost:5000';      // Backend (server.js)
   const API = BASE + '/api';
   const CHAVE_SESSAO = 'conecta:sessao';     // mesma chave do home.js
+  const CHAVE_MOCK = 'conecta:mock';          // persistente; mantém o mock estável sem depender do BACKEND
   const LIMITE_STL = 50 * 1024 * 1024;       // 50 MB (igual ao Backend)
   const LIMITE_STL_DEMO = 1.5 * 1024 * 1024; // acima disso o demo guarda só o nome
+
+  function mockAtivo() {
+    try {
+      const url = new URL(window.location.href);
+      const valorParam = url.searchParams.get('mock');
+      if (valorParam === '1' || valorParam === 'true' || valorParam === 'on') {
+        localStorage.setItem(CHAVE_MOCK, '1');
+        return true;
+      }
+      if (valorParam === '0' || valorParam === 'false' || valorParam === 'off') {
+        localStorage.setItem(CHAVE_MOCK, '0');
+        return false;
+      }
+      const valor = localStorage.getItem(CHAVE_MOCK);
+      return valor === '1' || valor === 'true' || valor === 'on';
+    } catch {
+      return false;
+    }
+  }
+
+  function setMockAtivo(ativado) {
+    try {
+      const url = new URL(window.location.href);
+      if (ativado) {
+        url.searchParams.set('mock', '1');
+        localStorage.setItem(CHAVE_MOCK, '1');
+      } else {
+        url.searchParams.delete('mock');
+        localStorage.setItem(CHAVE_MOCK, '0');
+      }
+      window.history.replaceState({}, '', url);
+    } catch {
+      // fallback silencioso quando localStorage não estiver disponível
+    }
+  }
 
   /* ---------- utilidades ---------- */
   const esc = (v) => String(v ?? '').replace(/[&<>"']/g, (c) => (
@@ -48,10 +84,11 @@
     try { return JSON.parse(sessionStorage.getItem(CHAVE_SESSAO)); } catch { return null; }
   };
   // Sem login real (sessão de demonstração ou página aberta direto) os dados
-  // ficam no navegador. Com login real, tudo passa pela API.
+  // ficam no navegador. Com login real, tudo passa pela API, salvo quando o
+  // mock está explícito e persistente via ?mock=1 ou localStorage.
   const usaLocal = () => {
     const s = sessao();
-    return !s || s.demo === true;
+    return mockAtivo() || !s || s.demo === true;
   };
 
   /* ---------- armazenamento local (modo demonstração) ---------- */
@@ -601,7 +638,7 @@
 
   window.CS = {
     BASE, esc, data, dataHora, tamanho, hojeISO, mascararPaciente,
-    sessao, usaLocal, dados,
+    sessao, usaLocal, mockAtivo, setMockAtivo, dados,
     validarStl, volumeValido, mostrarModelo, mostrarSucesso,
     ETAPAS, rotuloStatus, classeStatus, progressoHTML,
   };
