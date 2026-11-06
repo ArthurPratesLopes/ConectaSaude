@@ -338,3 +338,6 @@
   color: #6b7777;
   font-size: 12px;
 }
+
+/* Contador de solicitações dentro do menu do cabeçalho */
+header nav .aba-contador { margin-left: 8px; }
