@@ -3,11 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Detalhe do pedido | Conecta Saúde</title>
+  <title>Detalhe do pedido</title>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/home.css">
   <link rel="stylesheet" href="../css/pedidos.css">
   <link rel="stylesheet" href="../css/interacoes.css">
+  <link rel="stylesheet" href="../css/chat.css">
 </head>
 <body>
 
@@ -116,6 +117,34 @@
           <p>O pedido foi registrado pela instituição.</p>
         </li>
       </ol>
+    </section>
+
+        <!-- CHAT: conversa ligada a este pedido (CS-2026-0142) -->
+    <section class="chat" aria-labelledby="titulo-chat" data-solicitacao="CS-2026-0142">
+      <div class="chat-topo">
+        <div>
+          <h2 id="titulo-chat">Comunicação da solicitação</h2>
+          <p>CS-2026-0142 · Conversa com Laboratório Mauá 01</p>
+        </div>
+        <span class="chat-online">Online</span>
+      </div>
+
+      <div class="chat-mensagens" id="chat-mensagens" aria-live="polite">
+        <div class="mensagem mensagem-recebida">
+          <p>Olá! Recebemos os dados da solicitação. Podemos confirmar alguns detalhes técnicos?</p>
+          <small>10:48</small>
+        </div>
+        <div class="mensagem mensagem-enviada">
+          <p>Claro. O arquivo anexado já está na escala correta e pronto para fabricação.</p>
+          <small>10:52</small>
+        </div>
+      </div>
+
+      <div class="chat-envio">
+        <label class="so-leitor" for="chat-texto">Mensagem</label>
+        <textarea id="chat-texto" rows="2" placeholder="Escreva uma mensagem sobre esta solicitação..."></textarea>
+        <button type="button" class="botao-principal" id="chat-enviar" disabled>Enviar</button>
+      </div>
     </section>
   </main>
 
