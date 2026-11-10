@@ -1,8 +1,8 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
-const connectDB = require('./config/db');
-const Printer = require('./models/Printer');
-const User = require('./models/User');
+const connectDB = require('./Config/db');
+const Printer = require('./Models/printer');
+const User = require('./Models/user');
 
 // Carrega as variáveis do .env e conecta ao banco
 dotenv.config();

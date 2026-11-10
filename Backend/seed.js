@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
 
-const User = require('./models/User');
-const Printer = require('./models/Printer');
-const Order = require('./models/Order');
-const Message = require('./models/Message');
+const User = require('./Models/user');
+const Printer = require('./Models/printer');
+const Order = require('./Models/order');
+const Message = require('./Models/Message');
 
 dotenv.config();
 
