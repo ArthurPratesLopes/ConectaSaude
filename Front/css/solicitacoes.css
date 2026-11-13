@@ -341,3 +341,578 @@
 
 /* Contador de solicitações dentro do menu do cabeçalho */
 header nav .aba-contador { margin-left: 8px; }
+
+/* ---------- SOLICITAÇÕES RECEBIDAS: quadro com 4 colunas ---------- */
+.kanban {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+  align-items: start;
+}
+
+.coluna {
+  overflow: hidden;
+  border: 1px solid #d9e3e4;
+  border-radius: 16px;
+  background: #f4f9f8;
+}
+
+.coluna-topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 22px;
+}
+
+.coluna-topo h2 {
+  margin: 0;
+  color: #263636;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.coluna-contador {
+  display: grid;
+  place-items: center;
+  min-width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  background: #fff;
+  color: #263636;
+  font-weight: 700;
+}
+
+.coluna-corpo {
+  display: grid;
+  gap: 12px;
+  padding: 12px;
+}
+
+/* cor de cada coluna */
+.coluna-novos { background: #eef4fb; border-color: #d3e2f3; }
+.coluna-novos .coluna-topo { background: #dfeaf8; }
+
+.coluna-aceito { background: #eaf6f1; border-color: #cfe8dd; }
+.coluna-aceito .coluna-topo { background: #d9efe6; }
+
+.coluna-producao { background: #fdf6e8; border-color: #f3e2bd; }
+.coluna-producao .coluna-topo { background: #fbeccd; }
+
+.coluna-pronto { background: #e9f6ee; border-color: #cde7d8; }
+.coluna-pronto .coluna-topo { background: #d7efe0; }
+
+/* cartão de cada solicitação */
+.cartao-kanban {
+  padding: 18px;
+  background: #fff;
+  border: 1px solid #d9e3e4;
+  border-radius: 14px;
+}
+
+.cartao-kanban-topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.cartao-kanban h3 {
+  margin: 0 0 12px;
+  color: #263636;
+  font-size: 17px;
+  font-weight: 500;
+}
+
+.cartao-kanban-linha {
+  margin: 0 0 8px;
+  color: #6b7777;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.cartao-kanban-seta {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border: 1px solid #d9e3e4;
+  border-radius: 50%;
+  color: #006767;
+  font-size: 22px;
+  text-decoration: none;
+}
+
+.cartao-kanban-seta:hover {
+  border-color: #006767;
+  background: #e1f1f0;
+}
+
+.cartao-kanban-status {
+  display: block;
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid #d9e3e4;
+}
+
+.cartao-kanban-status small {
+  display: block;
+  margin-bottom: 8px;
+  color: #6b7777;
+  font-size: 11px;
+}
+
+.cartao-kanban-status select {
+  width: 100%;
+  min-height: 44px;
+  padding: 0 10px;
+  color: #263636;
+  font-size: 13px;
+  background: #fff;
+  border: 1px solid #b8c7c8;
+  border-radius: 8px;
+}
+
+.cartao-kanban-acoes {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 16px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.cartao-kanban-acoes a {
+  color: #006767;
+  text-decoration: none;
+}
+
+.cartao-kanban-acoes a:hover {
+  text-decoration: underline;
+}
+
+.cartao-kanban-acoes button {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #cb4928;
+  font-size: 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.cartao-kanban-acoes button:hover {
+  text-decoration: underline;
+}
+
+/* ícone pequeno dentro de textos */
+.icone-mini {
+  width: 18px;
+  height: 18px;
+  flex: none;
+}
+
+.cartao-kanban-linha {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* título da coluna: ícone ao lado do texto */
+.coluna-topo h2 {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* o ✓ de "Pronto" é texto, então precisa de um tamanho próprio */
+.coluna-topo h2 span.icone {
+  width: auto;
+  height: auto;
+  color: #006767;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* ---------- EDITAR CADASTRO ---------- */
+
+/* caixinha colorida que guarda um ícone */
+.caixa-icone {
+  display: grid;
+  place-items: center;
+  flex: none;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: #e1f1f0;
+}
+
+/* duas colunas lado a lado */
+.edicao-grade {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+/* os cartões da esquerda ficam empilhados */
+.edicao-coluna {
+  display: grid;
+  gap: 24px;
+}
+
+.edicao-grade .form-cartao {
+  margin-bottom: 0;
+}
+
+/* lista de requisitos com checkbox */
+.lista-requisitos {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.lista-requisitos li {
+  border-bottom: 1px solid #d9e3e4;
+}
+
+.lista-requisitos label {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 16px 0;
+  color: #263636;
+  cursor: pointer;
+}
+
+.lista-requisitos input {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  accent-color: #006767;
+}
+
+/* barra com "Salvar alterações" */
+.salvar-barra {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  background: #fff;
+  border: 1px solid #d9e3e4;
+  border-radius: 16px;
+}
+
+.salvo-auto {
+  color: #006767;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* botão verde-petróleo (o .botao-principal é laranja) */
+.botao-petroleo {
+  margin-top: 0;
+  border: 0;
+  background: #006767;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.botao-petroleo:hover {
+  background: #004f50;
+}
+/* ---------- impressoras (coluna da direita) ---------- */
+.caixa-icone-mini {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+}
+
+.impressoras-topo {
+  margin: 18px 0 12px;
+  color: #263636;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.impressora small {
+  display: block;
+}
+
+.impressora small strong {
+  color: #263636;
+}
+
+/* impressora que está sendo editada */
+.impressora-ativa {
+  border-color: #006767;
+  background: #e1f1f0;
+}
+
+.impressora .remover {
+  color: #cb4928;
+  font-size: 22px;
+}
+
+/* bloco "Editando equipamento" */
+.equipamento-editando {
+  margin-top: 28px;
+  padding-top: 24px;
+  border-top: 1px solid #d9e3e4;
+}
+
+.equipamento-editando h3 {
+  margin: 0 0 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #d9e3e4;
+  color: #263636;
+  font-size: 20px;
+  font-weight: 400;
+}
+
+/* botão que ocupa a largura toda */
+.botao-largo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  margin-top: 22px;
+}
+/* ---------- etiqueta "Nova" (azul, como no protótipo) ---------- */
+.selo-nova {
+  background: #e3eefb;
+  color: #1f4f8f;
+}
+
+/* ---------- barra de etapas na horizontal ---------- */
+.stepper {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+}
+
+.stepper li {
+  position: relative;
+  flex: 1;
+  text-align: center;
+}
+
+/* linha que liga uma etapa à anterior */
+.stepper li + li::before {
+  content: "";
+  position: absolute;
+  top: 28px;
+  right: 50%;
+  width: 100%;
+  height: 2px;
+  background: #d9e3e4;
+}
+
+.stepper .feito::before,
+.stepper .atual::before {
+  background: #006767;
+}
+
+.stepper-bolinha {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 14px;
+  border: 2px solid #d9e3e4;
+  border-radius: 50%;
+  background: #fff;
+  color: #8a9696;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+/* etapa atual: bolinha cheia com um "halo" claro em volta */
+.stepper .feito .stepper-bolinha,
+.stepper .atual .stepper-bolinha {
+  background: #006767;
+  border-color: #006767;
+  color: #fff;
+}
+
+.stepper .atual .stepper-bolinha {
+  box-shadow: 0 0 0 6px #e1f1f0;
+}
+
+.stepper-nome {
+  display: block;
+  color: #8a9696;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.stepper .feito .stepper-nome,
+.stepper .atual .stepper-nome {
+  color: #263636;
+  font-weight: 700;
+}
+
+.stepper-sub {
+  display: block;
+  margin-top: 2px;
+  color: #8a9696;
+  font-size: 11px;
+}
+
+/* ---------- cartão "Acompanhamento da produção" ---------- */
+.acompanhamento {
+  padding: 28px 30px;
+}
+
+.acompanhamento-topo {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.acompanhamento-titulo {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.acompanhamento h2 {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 400;
+}
+
+.acompanhamento-titulo p {
+  margin: 2px 0 0;
+  color: #6b7777;
+  font-size: 12px;
+}
+
+.acompanhamento-status {
+  width: 270px;
+  max-width: 100%;
+}
+
+.acompanhamento-status label {
+  display: block;
+  margin-bottom: 8px;
+  color: #263636;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.acompanhamento-status select {
+  width: 100%;
+  min-height: 48px;
+  padding: 0 12px;
+  color: #263636;
+  background: #fff;
+  border: 1px solid #b8c7c8;
+  border-radius: 8px;
+}
+
+.acompanhamento .stepper {
+  margin-top: 28px;
+}
+
+/* linha "Histórico: Nova 8 jun" */
+.acompanhamento-historico {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 24px;
+  padding-top: 20px;
+  border-top: 1px solid #d9e3e4;
+  color: #263636;
+  font-size: 12px;
+}
+
+.chip-historico {
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: #e1f1f0;
+  color: #006767;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.chip-historico small {
+  margin-left: 6px;
+  font-size: 10px;
+  font-weight: 400;
+}
+/* o chat agora fica numa coluna ao lado, então não precisa de margem em cima */
+.chat {
+  margin-top: 0;
+}
+
+/* nome de quem enviou, dentro do balão */
+.mensagem-autor {
+  display: block;
+  margin-bottom: 4px;
+  color: #006767;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.mensagem-enviada .mensagem-autor {
+  color: #fff;
+}
+
+.chat-mensagens {
+  min-height: 320px;
+}
+
+/* evita que "● Online" quebre em duas linhas */
+.chat-online {
+  flex: none;
+  white-space: nowrap;
+}
+/* ---------- duas colunas: dados à esquerda, chat à direita ---------- */
+.detalhe-grade-2 {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.detalhe-grade-2 .detalhe-cartao {
+  margin-bottom: 0;
+}
+
+/* botões do arquivo podem quebrar de linha se faltar espaço */
+.arquivo-cartao {
+  flex-wrap: wrap;
+}
+
+@media (max-width: 900px) {
+  .detalhe-grade-2 { grid-template-columns: 1fr; }
+}
+/* celular: as etapas ficam uma embaixo da outra */
+@media (max-width: 900px) {
+  .stepper { flex-direction: column; gap: 18px; }
+  .stepper li { display: flex; align-items: center; gap: 14px; text-align: left; }
+  .stepper li + li::before { display: none; }
+  .stepper-bolinha { margin: 0; flex: none; }
+}
+@media (max-width: 900px) {
+  .edicao-grade { grid-template-columns: 1fr; }
+}
+/* telas menores: 2 colunas, depois 1 */
+@media (max-width: 1100px) {
+  .kanban { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 640px) {
+  .kanban { grid-template-columns: 1fr; }
+}

@@ -165,3 +165,30 @@
   background: #fde8e3;
   color: #cb4928;
 }
+/* o chat agora fica numa coluna ao lado, então não precisa de margem em cima */
+.chat {
+  margin-top: 0;
+}
+
+/* nome de quem enviou, dentro do balão */
+.mensagem-autor {
+  display: block;
+  margin-bottom: 4px;
+  color: #006767;
+  font-size: 11px;
+  font-weight: 700;
+}
+
+.mensagem-enviada .mensagem-autor {
+  color: #fff;
+}
+
+.chat-mensagens {
+  min-height: 320px;
+}
+
+/* evita que "● Online" quebre em duas linhas */
+.chat-online {
+  flex: none;
+  white-space: nowrap;
+}

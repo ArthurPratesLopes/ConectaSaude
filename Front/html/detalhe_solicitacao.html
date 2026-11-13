@@ -21,152 +21,171 @@
     </a>
 
       <nav aria-label="Navegação principal">
-      <a href="solicitacoes.html" aria-current="page">Solicitações recebidas <span class="aba-contador">3</span></a>
-      <a href="fablab.html">Cadastro do laboratório</a>
-    </nav>
+  <a href="solicitacoes.html" aria-current="page">Solicitações recebidas</a>
+  <a href="fablab.html">Editar cadastro</a>
+</nav>
 
     <a href="../index.html" class="botao-acessar" id="botao-sair">Sair</a>
   </header>
 
   <main class="painel">
+<a href="solicitacoes.html" class="voltar">← Voltar para solicitações</a>
 
-    <a href="solicitacoes.html" class="voltar">‹ Voltar para solicitações</a>
+<div class="painel-topo">
+  <div>
+    <span class="sobretitulo">Solicitação CS-2026-0138</span>
+    <h1>Visualizar solicitação</h1>
+    <p>Confira todos os dados enviados pela Instituição e atualize o andamento da produção.</p>
+  </div>
+  <span class="selo selo-nova">Nova</span>
+</div>
 
-    <div class="painel-topo">
+<!-- ACOMPANHAMENTO DA PRODUÇÃO (largura toda) -->
+<section class="detalhe-cartao acompanhamento" aria-labelledby="titulo-andamento">
+  <div class="acompanhamento-topo">
+    <div class="acompanhamento-titulo">
+      <span class="caixa-icone"><img class="icone" src="../img/impressora.png" alt=""></span>
       <div>
-        <span class="sobretitulo">Solicitação CS-2026-0148</span>
-        <h1>Visualizar solicitação</h1>
-        <p>Confira todos os dados enviados pela instituição e atualize o andamento da produção.</p>
+        <h2 id="titulo-andamento">Acompanhamento da produção</h2>
+        <p>As alterações ficam registradas automaticamente no histórico.</p>
       </div>
-      <span class="selo selo-nova">Nova</span>
     </div>
-        <div class="detalhe-grade">
-      <section class="detalhe-cartao" aria-labelledby="titulo-dados">
-        <span class="sobretitulo">Dados da solicitação</span>
-        <h2 class="detalhe-titulo" id="titulo-dados">Prótese de mão</h2>
-        <p class="detalhe-recebida">Recebida de Instituição São Paulo · Hoje, 10:42</p>
 
-        <dl class="dados dados-2col">
-          <div>
-            <dt>Código do paciente</dt>
-            <dd>PAC-5824</dd>
-          </div>
-          <div>
-            <dt>Instituição solicitante</dt>
-            <dd>Instituição São Paulo</dd>
-          </div>
-          <div>
-            <dt>Tipo de peça/prótese/órtese</dt>
-            <dd>Prótese de mão</dd>
-          </div>
-          <div>
-            <dt>Material solicitado</dt>
-            <dd>PLA médico</dd>
-          </div>
-          <div>
-            <dt>Quantidade</dt>
-            <dd>1 unidade</dd>
-          </div>
-          <div>
-            <dt>Prazo necessário</dt>
-            <dd>25 jun 2026</dd>
-          </div>
-          <div>
-            <dt>Urgência</dt>
-            <dd>Prioritário</dd>
-          </div>
-          <div>
-            <dt>Laboratório responsável</dt>
-            <dd>Laboratório Mauá 01</dd>
-          </div>
-        </dl>
-                <div class="detalhe-bloco">
-          <span class="detalhe-rotulo">Observações e especificações técnicas</span>
-          <p class="detalhe-obs">Produzir conforme o modelo anexado, mantendo preenchimento de 35% e acabamento sem arestas nas superfícies de contato. Validar as medidas antes de iniciar a impressão.</p>
-        </div>
-
-        <div class="detalhe-bloco">
-          <span class="detalhe-rotulo">Arquivo para impressão</span>
-          <div class="arquivo-cartao">
-            <span class="arquivo-tipo">STL</span>
-            <div class="arquivo-info">
-              <span class="arquivo-nome">modelo_protese.stl</span>
-              <small>Arquivo 3D · 2,4 MB</small>
-            </div>
-            <a href="#" class="botao-contorno">Visualizar arquivo</a>
-          </div>
-        </div>
-
-            <!-- CHAT: conversa ligada a esta solicitação (CS-2026-0148) -->
-    <section class="chat" aria-labelledby="titulo-chat" data-solicitacao="CS-2026-0148">
-      <div class="chat-topo">
-        <div>
-          <h2 id="titulo-chat">Comunicação da solicitação</h2>
-          <p>CS-2026-0148 · Conversa com Instituição São Paulo</p>
-        </div>
-        <span class="chat-online">Online</span>
-      </div>
-
-      <div class="chat-mensagens" id="chat-mensagens" aria-live="polite">
-        <div class="mensagem mensagem-recebida">
-          <p>Olá! Recebemos os dados da solicitação. Podemos confirmar alguns detalhes técnicos?</p>
-          <small>10:48</small>
-        </div>
-        <div class="mensagem mensagem-enviada">
-          <p>Claro. O arquivo anexado já está na escala correta e pronto para fabricação.</p>
-          <small>10:52</small>
-        </div>
-      </div>
-
-      <div class="chat-envio">
-        <label class="so-leitor" for="chat-texto">Mensagem</label>
-        <textarea id="chat-texto" rows="2" placeholder="Escreva uma mensagem sobre esta solicitação..."></textarea>
-        <button type="button" class="botao-principal" id="chat-enviar" disabled>Enviar</button>
-      </div>
-    </section>
-      </section>
-            <section class="detalhe-cartao andamento" aria-labelledby="titulo-andamento">
-        <h2 id="titulo-andamento">Andamento da produção</h2>
-        <p class="andamento-sub">Atualize o status para manter a instituição informada.</p>
-
-        <label class="andamento-campo" for="status-atual">Status atual</label>
-        <select id="status-atual">
-          <option selected>Nova</option>
-          <option>Aceita</option>
-          <option>Em produção</option>
-          <option>Pronta para entrega</option>
-          <option>Recusada</option>
-        </select>
-
-        <ol class="andamento-etapas">
-          <li>
-            <span class="andamento-numero">1</span>
-            <div>
-              <b>Aceita</b>
-              <small>Confirmar capacidade</small>
-            </div>
-          </li>
-          <li>
-            <span class="andamento-numero">2</span>
-            <div>
-              <b>Em produção</b>
-              <small>Iniciar fabricação</small>
-            </div>
-          </li>
-          <li>
-            <span class="andamento-numero">3</span>
-            <div>
-              <b>Pronta para entrega</b>
-              <small>Finalizar produção</small>
-            </div>
-          </li>
-        </ol>
-
-        <button type="button" class="botao-cancelar-contorno" id="cancelar-solicitacao">Cancelar solicitação</button>
-
-        <p class="andamento-nota">As alterações são registradas automaticamente no histórico.</p>
-      </section>
+    <div class="acompanhamento-status">
+      <label for="status-atual">Status atual</label>
+      <select id="status-atual">
+        <option selected disabled>Selecione a etapa</option>
+        <option>Aceita</option>
+        <option>Em produção</option>
+        <option>Pronta para entrega</option>
+        <option>Entregue</option>
+      </select>
     </div>
+  </div>
+
+  <ol class="stepper" aria-label="Etapas da produção">
+    <li class="atual">
+      <span class="stepper-bolinha">1</span>
+      <span class="stepper-nome">1. Aceita</span>
+      <span class="stepper-sub">Confirmar capacidade</span>
+    </li>
+    <li>
+      <span class="stepper-bolinha">2</span>
+      <span class="stepper-nome">2. Em produção</span>
+      <span class="stepper-sub">Iniciar fabricação</span>
+    </li>
+    <li>
+      <span class="stepper-bolinha">3</span>
+      <span class="stepper-nome">3. Pronta</span>
+      <span class="stepper-sub">Finalizar produção</span>
+    </li>
+    <li>
+      <span class="stepper-bolinha">✓</span>
+      <span class="stepper-nome">4. Entregue</span>
+      <span class="stepper-sub">Concluir solicitação</span>
+    </li>
+  </ol>
+
+  <div class="acompanhamento-historico">
+    <b>Histórico:</b>
+    <span class="chip-historico">Nova <small>8 jun, 14:20</small></span>
+  </div>
+</section>
+<!-- DUAS COLUNAS: dados da solicitação + chat -->
+<div class="detalhe-grade-2">
+
+  <section class="detalhe-cartao" aria-labelledby="titulo-dados">
+    <span class="sobretitulo">Dados da solicitação</span>
+    <h2 class="detalhe-titulo" id="titulo-dados">Tala de dedo</h2>
+    <p class="detalhe-recebida">Recebida de Instituição São Paulo · 8 jun, 14:20</p>
+
+    <dl class="dados dados-2col">
+      <div>
+        <dt>Código do paciente</dt>
+        <dd>PAC-0913</dd>
+      </div>
+      <div>
+        <dt>Instituição solicitante</dt>
+        <dd>Instituição São Paulo</dd>
+      </div>
+      <div>
+        <dt>Tipo de peça/prótese/órtese</dt>
+        <dd>Tala de dedo</dd>
+      </div>
+      <div>
+        <dt>Material solicitado</dt>
+        <dd>PETG</dd>
+      </div>
+      <div>
+        <dt>Quantidade</dt>
+        <dd>1 unidade</dd>
+      </div>
+      <div>
+        <dt>Prazo necessário</dt>
+        <dd>30 jun 2026</dd>
+      </div>
+      <div>
+        <dt>Urgência</dt>
+        <dd>Normal</dd>
+      </div>
+      <div>
+        <dt>Laboratório responsável</dt>
+        <dd>Laboratório Mauá 01</dd>
+      </div>
+    </dl>
+
+    <div class="detalhe-bloco">
+      <span class="detalhe-rotulo">Observações e especificações técnicas</span>
+      <p class="detalhe-obs">Produzir conforme o modelo anexado, mantendo preenchimento de 35% e acabamento sem arestas nas superfícies de contato. Validar as medidas antes de iniciar a impressão.</p>
+    </div>
+
+    <div class="detalhe-bloco">
+      <span class="detalhe-rotulo">Arquivo para impressão</span>
+      <div class="arquivo-cartao">
+        <span class="arquivo-tipo">STL</span>
+        <div class="arquivo-info">
+          <span class="arquivo-nome">tala_dedo.stl</span>
+          <small>Arquivo 3D · 1,3 MB</small>
+        </div>
+        <a href="#" class="botao-contorno">Visualizar arquivo</a>
+        <a href="#" class="botao-contorno">Baixar arquivo</a>
+      </div>
+    </div>
+
+    <button type="button" class="botao-cancelar-contorno" id="recusar-solicitacao">Recusar solicitação</button>
+  </section>
+
+  <!-- CHAT -->
+  <section class="chat" aria-labelledby="titulo-chat" data-solicitacao="CS-2026-0138">
+    <div class="chat-topo">
+      <div>
+        <h2 id="titulo-chat">Comunicação da solicitação</h2>
+        <p>CS-2026-0138 · Conversa com Instituição São Paulo</p>
+      </div>
+      <span class="chat-online">Online</span>
+    </div>
+
+    <div class="chat-mensagens" id="chat-mensagens" aria-live="polite">
+      <div class="mensagem mensagem-recebida">
+        <span class="mensagem-autor">Instituição São Paulo</span>
+        <p>Olá! O modelo anexado está na escala correta. Caso precise, posso confirmar as especificações técnicas.</p>
+        <small>10:48</small>
+      </div>
+      <div class="mensagem mensagem-enviada">
+        <span class="mensagem-autor">Você</span>
+        <p>Perfeito. Vamos analisar o arquivo e atualizar o andamento por aqui.</p>
+        <small>10:52 · ✓ Lida</small>
+      </div>
+    </div>
+
+    <div class="chat-envio">
+      <label class="so-leitor" for="chat-texto">Mensagem</label>
+      <textarea id="chat-texto" rows="2" placeholder="Escreva uma mensagem sobre esta solicitação..."></textarea>
+      <button type="button" class="botao-principal" id="chat-enviar" disabled>Enviar →</button>
+    </div>
+  </section>
+
+</div>
   </main>
 
   <footer class="rodape" id="rodape">
