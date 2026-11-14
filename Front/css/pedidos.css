@@ -438,6 +438,23 @@
   border-top: 1px solid #d9e3e4;
 }
 
+/* Cancelar e Salvar com a mesma altura */
+.gaveta-acoes {
+  align-items: center;
+}
+
+.gaveta-acoes .botao-principal {
+  margin-top: 0;
+}
+
+.gaveta-acoes .botao-contorno {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  padding: 0 22px;
+}
+
 .botao-contorno {
   display: inline-block;
   padding: 14px 22px;

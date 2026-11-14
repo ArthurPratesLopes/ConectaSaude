@@ -39,17 +39,6 @@
   font-weight: 700;
 }
 
-/* Etiqueta de status "Nova" (vermelha) */
-.selo-nova {
-  background: #fde8e3;
-  color: #cb4928;
-}
-
-.selo-nova::before {
-  content: "● ";
-  font-size: 9px;
-}
-
 /* Lado direito do cartão */
 .solicitacao-lado {
   display: flex;
@@ -343,92 +332,162 @@
 header nav .aba-contador { margin-left: 8px; }
 
 /* ---------- SOLICITAÇÕES RECEBIDAS: quadro com 4 colunas ---------- */
+
+/* ícones desta tela (traço fino, como no protótipo); a cor vem do texto em volta */
+.ik {
+  display: block;
+  flex: none;
+  width: 20px;
+  height: 20px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.8;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.ik-14 { width: 14px; height: 14px; }
+.ik-15 { width: 15px; height: 15px; }
+.ik-18 { width: 18px; height: 18px; }
+
+/* campo de busca, no canto direito do topo */
+.kanban-busca {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  width: min(330px, 100%);
+  min-height: 48px;
+  padding: 0 14px;
+  color: #6b7777;
+  background: #fff;
+  border: 1px solid #d9e3e4;
+  border-radius: 9px;
+}
+
+.kanban-busca:focus-within {
+  outline: 3px solid #f0ac3d;
+  outline-offset: 2px;
+}
+
+.kanban-busca input {
+  width: 100%;
+  min-height: 46px;
+  border: 0;
+  outline: 0;
+  background: transparent;
+  color: #263636;
+  font: inherit;
+}
+
+/* o quadro */
 .kanban {
+  /* tamanhos dos textos do cartão (iguais ao protótipo): para aumentar a leitura, mude só aqui */
+  --kanban-texto-pedido: 9px;
+  --kanban-texto-rotulo: 8px;
+  --kanban-texto-campo: 9px;
+  --kanban-texto-link: 8px;
+
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 24px;
-  align-items: start;
+  gap: 10px;
+  align-items: stretch;
 }
 
 .coluna {
+  min-height: 590px;
   overflow: hidden;
   border: 1px solid #d9e3e4;
-  border-radius: 16px;
-  background: #f4f9f8;
+  border-radius: 12px;
+  background: #f5f2fb;
 }
 
+.coluna-aceito { background: #eef4fb; }
+.coluna-producao { background: #fff8ea; }
+.coluna-pronto { background: #edf8f5; }
+
+/* cabeçalho da coluna: a cor do contador acompanha a cor do status */
 .coluna-topo {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 20px 22px;
+  min-height: 64px;
+  padding: 0 16px;
+  border-bottom: 1px solid #d9e3e4;
+  background: #ece6f8;
+  color: #5b3f9a;
 }
 
+.coluna-aceito .coluna-topo { background: #dfeaf8; color: #164d82; }
+.coluna-producao .coluna-topo { background: #fff0cb; color: #8f5d00; }
+.coluna-pronto .coluna-topo { background: #d9f5e9; color: #16845b; }
+
 .coluna-topo h2 {
+  display: flex;
+  align-items: center;
+  gap: 9px;
   margin: 0;
   color: #263636;
-  font-size: 18px;
-  font-weight: 600;
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 0;
+  line-height: 1.3;
 }
 
 .coluna-contador {
   display: grid;
   place-items: center;
-  min-width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  background: #fff;
-  color: #263636;
+  min-width: 31px;
+  height: 31px;
+  border-radius: 99px;
+  background: rgba(255, 255, 255, 0.58);
+  color: inherit;
+  font-size: 14px;
   font-weight: 700;
 }
 
 .coluna-corpo {
-  display: grid;
-  gap: 12px;
-  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
 }
-
-/* cor de cada coluna */
-.coluna-novos { background: #eef4fb; border-color: #d3e2f3; }
-.coluna-novos .coluna-topo { background: #dfeaf8; }
-
-.coluna-aceito { background: #eaf6f1; border-color: #cfe8dd; }
-.coluna-aceito .coluna-topo { background: #d9efe6; }
-
-.coluna-producao { background: #fdf6e8; border-color: #f3e2bd; }
-.coluna-producao .coluna-topo { background: #fbeccd; }
-
-.coluna-pronto { background: #e9f6ee; border-color: #cde7d8; }
-.coluna-pronto .coluna-topo { background: #d7efe0; }
 
 /* cartão de cada solicitação */
 .cartao-kanban {
-  padding: 18px;
+  padding: 15px;
   background: #fff;
   border: 1px solid #d9e3e4;
-  border-radius: 14px;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(20, 67, 67, 0.05);
 }
 
 .cartao-kanban-topo {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-start;
-  gap: 12px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  align-items: start;
+  gap: 10px;
 }
 
 .cartao-kanban h3 {
-  margin: 0 0 12px;
+  margin: 0 0 8px;
   color: #263636;
-  font-size: 17px;
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: 400;
 }
 
-.cartao-kanban-linha {
-  margin: 0 0 8px;
+.cartao-kanban-linha,
+.cartao-kanban-prazo {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0;
   color: #6b7777;
-  font-size: 12px;
-  line-height: 1.4;
+  font-size: var(--kanban-texto-pedido);
 }
+
+.cartao-kanban-linha { line-height: 1.5; }
+
+.cartao-kanban-prazo { margin-top: 12px; }
 
 .cartao-kanban-seta {
   display: grid;
@@ -438,8 +497,8 @@ header nav .aba-contador { margin-left: 8px; }
   height: 44px;
   border: 1px solid #d9e3e4;
   border-radius: 50%;
+  background: #fff;
   color: #006767;
-  font-size: 22px;
   text-decoration: none;
 }
 
@@ -450,36 +509,49 @@ header nav .aba-contador { margin-left: 8px; }
 
 .cartao-kanban-status {
   display: block;
-  margin-top: 14px;
-  padding-top: 14px;
+  margin-top: 12px;
+  padding-top: 10px;
   border-top: 1px solid #d9e3e4;
 }
 
 .cartao-kanban-status small {
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 5px;
   color: #6b7777;
-  font-size: 11px;
+  font-size: var(--kanban-texto-rotulo);
 }
 
 .cartao-kanban-status select {
   width: 100%;
   min-height: 44px;
-  padding: 0 10px;
+  padding: 0 8px;
   color: #263636;
-  font-size: 13px;
+  font-size: var(--kanban-texto-campo);
   background: #fff;
   border: 1px solid #b8c7c8;
-  border-radius: 8px;
+  border-radius: 7px;
 }
 
 .cartao-kanban-acoes {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-top: 16px;
-  font-size: 12px;
+  gap: 8px;
+  margin-top: 10px;
+  font-size: var(--kanban-texto-link);
   font-weight: 700;
+}
+
+.cartao-kanban-acoes a,
+.cartao-kanban-acoes button {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0;
+  border: 0;
+  background: none;
+  font: inherit;
+  cursor: pointer;
 }
 
 .cartao-kanban-acoes a {
@@ -487,53 +559,26 @@ header nav .aba-contador { margin-left: 8px; }
   text-decoration: none;
 }
 
-.cartao-kanban-acoes a:hover {
-  text-decoration: underline;
-}
+.cartao-kanban-acoes button { color: var(--error, #d94335); }
 
-.cartao-kanban-acoes button {
-  padding: 0;
-  border: 0;
-  background: none;
-  color: #cb4928;
-  font-size: 12px;
-  font-weight: 700;
-  cursor: pointer;
-}
-
+.cartao-kanban-acoes a:hover,
 .cartao-kanban-acoes button:hover {
   text-decoration: underline;
 }
 
-/* ícone pequeno dentro de textos */
-.icone-mini {
-  width: 18px;
-  height: 18px;
-  flex: none;
-}
-
-.cartao-kanban-linha {
+/* coluna sem solicitações (ou busca sem resultado) */
+.kanban-vazio {
   display: flex;
+  flex-direction: column;
   align-items: center;
+  justify-content: center;
   gap: 8px;
+  min-height: 120px;
+  color: #9babab;
+  font-size: 9px;
 }
 
-/* título da coluna: ícone ao lado do texto */
-.coluna-topo h2 {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-
-/* o ✓ de "Pronto" é texto, então precisa de um tamanho próprio */
-.coluna-topo h2 span.icone {
-  width: auto;
-  height: auto;
-  color: #006767;
-  font-size: 22px;
-  font-weight: 700;
-  line-height: 1;
-}
+.kanban-vazio[hidden] { display: none; }
 
 /* ---------- EDITAR CADASTRO ---------- */
 
@@ -684,8 +729,8 @@ header nav .aba-contador { margin-left: 8px; }
 }
 /* ---------- etiqueta "Nova" (azul, como no protótipo) ---------- */
 .selo-nova {
-  background: #e3eefb;
-  color: #1f4f8f;
+  background: #ece6f8;
+  color: #5b3f9a;
 }
 
 /* ---------- barra de etapas na horizontal ---------- */
@@ -911,8 +956,17 @@ header nav .aba-contador { margin-left: 8px; }
 /* telas menores: 2 colunas, depois 1 */
 @media (max-width: 1100px) {
   .kanban { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .coluna { min-height: 520px; }
+}
+
+@media (max-width: 900px) {
+  .kanban-busca { width: 100%; }
 }
 
 @media (max-width: 640px) {
   .kanban { grid-template-columns: 1fr; }
+  .coluna { min-height: 0; }
 }
+
+/* sem o brilho vermelho nos botões verdes */
+.botao-petroleo { box-shadow: none; }
