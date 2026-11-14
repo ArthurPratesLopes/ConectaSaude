@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editar cadastro da Instituição</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/home.css">
+  <link rel="stylesheet" href="../css/pedidos.css">
+  <link rel="stylesheet" href="../css/laboratorio.css">
+  <link rel="stylesheet" href="../css/solicitacoes.css">
+  <link rel="stylesheet" href="../css/interacoes.css">
+  <link rel="stylesheet" href="../css/cadastro_instituicao.css">
+</head>
+<body>
+
+  <header>
+    <a href="aacd.html" class="marca" aria-label="Conecta Saúde – painel">
+      <img src="../img/logo.png" alt="" width="42" height="42">
+      <span>Conecta Saúde<small>Instituto Mauá de Tecnologia</small></span>
+    </a>
+
+    <nav aria-label="Navegação principal">
+      <a href="aacd.html">Pedidos da Instituição</a>
+      <a href="laboratorio_instituicao.html">Laboratórios</a>
+    </nav>
+
+    <a href="../index.html" class="botao-acessar" id="botao-sair">Sair</a>
+  </header>
+
+  <main class="painel">
+    <div class="painel-topo">
+      <div>
+        <span class="sobretitulo">Minha conta</span>
+        <h1>Editar cadastro</h1>
+        <p>Mantenha os dados da Instituição e dos responsáveis atualizados.</p>
+      </div>
+      <span class="selo selo-entregue" id="selo-conta" hidden>✓ Cadastro ativo</span>
+    </div>
+
+    <div class="conta-coluna">
+
+      <!-- aviso quando não foi possível carregar -->
+      <div class="conta-falha" id="conta-falha" role="alert" hidden>
+        <span id="conta-falha-texto">Não foi possível carregar o cadastro.</span>
+        <button type="button" class="logo-botao" id="conta-tentar">Tentar de novo</button>
+      </div>
+
+      <form class="form-cartao" id="form-conta" novalidate aria-labelledby="titulo-conta" aria-busy="true">
+        <div class="form-cartao-topo">
+          <span class="caixa-icone"><img class="icone" src="../img/icone-aacd.png" alt=""></span>
+          <div>
+            <h2 id="titulo-conta">Dados da Instituição</h2>
+            <p>Informações usadas nas solicitações e comunicações.</p>
+          </div>
+        </div>
+
+        <div class="form-corpo">
+          <!-- LOGO -->
+          <div class="campo campo-logo campo-logo-edicao">
+            <label for="conta-logo">Logo da instituição <span class="opcional">(opcional)</span></label>
+            <div class="logo-upload">
+              <div class="logo-previa" id="conta-logo-previa" aria-hidden="true"></div>
+              <div class="logo-acoes">
+                <div class="logo-botoes">
+                  <button type="button" class="logo-botao" id="conta-logo-escolher">Enviar logo</button>
+                  <button type="button" class="logo-botao logo-remover" id="conta-logo-remover" hidden>Remover</button>
+                </div>
+                <small class="logo-dica">PNG, JPG ou WebP, até 5 MB. Aparece ao lado do seu nome no menu.</small>
+              </div>
+            </div>
+            <input type="file" id="conta-logo" accept="image/png,image/jpeg,image/webp" hidden aria-describedby="conta-logo-erro">
+            <small class="campo-erro" id="conta-logo-erro" role="alert" hidden></small>
+            <small class="logo-ok" id="conta-logo-ok" role="status" hidden></small>
+          </div>
+
+          <!-- DADOS -->
+          <div class="form-grade">
+            <div class="campo">
+              <label for="nomeInstituicao">Nome da instituição <em>*</em></label>
+              <input type="text" id="nomeInstituicao" autocomplete="organization" maxlength="120" disabled>
+            </div>
+            <div class="campo">
+              <label for="responsavel">Responsável <em>*</em></label>
+              <input type="text" id="responsavel" autocomplete="name" maxlength="120" disabled>
+            </div>
+            <div class="campo">
+              <label for="cidade">Cidade <em>*</em></label>
+              <input type="text" id="cidade" autocomplete="address-level2" maxlength="80" disabled>
+            </div>
+            <div class="campo">
+              <label for="estado">UF <em>*</em></label>
+              <select id="estado" autocomplete="address-level1" disabled>
+                <option value="">Selecione</option>
+              </select>
+            </div>
+            <div class="campo">
+              <label for="email">E-mail <em>*</em></label>
+              <input type="email" id="email" autocomplete="email" disabled>
+            </div>
+            <div class="campo">
+              <label for="telefone">Telefone <em>*</em></label>
+              <input type="tel" id="telefone" autocomplete="tel" inputmode="numeric" placeholder="(11) 3158-2470" disabled>
+            </div>
+          </div>
+
+          <!-- CONFIRMAÇÃO (só aparece ao trocar o e-mail) -->
+          <div class="campo campo-senha-atual" id="campo-senha-atual" hidden>
+            <label for="senhaAtual">Senha atual <em>*</em></label>
+            <div class="campo-senha">
+              <input type="password" id="senhaAtual" autocomplete="current-password" placeholder="Necessária para trocar o e-mail">
+              <button type="button" class="ver-senha" data-alvo="senhaAtual" aria-label="Mostrar senha" aria-pressed="false">
+                <img src="../img/olho.png" alt="" width="20" height="20">
+              </button>
+            </div>
+            <small class="dica">Por segurança, confirme a senha atual para trocar o e-mail.</small>
+          </div>
+
+          <!-- SENHA: atendimento pela equipe -->
+          <div class="bloco-senha">
+            <b>Trocar senha</b>
+            <p>Para trocar sua senha, fale com a equipe Conecta Saúde pelo e-mail
+              <a href="mailto:conectasaude@maua.br?subject=Troca%20de%20senha">conectasaude@maua.br</a>.</p>
+          </div>
+
+          <p class="aviso" id="conta-aviso" role="alert" hidden></p>
+        </div>
+
+        <div class="salvar-barra salvar-barra-interna">
+          <span class="salvo-auto" id="conta-estado" aria-live="polite">Carregando…</span>
+          <div class="salvar-acoes">
+            <button type="button" class="botao-contorno" id="conta-descartar" hidden>Descartar</button>
+            <button type="submit" class="botao-principal botao-petroleo" id="conta-salvar" disabled>Salvar alterações</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </main>
+
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
+
+  <footer class="rodape" id="rodape">
+    <div class="rodape-interno">
+      <div class="rodape-linha">
+        <div class="rodape-marca">
+          <img src="../img/logo.png" alt="">
+          <div>
+            <b>Conecta Saúde</b>
+            <p>Uma iniciativa do Instituto Mauá de Tecnologia em parceria com instituições de saúde.</p>
+          </div>
+        </div>
+        <nav aria-label="Links do rodapé">
+          <a href="#privacidade">Privacidade</a>
+          <a href="#termos">Termos de uso</a>
+        </nav>
+      </div>
+      <p class="rodape-copy">© 2026 Instituto Mauá de Tecnologia</p>
+    </div>
+  </footer>
+
+<script src="../js/app.js"></script>
+</body>
+</html>

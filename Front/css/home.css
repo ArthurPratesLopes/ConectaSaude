@@ -33,8 +33,7 @@ p { line-height: 1.65; }
 
 :focus-visible { outline: 3px solid #f0ac3d; outline-offset: 2px; }
 
-.ic { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
-.icone { width: 24px; height: 24px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.icone { width: 24px; height: 24px; flex: none; }
 
 .pular {
   position: absolute; left: 12px; top: -60px; z-index: 200;
@@ -106,8 +105,6 @@ h1 {
   transition: background .2s, transform .2s;
 }
 .botao-principal:hover { background: var(--terra-dark); transform: translateY(-1px); }
-.botao-principal .ic { width: 18px; height: 18px; transition: transform .2s; }
-.botao-principal:hover .ic { transform: translateX(3px); }
 
 .hero-visual {
   position: relative; display: grid; place-items: center;
@@ -184,9 +181,10 @@ h1 {
 .ver-senha {
   position: absolute; top: 0; right: 0; width: 46px; height: 46px;
   display: grid; place-items: center;
-  border: 0; background: transparent; color: var(--muted); border-radius: 8px; cursor: pointer;
+  border: 0; background: transparent; border-radius: 8px; cursor: pointer;
 }
-.ver-senha:hover { color: var(--petrol); }
+.ver-senha img { opacity: .55; }
+.ver-senha:hover img { opacity: 1; }
 
 .campo-erro { display: block; margin-top: 6px; color: var(--error); font-size: 11px; font-weight: 600; line-height: 1.4; }
 
@@ -237,7 +235,7 @@ h1 {
 @keyframes gira { to { transform: rotate(360deg); } }
 
 .lgpd { display: flex; align-items: center; justify-content: center; gap: 6px; margin: 12px 0 0; color: var(--muted); font-size: 10px; }
-.lgpd .ic { width: 13px; height: 13px; }
+.lgpd .icone { width: 13px; height: 13px; }
 
 [hidden] { display: none !important; }
 
@@ -262,7 +260,8 @@ h1 {
 .contato p { margin: 0; color: var(--muted); }
 .contato-links { display: flex; gap: 16px; }
 .contato-links a {
-  display: flex; align-items: center; gap: 14px; min-width: 250px; padding: 18px;
+  display: flex; align-items: center; justify-content: center; min-width: 250px; padding: 18px;
+  text-align: center;
   background: #fff; border: 1px solid var(--line); border-radius: 12px;
   color: var(--petrol); text-decoration: none;
   transition: border-color .2s, box-shadow .2s;
@@ -284,23 +283,14 @@ h1 {
 .rodape nav a:hover { color: #fff; text-decoration: underline; }
 .rodape-copy { margin: 16px 0 0; color: #a9c1c1; font-size: 11px; }
 
-/* ---------- modais (:target) ---------- */
-.janela {
-  display: none; position: fixed; inset: 0; z-index: 100;
-  align-items: center; justify-content: center; padding: 20px;
-  background: rgba(10, 38, 38, .6);
-}
-.janela:target { display: flex; animation: aparece .2s ease; }
-.janela-caixa { width: min(560px, 100%); max-height: 85vh; overflow-y: auto; padding: 28px; background: #fff; border-radius: 16px; box-shadow: 0 22px 60px rgba(10, 38, 38, .3); }
-.janela-caixa h2 { margin: 0 0 14px; color: var(--ink); font-size: 22px; }
-.janela-caixa ul { margin: 0 0 20px; padding-left: 20px; color: var(--text); }
-.janela-caixa li { margin-bottom: 8px; line-height: 1.55; }
 @keyframes aparece { from { opacity: 0; } to { opacity: 1; } }
 
-/* ---------- Termos de Uso e Política de Privacidade (js/legal.js) ---------- */
-.janela-legal { width: min(780px, 100%); max-height: 88vh; display: flex; flex-direction: column; padding: 0; overflow: hidden; }
+/* ---------- Termos de Uso e Política de Privacidade (janela criada por js/legal.js) ---------- */
+.janela-legal { width: min(780px, calc(100% - 32px)); max-height: 88vh; padding: 0; overflow: hidden; border: 0; border-radius: 16px; background: #fff; box-shadow: 0 22px 60px rgba(10, 38, 38, .3); }
+.janela-legal[open] { display: flex; flex-direction: column; animation: aparece .2s ease; }
+.janela-legal::backdrop { background: rgba(10, 38, 38, .6); }
 .legal-cabeca { padding: 24px 32px 14px; border-bottom: 1px solid var(--line); }
-.legal-cabeca h2 { margin: 0 0 4px; }
+.legal-cabeca h2 { margin: 0 0 4px; color: var(--ink); font-size: 22px; }
 .legal-meta { margin: 0; color: var(--muted); font-size: 12px; }
 .legal-corpo { flex: 1; overflow-y: auto; padding: 18px 32px 8px; color: var(--text); line-height: 1.65; }
 .legal-corpo:focus-visible { outline: 2px solid var(--petrol); outline-offset: -2px; }
@@ -312,6 +302,7 @@ h1 {
 .legal-lista li { margin-bottom: 5px; text-align: justify; }
 .legal-alineas { list-style-type: lower-alpha; }
 .legal-rodape { display: flex; justify-content: flex-end; padding: 14px 32px; border-top: 1px solid var(--line); background: #fff; }
+.legal-rodape .botao-principal { margin-top: 0; cursor: pointer; border: 0; font: inherit; font-weight: 700; }
 
 /* ---------- usuário logado: bolinha + nome; ao clicar abre "Sair" (js/app.js) ---------- */
 .conta { position: relative; display: flex; align-items: center; margin-left: auto; min-width: 0; }
@@ -347,6 +338,7 @@ header .usuario-menu-item {
   color: var(--error); font-weight: 700; text-decoration: none;
 }
 header .usuario-menu-item:hover, header .usuario-menu-item:focus-visible { background: var(--bg); }
+header .usuario-menu-item .icone { width: 20px; height: 20px; }
 
 /* ---------- logo no cadastro (index.html) ---------- */
 .opcional { color: var(--muted); font-weight: 500; }
@@ -413,3 +405,30 @@ header .usuario-menu-item:hover, header .usuario-menu-item:focus-visible { backg
 /* esconde o olhinho nativo do Edge (o site já tem o próprio botão) */
 input[type="password"]::-ms-reveal,
 input[type="password"]::-ms-clear { display: none; }
+/* item neutro do menu do usuário ("Meu cadastro") */
+header .usuario-menu-item-normal { color: var(--ink); }
+header .usuario-menu-item[aria-current="page"] { background: var(--petrol-soft); color: var(--petrol); }
+
+/* ---------- aviso depois de criar a conta (credenciamento em análise) ---------- */
+body.sem-rolagem { overflow: hidden; }
+.cred-fundo {
+  position: fixed; inset: 0; z-index: 300;
+  display: flex; align-items: center; justify-content: center; padding: 20px;
+  background: rgba(10, 38, 38, .6);
+}
+.cred-caixa {
+  width: min(460px, 100%); max-height: 92vh; overflow-y: auto;
+  padding: 32px 28px 26px; background: #fff; border-radius: 16px;
+  box-shadow: 0 22px 60px rgba(10, 38, 38, .3); text-align: center;
+}
+.cred-caixa :focus-visible { outline: 3px solid #f0ac3d; outline-offset: 2px; }
+.cred-caixa h2 { margin: 0 0 12px; color: var(--petrol-dark); font-size: 22px; outline: none; }
+.cred-texto { margin: 0 0 10px; color: var(--muted); font-size: 14px; line-height: 1.6; }
+.cred-texto b { color: var(--ink); overflow-wrap: anywhere; }
+.cred-texto a { color: var(--petrol); font-weight: 700; }
+.cred-botao {
+  min-height: 46px; margin-top: 14px; padding: 0 32px;
+  border: 0; border-radius: 8px; background: var(--petrol); color: #fff;
+  font: inherit; font-weight: 700; cursor: pointer;
+}
+.cred-botao:hover { background: var(--petrol-dark); }

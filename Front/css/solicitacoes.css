@@ -333,17 +333,12 @@ header nav .aba-contador { margin-left: 8px; }
 
 /* ---------- SOLICITAÇÕES RECEBIDAS: quadro com 4 colunas ---------- */
 
-/* ícones desta tela (traço fino, como no protótipo); a cor vem do texto em volta */
+/* ícones PNG desta tela (traço fino, como no protótipo) */
 .ik {
   display: block;
   flex: none;
   width: 20px;
   height: 20px;
-  fill: none;
-  stroke: currentColor;
-  stroke-width: 1.8;
-  stroke-linecap: round;
-  stroke-linejoin: round;
 }
 
 .ik-14 { width: 14px; height: 14px; }
@@ -690,6 +685,11 @@ header nav .aba-contador { margin-left: 8px; }
 .impressora small strong {
   color: #263636;
 }
+
+/* a linha inteira é clicável: só a que foi clicada fica verde */
+.impressora { cursor: pointer; transition: border-color .15s, background-color .15s; }
+.impressora:not(.impressora-ativa):hover { border-color: #8cbaba; }
+.impressora:focus-visible { outline: 3px solid #f0ac3d; outline-offset: 2px; }
 
 /* impressora que está sendo editada */
 .impressora-ativa {
