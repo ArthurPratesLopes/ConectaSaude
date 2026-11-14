@@ -227,10 +227,6 @@
   font-weight: 500;
 }
 
-.pilulas-check .pilula input:checked + span::before {
-  content: "✓ ";
-}
-
 .parque {
   list-style: none;
   margin: 20px 0 0;
@@ -272,6 +268,7 @@
 
 .impressora-editar {
   color: #006767;
+  font-size: 12px;
   font-weight: 700;
   text-decoration: none;
 }
@@ -479,4 +476,22 @@
   .cadastro-acoes .botao-contorno {
     justify-content: center;
   }
+}
+
+/* nome do equipamento + botão "Cadastrar impressora" */
+.equipamento-topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 16px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #d9e3e4;
+}
+
+.botao-nova {
+  margin-top: 0;
+  min-height: 40px;
+  padding: 0 16px;
+  white-space: nowrap;
 }

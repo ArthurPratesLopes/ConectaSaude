@@ -58,7 +58,7 @@
         const form = document.getElementById('form-acesso');
 
         if (form) iniciarHome(form);
-        else protegerPaginaInterna();
+        else { protegerPaginaInterna(); montarMenuUsuario(); iniciarLogoCadastro(); }
 
         // BOTÃO SAIR
         const sair = document.getElementById('botao-sair');
@@ -70,6 +70,182 @@
             });
         }
     });
+
+    // ---------- Menu do usuário: bolinha com iniciais + nome; ao clicar, abre "Sair" ----------
+    const ROTULO_PERFIL = { cliente: 'Instituição', fornecedor: 'Laboratório', admin: 'Administrador' };
+    const ICONE_SETA = '<svg class="usuario-seta" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path d="M6 9l6 6 6-6"/></svg>';
+    const ICONE_SAIR = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/></svg>';
+
+    // "Instituição São Paulo" -> "IS"; ignora "de/da/do/e" no meio do nome
+    function iniciaisDe(nome, email) {
+        const palavras = String(nome || '').trim().split(/\s+/).filter((p) => p && !/^(d[aeo]s?|e)$/i.test(p));
+        const letras = palavras.slice(0, 2).map((p) => p.charAt(0)).join('');
+        return (letras || String(email || '?').charAt(0)).toUpperCase();
+    }
+
+    // ---------- Logo da empresa (guardado neste navegador, por usuário) ----------
+    const chaveLogo = (u) => 'conectasaude.logo.' + (u.id || u.email);
+    let atualizarAvatarMenu = () => {}; // definido quando o menu é montado
+
+    function lerLogo() {
+        const s = lerSessao();
+        if (!s) return null;
+        try { return localStorage.getItem(chaveLogo(s.usuario)); } catch (e) { return null; }
+    }
+    function salvarLogo(dataUrl) {
+        const s = lerSessao();
+        if (!s) return false;
+        try { localStorage.setItem(chaveLogo(s.usuario), dataUrl); return true; } catch (e) { return false; }
+    }
+    function removerLogo() {
+        const s = lerSessao();
+        if (!s) return;
+        try { localStorage.removeItem(chaveLogo(s.usuario)); } catch (e) { /* sem acesso ao storage */ }
+    }
+
+    // Redimensiona para 192x192 com fundo branco e o logo inteiro visível dentro do círculo
+    function prepararLogo(arquivo) {
+        return new Promise((resolve, reject) => {
+            const url = URL.createObjectURL(arquivo);
+            const img = new Image();
+            img.onload = () => {
+                const T = 192;
+                const c = document.createElement('canvas');
+                c.width = c.height = T;
+                const g = c.getContext('2d');
+                g.fillStyle = '#fff';
+                g.fillRect(0, 0, T, T);
+                g.imageSmoothingQuality = 'high';
+                const caixa = T * 0.80; // deixa o logo grande sem cortar o conteúdo no círculo
+                const esc = Math.min(caixa / img.width, caixa / img.height);
+                const w = img.width * esc, h = img.height * esc;
+                g.drawImage(img, (T - w) / 2, (T - h) / 2, w, h);
+                URL.revokeObjectURL(url);
+                resolve(c.toDataURL('image/png'));
+            };
+            img.onerror = () => { URL.revokeObjectURL(url); reject(new Error('imagem inválida')); };
+            img.src = url;
+        });
+    }
+
+    // Bolinha: logo, se houver; senão as iniciais
+    function preencherAvatar(avatar, u) {
+        const logo = lerLogo();
+        avatar.textContent = '';
+        if (logo) {
+            const img = document.createElement('img');
+            img.src = logo;
+            img.alt = '';
+            avatar.appendChild(img);
+        } else {
+            avatar.textContent = iniciaisDe(u.nomeInstituicao, u.email);
+        }
+    }
+
+    // Campo "Logo" da página Editar cadastro (salva assim que a imagem é escolhida)
+    function iniciarLogoCadastro() {
+        const input = document.getElementById('logo-lab');
+        const sessao = lerSessao();
+        if (!input || !sessao) return;
+
+        const u = sessao.usuario;
+        const previa = document.getElementById('logo-previa');
+        const remover = document.getElementById('logo-remover');
+        const erro = document.getElementById('erro-logo');
+        const ok = document.getElementById('logo-ok');
+
+        const aviso = (msgErro, msgOk) => {
+            erro.textContent = msgErro || ''; erro.hidden = !msgErro;
+            ok.textContent = msgOk || ''; ok.hidden = !msgOk;
+        };
+        function mostrarPrevia() {
+            const logo = lerLogo();
+            previa.style.backgroundImage = logo ? `url(${logo})` : '';
+            previa.style.backgroundSize = 'cover';
+            previa.style.backgroundPosition = 'center';
+            previa.textContent = logo ? '' : iniciaisDe(u.nomeInstituicao, u.email);
+            remover.hidden = !logo;
+        }
+        mostrarPrevia();
+
+        document.getElementById('logo-escolher').addEventListener('click', () => input.click());
+
+        input.addEventListener('change', async () => {
+            const arq = input.files[0];
+            aviso('');
+            if (!arq) return;
+            if (!['image/png', 'image/jpeg', 'image/webp'].includes(arq.type) || arq.size > 5 * 1024 * 1024) {
+                aviso('Use PNG, JPG ou WebP de até 5 MB.');
+                input.value = '';
+                return;
+            }
+            try {
+                const dataUrl = await prepararLogo(arq);
+                if (!salvarLogo(dataUrl)) { aviso('Não foi possível guardar o logo neste navegador.'); return; }
+                mostrarPrevia();
+                atualizarAvatarMenu();
+                aviso('', '✓ Logo atualizado no menu.');
+            } catch (e) {
+                aviso('Não foi possível ler esta imagem. Tente outro arquivo.');
+            } finally {
+                input.value = ''; // permite escolher o mesmo arquivo de novo
+            }
+        });
+
+        remover.addEventListener('click', () => {
+            removerLogo();
+            mostrarPrevia();
+            atualizarAvatarMenu();
+            aviso('', 'Logo removido.');
+        });
+    }
+
+    function montarMenuUsuario() {
+        const botaoSair = document.getElementById('botao-sair');
+        const sessao = lerSessao();
+        if (!botaoSair || !sessao) return; // sem sessão: mantém o botão "Sair" original
+
+        const u = sessao.usuario;
+        const nome = u.nomeInstituicao || u.email || 'Minha conta';
+
+        const conta = document.createElement('div');
+        conta.className = 'conta';
+        conta.innerHTML =
+            '<button type="button" class="usuario-botao" id="usuario-botao" aria-haspopup="menu" aria-expanded="false" aria-controls="usuario-menu">' +
+                '<span class="usuario-avatar" aria-hidden="true"></span>' +
+                '<span class="usuario-textos"><b class="usuario-nome"></b><small class="usuario-perfil"></small></span>' +
+                ICONE_SETA +
+            '</button>' +
+            '<div class="usuario-menu" id="usuario-menu" role="menu" aria-labelledby="usuario-botao" hidden>' +
+                '<a href="../index.html" class="usuario-menu-item" id="botao-sair" role="menuitem">' + ICONE_SAIR + 'Sair</a>' +
+            '</div>';
+
+        // textos entram por textContent (nome vem do cadastro; nunca como HTML)
+        const avatar = conta.querySelector('.usuario-avatar');
+        atualizarAvatarMenu = () => preencherAvatar(avatar, u);
+        atualizarAvatarMenu();
+        conta.querySelector('.usuario-nome').textContent = nome;
+        conta.querySelector('.usuario-perfil').textContent = ROTULO_PERFIL[u.perfil] || '';
+
+        const botao = conta.querySelector('.usuario-botao');
+        const menu = conta.querySelector('.usuario-menu');
+        botao.setAttribute('aria-label', 'Menu da conta de ' + nome);
+        botaoSair.replaceWith(conta); // o novo "Sair" mantém o id e usa a lógica de saída já existente
+
+        const fechar = () => { menu.hidden = true; botao.setAttribute('aria-expanded', 'false'); };
+        const abrir = (viaTeclado) => {
+            menu.hidden = false;
+            botao.setAttribute('aria-expanded', 'true');
+            if (viaTeclado) menu.querySelector('[role="menuitem"]').focus();
+        };
+
+        botao.addEventListener('click', (e) => (menu.hidden ? abrir(e.detail === 0) : fechar()));
+        document.addEventListener('click', (e) => { if (!conta.contains(e.target)) fechar(); });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && !menu.hidden) { fechar(); botao.focus(); }
+        });
+        menu.addEventListener('keydown', (e) => { if (e.key === 'Tab') fechar(); });
+    }
 
     // ---------- Páginas internas: exigem login e o perfil certo ----------
     function protegerPaginaInterna() {
@@ -143,7 +319,7 @@
                 b.classList.toggle('ativa', ativa);
                 b.setAttribute('aria-pressed', String(ativa));
             });
-            ['campo-nome', 'campo-local', 'campo-logo', 'campo-termo'].forEach((id) => { $(id).hidden = !cadastro; });
+            ['campo-nome', 'campo-local', 'campo-termo'].forEach((id) => { $(id).hidden = !cadastro; });
             document.querySelector('.link-esqueci').hidden = cadastro;
             $('titulo-acesso').textContent = cadastro ? 'Crie sua conta' : 'Acesse a plataforma';
             $('sub-acesso').textContent = cadastro
@@ -195,37 +371,6 @@
 
         document.querySelector('.link-esqueci').addEventListener('click', () => {
             mostrarAviso('A recuperação de senha ainda não está disponível. Fale com conectasaude@maua.br.', 'info');
-        });
-
-        // --- logo (apenas pré-visualização por enquanto; não é enviada ao servidor) ---
-        const inputLogo = $('logo');
-        $('logo-escolher').addEventListener('click', () => inputLogo.click());
-        $('logo-remover').addEventListener('click', () => {
-            inputLogo.value = '';
-            $('logo-previa').style.backgroundImage = '';
-            $('logo-remover').hidden = true;
-            const e = $('erro-logo'); e.hidden = true;
-        });
-        inputLogo.addEventListener('change', () => {
-            const arq = inputLogo.files[0];
-            const e = $('erro-logo');
-            e.hidden = true;
-            if (!arq) return;
-            if (!['image/png', 'image/jpeg', 'image/webp'].includes(arq.type) || arq.size > 5 * 1024 * 1024) {
-                e.textContent = 'Use PNG, JPG ou WebP de até 5 MB.';
-                e.hidden = false;
-                inputLogo.value = '';
-                return;
-            }
-            const leitor = new FileReader();
-            leitor.onload = () => {
-                const previa = $('logo-previa');
-                previa.style.backgroundImage = `url(${leitor.result})`;
-                previa.style.backgroundSize = 'cover';
-                previa.style.backgroundPosition = 'center';
-                $('logo-remover').hidden = false;
-            };
-            leitor.readAsDataURL(arq);
         });
 
         // --- validação no navegador (o servidor valida de novo) ---

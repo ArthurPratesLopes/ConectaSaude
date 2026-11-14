@@ -50,6 +50,23 @@
       </div>
 
       <div class="form-corpo">
+        <div class="campo campo-logo campo-logo-edicao">
+          <label for="logo-lab">Logo do laboratório <span class="opcional">(opcional)</span></label>
+          <div class="logo-upload">
+            <div class="logo-previa" id="logo-previa" aria-hidden="true"></div>
+            <div class="logo-acoes">
+              <div class="logo-botoes">
+                <button type="button" class="logo-botao" id="logo-escolher">Escolher imagem</button>
+                <button type="button" class="logo-botao logo-remover" id="logo-remover" hidden>Remover</button>
+              </div>
+              <small class="logo-dica">PNG, JPG ou WebP, até 5 MB. Aparece ao lado do seu nome no menu.</small>
+            </div>
+          </div>
+          <input type="file" id="logo-lab" accept="image/png,image/jpeg,image/webp" hidden aria-describedby="erro-logo">
+          <small class="campo-erro" id="erro-logo" role="alert" hidden></small>
+          <small class="logo-ok" id="logo-ok" role="status" hidden></small>
+        </div>
+
         <div class="campo-duplo">
           <div class="campo">
             <label for="razao">Razão social <em>*</em></label>
@@ -114,7 +131,7 @@
     </section>
 
     <div class="salvar-barra">
-      <span class="salvo-auto">✓ Alterações salvas automaticamente</span>
+      <span class="salvo-auto"> Alterações salvas automaticamente</span>
       <button type="button" class="botao-principal botao-petroleo" id="salvar-cadastro">Salvar alterações</button>
     </div>
 
@@ -213,7 +230,7 @@
         </div>
       </fieldset>
 
-      <button type="button" class="botao-principal botao-petroleo botao-largo" id="salvar-imp">Salvar impressora <span>✓</span></button>
+      <button type="button" class="botao-principal botao-petroleo botao-largo" id="salvar-imp">Salvar impressora <span></span></button>
     </div>
   </div>
 </section>
