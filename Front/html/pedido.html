@@ -28,7 +28,7 @@
   <main class="painel">
     <a href="aacd.html" class="voltar">‹ Voltar para os pedidos</a>
 
-    <!-- EXEMPLO: o JavaScript substitui estes dados -->
+    <!-- EXEMPLO: dados fixos de demonstração (nenhum script os substitui hoje) -->
     <div class="detalhe-topo">
       <div class="pedido-linha1">
         <span class="selo selo-impressao" id="detalhe-selo">Impressão</span>
@@ -47,7 +47,11 @@
         <li><span class="bolinha">4</span><span class="etapa">Entregue</span></li>
       </ol>
     </section>
-        <!-- EXEMPLO: o JavaScript substitui estes dados -->
+    <!-- DUAS COLUNAS: dados do pedido à esquerda + chat à direita -->
+    <div class="detalhe-grade-pedido">
+
+    <div class="detalhe-coluna">
+        <!-- EXEMPLO: dados fixos de demonstração (nenhum script os substitui hoje) -->
     <section class="detalhe-cartao" aria-labelledby="titulo-dados">
       <h2 id="titulo-dados">Dados do pedido</h2>
       <dl class="dados">
@@ -91,13 +95,13 @@
         </div>
       </dl>
     </section>
-    <!-- Visualização do modelo .stl (aparece só quando o arquivo está disponível) -->
+    <!-- Visualização do modelo .stl (começa escondida; nenhum script desta página a exibe hoje) -->
     <section class="detalhe-cartao" id="secao-modelo" aria-labelledby="titulo-modelo" hidden>
       <h2 id="titulo-modelo">Modelo 3D</h2>
       <div class="visualizador" id="visualizador-stl" aria-label="Pré-visualização 3D do modelo"></div>
       <small class="dica">Arraste para girar e role para aproximar.</small>
     </section>
-        <!-- EXEMPLO: o JavaScript substitui estes dados -->
+        <!-- EXEMPLO: dados fixos de demonstração (nenhum script os substitui hoje) -->
     <section class="detalhe-cartao" aria-labelledby="titulo-historico">
       <h2 id="titulo-historico">Histórico</h2>
       <ol class="historico" id="historico">
@@ -118,6 +122,7 @@
         </li>
       </ol>
     </section>
+    </div>
 
         <!-- CHAT: conversa ligada a este pedido (CS-2026-0142) -->
     <section class="chat" aria-labelledby="titulo-chat" data-solicitacao="CS-2026-0142">
@@ -146,6 +151,8 @@
         <button type="button" class="botao-principal" id="chat-enviar" disabled>Enviar</button>
       </div>
     </section>
+
+    </div>
   </main>
 
 <footer class="rodape" id="rodape">

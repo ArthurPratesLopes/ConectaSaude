@@ -100,28 +100,6 @@ body.sem-rolagem { overflow: hidden; }
 }
 .sucesso-fechar:hover { background: var(--petrol-soft); }
 
-.sucesso-selo { width: 76px; height: 76px; margin: 0 auto 18px; }
-.sucesso-selo svg { display: block; width: 100%; height: 100%; }
-.sucesso-circulo {
-  fill: var(--success-soft);
-  stroke: var(--success);
-  stroke-width: 2;
-  stroke-dasharray: 151;
-  stroke-dashoffset: 151;
-  animation: traco .6s ease forwards;
-}
-.sucesso-check {
-  fill: none;
-  stroke: var(--success);
-  stroke-width: 4;
-  stroke-linecap: round;
-  stroke-linejoin: round;
-  stroke-dasharray: 40;
-  stroke-dashoffset: 40;
-  animation: traco .4s .45s ease forwards;
-}
-@keyframes traco { to { stroke-dashoffset: 0; } }
-
 .sucesso-caixa h2 {
   margin: 0 0 8px;
   color: var(--ink);
@@ -163,7 +141,6 @@ body.sem-rolagem { overflow: hidden; }
 
 @media (prefers-reduced-motion: reduce) {
   .tela-sucesso { animation: none; }
-  .sucesso-circulo, .sucesso-check { animation: none; stroke-dashoffset: 0; }
 }
 
 
@@ -182,4 +159,40 @@ body.sem-rolagem { overflow: hidden; }
 @media (max-width: 720px) {
   .pedidos-ferramentas { justify-content: stretch; }
   .pedidos-ferramentas input[type="search"] { flex: 1 1 100%; min-width: 0; }
+}
+
+
+/* ---------- janela (modal): recusar solicitação e visualizar arquivo 3D ---------- */
+.modal-caixa { text-align: left; }
+.modal-largo { width: min(760px, 100%); }
+.modal-caixa h2 { padding-right: 44px; }
+.modal-caixa .sucesso-texto { margin: 0 0 16px; max-width: none; }
+.modal-campo label { display: block; margin-bottom: 6px; color: var(--ink); font-size: 13px; font-weight: 700; }
+.modal-campo textarea {
+  width: 100%; min-height: 96px; padding: 12px 14px; resize: vertical;
+  border: 1px solid var(--line); border-radius: 8px; font: inherit; color: var(--text); background: #fff;
+}
+.modal-campo textarea:focus { outline: 2px solid var(--petrol); outline-offset: 1px; }
+.modal-caixa .sucesso-acoes { justify-content: flex-end; }
+.botao-perigo {
+  padding: 14px 22px; border: 0; border-radius: 8px; background: var(--terra); color: #fff;
+  font: inherit; font-weight: 700; cursor: pointer;
+}
+.botao-perigo:hover { background: var(--terra-dark); }
+.modal-dica { margin: 10px 0 0; color: var(--muted); font-size: 12px; }
+.modal-caixa .visualizador { height: min(420px, 56vh); }
+
+/* ---------- solicitação recusada ---------- */
+.recusa-aviso {
+  margin-top: 24px; padding: 16px 18px; border: 1px solid #f1c3bd; border-radius: 12px;
+  background: #fdf1ef; color: #7a2018;
+}
+.recusa-aviso b { display: block; margin-bottom: 4px; color: #b3261e; }
+.recusa-aviso p { margin: 0; overflow-wrap: anywhere; }
+.recusa-aviso p + p { margin-top: 6px; }
+.acompanhamento.recusada .stepper { display: none; }
+.acompanhamento.recusada .chip-historico-recusada { background: #fbe4e1; color: #b3261e; }
+
+@media (max-width: 600px) {
+  .modal-caixa .sucesso-acoes { flex-direction: column-reverse; }
 }

@@ -477,21 +477,3 @@
     justify-content: center;
   }
 }
-
-/* nome do equipamento + botão "Cadastrar impressora" */
-.equipamento-topo {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-  margin-bottom: 16px;
-  padding-bottom: 16px;
-  border-bottom: 1px solid #d9e3e4;
-}
-
-.botao-nova {
-  margin-top: 0;
-  min-height: 40px;
-  padding: 0 16px;
-  white-space: nowrap;
-}

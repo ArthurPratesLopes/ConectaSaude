@@ -1,0 +1,60 @@
+/* Tela "Editar cadastro" da Instituição */
+.conta-coluna { max-width: 860px; margin: 0 auto; }
+.conta-coluna .form-cartao { margin-bottom: 0; overflow: hidden; }
+
+.form-grade { display: grid; grid-template-columns: 1fr 1fr; gap: 0 16px; }
+
+.bloco-senha { margin-top: 22px; padding-top: 18px; border-top: 1px solid var(--line); }
+.bloco-senha b { display: block; color: var(--ink); font-size: 12px; }
+.bloco-senha p { margin: 6px 0 0; color: var(--muted); font-size: 13px; line-height: 1.5; }
+.bloco-senha a { color: var(--petrol); font-weight: 700; }
+.campo-senha-atual { margin-top: 18px; }
+.campo-senha-atual { padding: 14px 16px 16px; background: var(--petrol-soft); border-radius: 12px; }
+.campo-senha-atual[hidden], .conta-falha[hidden], .toast[hidden] { display: none; }
+
+/* barra de salvar (dentro do cartão) */
+.salvar-barra-interna { border: 0; border-top: 1px solid var(--line); border-radius: 0; background: #fafcfc; }
+.salvar-acoes { display: flex; align-items: center; gap: 12px; }
+.salvar-acoes .botao-contorno { min-height: 44px; padding: 0 20px; background: #fff; cursor: pointer; font: inherit; font-weight: 700; }
+.salvar-acoes .botao-petroleo { min-height: 44px; padding: 0 24px; border-radius: 10px; color: #fff; }
+.salvo-auto.pendente { color: #b35c00; }
+.salvo-auto.erro { color: var(--error); }
+.botao-petroleo:disabled { opacity: .55; cursor: not-allowed; }
+.botao-petroleo.carregando { position: relative; color: transparent; }
+.botao-petroleo.carregando::after {
+  content: ""; position: absolute; inset: 0; margin: auto; width: 18px; height: 18px;
+  border: 2.5px solid rgba(255, 255, 255, .4); border-top-color: #fff; border-radius: 50%;
+  animation: giro .7s linear infinite;
+}
+@keyframes giro { to { transform: rotate(360deg); } }
+
+.form-corpo .aviso { margin-top: 20px; }
+.form-corpo .aviso[hidden] { display: none; }
+
+/* falha ao carregar */
+.conta-falha {
+  display: flex; justify-content: space-between; align-items: center; gap: 16px;
+  margin-bottom: 20px; padding: 14px 18px; background: #fdeceb; color: #9c2a20;
+  border-radius: 12px; font-size: 13px; font-weight: 600;
+}
+
+/* aviso "Alterações salvas" */
+.toast {
+  position: fixed; z-index: 90; left: 50%; bottom: 28px; transform: translateX(-50%);
+  display: flex; align-items: center; gap: 10px; max-width: calc(100% - 32px);
+  padding: 13px 20px; background: #0d3b3b; color: #fff; border-radius: 12px;
+  box-shadow: 0 16px 40px rgba(10, 38, 38, .3); font-size: 13px; font-weight: 700;
+  animation: toast-entra .25s ease-out;
+}
+.toast.erro { background: #9c2a20; }
+.toast .icone { width: 18px; height: 18px; filter: invert(1); } /* ícone preto vira branco */
+@keyframes toast-entra { from { opacity: 0; transform: translate(-50%, 10px); } }
+
+@media (max-width: 720px) {
+  .form-grade { grid-template-columns: 1fr; }
+  .salvar-barra-interna { flex-direction: column; align-items: stretch; }
+  .salvar-acoes { justify-content: flex-end; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .toast, .botao-petroleo.carregando::after { animation: none; }
+}

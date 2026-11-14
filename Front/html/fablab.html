@@ -14,14 +14,13 @@
 <body>
 
     <header>
-    <a href="fablab.html" class="marca" aria-label="Conecta Saúde – painel">
+    <a href="solicitacoes.html" class="marca" aria-label="Conecta Saúde – painel">
       <img src="../img/logo.png" alt="" width="42" height="42">
       <span>Conecta Saúde<small>Instituto Mauá de Tecnologia</small></span>
     </a>
 
       <nav aria-label="Navegação principal">
   <a href="solicitacoes.html">Solicitações recebidas</a>
-  <a href="fablab.html" aria-current="page">Editar cadastro</a>
 </nav>
     <a href="../index.html" class="botao-acessar" id="botao-sair">Sair</a>
     </header>
@@ -131,13 +130,13 @@
     </section>
 
     <div class="salvar-barra">
-      <span class="salvo-auto"> Alterações salvas automaticamente</span>
+      <span class="salvo-auto" id="salvo-auto" aria-live="polite">✓ Alterações salvas automaticamente</span>
       <button type="button" class="botao-principal botao-petroleo" id="salvar-cadastro">Salvar alterações</button>
     </div>
 
   </div>
 
-  <!-- COLUNA DA DIREITA (vamos montar no próximo passo) -->
+  <!-- COLUNA DA DIREITA: equipamentos (impressoras) -->
 <section class="form-cartao" id="equipamento" aria-labelledby="titulo-equip">
   <div class="form-cartao-topo">
     <span class="caixa-icone"><img class="icone" src="../img/impressora.png" alt=""></span>
@@ -148,17 +147,16 @@
   </div>
 
   <div class="form-corpo">
-    <p class="impressoras-topo">Impressoras cadastradas (2)</p>
+    <p class="impressoras-topo" id="impressoras-contagem">Impressoras cadastradas (2)</p>
 
-    <ul class="parque" id="parque">
-      <li class="impressora impressora-ativa">
+    <ul class="parque" id="parque" aria-live="polite">
+      <li class="impressora">
         <span class="caixa-icone caixa-icone-mini"><img class="icone" src="../img/impressora.png" alt=""></span>
         <div>
           <b>Ultimaker S3</b>
           <small>FDM · 230 × 190 × 200 mm</small>
           <small>PLA, PETG · <strong>Disponível</strong></small>
         </div>
-        <a href="#equipamento" class="impressora-editar">Editar</a>
         <button type="button" class="remover" aria-label="Remover Ultimaker S3">×</button>
       </li>
 
@@ -169,16 +167,16 @@
           <small>FDM · 250 × 210 × 220 mm</small>
           <small>PLA, PETG, TPU · <strong>Limitada</strong> — Fila de produção até sexta-feira.</small>
         </div>
-        <a href="#equipamento" class="impressora-editar">Editar</a>
         <button type="button" class="remover" aria-label="Remover Prusa MK4">×</button>
       </li>
     </ul>
 
     <a href="#nova-impressora" class="botao-adicionar">Adicionar outra impressora <span>+</span></a>
+    <small class="logo-ok" id="aviso-lista" role="status" hidden></small>
 
-    <div class="equipamento-editando">
-      <span class="sobretitulo">Editando equipamento</span>
-      <h3>Ultimaker S3</h3>
+    <div class="equipamento-editando" hidden>
+      <span class="sobretitulo" id="editor-sobretitulo">Editando equipamento</span>
+      <h3 id="editor-titulo">Ultimaker S3</h3>
 
       <div class="campo-duplo">
         <div class="campo">
@@ -210,7 +208,7 @@
           <select id="disponibilidade">
             <option selected>Disponível</option>
             <option>Limitada</option>
-            <option>Indisponível</option>
+            <option>Manutenção</option>
           </select>
         </div>
         <div class="campo">
@@ -229,6 +227,9 @@
           <label class="pilula"><input type="checkbox" name="mat" value="Resina médica"><span>Resina médica</span></label>
         </div>
       </fieldset>
+
+      <small class="campo-erro" id="erro-equip" role="alert" hidden></small>
+      <small class="logo-ok" id="ok-equip" role="status" hidden></small>
 
       <button type="button" class="botao-principal botao-petroleo botao-largo" id="salvar-imp">Salvar impressora <span></span></button>
     </div>
@@ -310,6 +311,6 @@
       </form>
     </section>
   </div>
-  <script src="../js/app.js"></script>
+<script src="../js/app.js"></script>
 </body>
 </html>

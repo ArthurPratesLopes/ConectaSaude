@@ -768,3 +768,31 @@
     grid-template-columns: 1fr;
   }
 }
+
+
+/* ---------- tela do pedido (AACD): dados à esquerda, chat à direita ---------- */
+.detalhe-grade-pedido {
+  display: grid;
+  grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+
+.detalhe-grade-pedido .detalhe-coluna {
+  min-width: 0;
+}
+
+.detalhe-grade-pedido .chat {
+  margin-top: 0;
+}
+
+/* na coluna mais estreita, os dados passam para 2 por linha */
+.detalhe-grade-pedido .dados {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+@media (max-width: 900px) {
+  .detalhe-grade-pedido {
+    grid-template-columns: 1fr;
+  }
+}
