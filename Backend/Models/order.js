@@ -1,6 +1,15 @@
 const mongoose = require('mongoose');
 
 const orderSchema = new mongoose.Schema({
+  codigo: String,
+  paciente: String,
+  peca: String,
+  prazo: Date,
+  urgencia: {
+    type: String,
+    enum: ['Normal', 'Prioritário', 'Urgente'],
+    default: 'Normal'
+  },
   clienteId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
@@ -8,21 +17,18 @@ const orderSchema = new mongoose.Schema({
   },
   fornecedorId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'User',
-    required: true
+    ref: 'User'
   },
   impressoraId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Printer',
-    required: true
+    ref: 'Printer'
   },
   arquivoUrl: {
     type: String,
     required: true
   },
   material: {
-    type: String,
-    required: true
+    type: String
   },
   resolucaoCamada: {
     type: String

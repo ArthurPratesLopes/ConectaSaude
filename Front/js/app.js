@@ -1,11 +1,9 @@
 (() => {
     'use strict';
 
-    // ---------- Configuração ----------
     const API = 'http://localhost:5000/api';
     const CHAVE_SESSAO = 'conectasaude.sessao';
 
-    // O front usa "aacd"/"fablab"; o banco usa "cliente"/"fornecedor"
     const PERFIL_PARA_API = { aacd: 'cliente', fablab: 'fornecedor' };
     const HOME_DO_PERFIL = {
         cliente: 'html/aacd.html',
@@ -18,7 +16,6 @@
     };
     const UFS = ['AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA','PB','PR','PE','PI','RJ','RN','RS','RO','RR','SC','SP','SE','TO'];
 
-    // ---------- Sessão (token guardado no navegador) ----------
     function lerSessao() {
         try {
             const s = JSON.parse(localStorage.getItem(CHAVE_SESSAO));
@@ -37,7 +34,6 @@
         localStorage.removeItem(CHAVE_SESSAO);
     }
 
-    // Disponível para as outras telas: CS.fetchAutenticado('/orders') etc.
     window.CS = {
         sessao: lerSessao,
         fetchAutenticado(caminho, opcoes = {}) {
@@ -53,9 +49,12 @@
         const form = document.getElementById('form-acesso');
 
         if (form) iniciarHome(form);
-        else protegerPaginaInterna();
+        else {
+            protegerPaginaInterna();
+            if ($('pedidos')) iniciarPedidos();
+            if ($('detalhe-codigo')) iniciarDetalhePedido();
+        }
 
-        // BOTÃO SAIR
         const sair = document.getElementById('botao-sair');
         if (sair) {
             sair.addEventListener('click', (event) => {
@@ -66,7 +65,6 @@
         }
     });
 
-    // ---------- Páginas internas: exigem login e o perfil certo ----------
     function protegerPaginaInterna() {
         const sessao = lerSessao();
         if (!sessao) {
@@ -82,7 +80,78 @@
         }
     }
 
-    // ---------- Home: login e cadastro ----------
+    const $ = (id) => document.getElementById(id);
+    const esc = (t) => new Option(t).innerHTML;
+    const dia = (d) => new Date(d).toLocaleDateString('pt-BR', { timeZone: 'UTC' });
+    const STATUS = {
+        analise: ['registrado', 'Registrado'],
+        aceito: ['aceito', 'Aceito'],
+        producao: ['impressao', 'Impressão'],
+        pronto: ['entregue', 'Entregue'],
+        recusado: ['recusado', 'Recusado']
+    };
+
+    function iniciarPedidos() {
+        const carregar = () => CS.fetchAutenticado('/orders').then((r) => r.json()).then(({ pedidos }) => {
+            Object.entries({ nTodos: '', nAbertos: 'analise', nImpressao: 'producao', nEntregues: 'pronto', nRecusados: 'recusado' }).forEach(([id, status]) => {
+                $(id).textContent = String(pedidos.filter((p) => !status || p.status === status).length).padStart(2, '0');
+            });
+            $('atualizado').textContent = '';
+            $('pedidos').innerHTML = pedidos.map((p) => `<li class="pedido">
+                <div class="pedido-info">
+                    <div class="pedido-linha1"><span class="selo selo-${STATUS[p.status][0]}">${STATUS[p.status][1]}</span><span class="pedido-codigo">${p.codigo}</span></div>
+                    <h3>${esc(p.peca)}</h3>
+                    <p>Registrado em ${dia(p.createdAt)} • Prazo: ${dia(p.prazo)}</p>
+                </div>
+                <a class="pedido-seta" href="pedido.html?id=${p._id}">›</a>
+            </li>`).join('') || '<li class="pedido-aviso">Você ainda não enviou nenhum pedido.</li>';
+        }).catch(() => {
+            $('pedidos').innerHTML = '<li class="pedido-aviso pedido-aviso-erro">Não foi possível carregar os pedidos.</li>';
+        });
+
+        $('formPedido').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const dados = new FormData();
+            ['paciente', 'peca', 'material', 'prazo', 'medidas'].forEach((id) => dados.append(id, $(id).value));
+            dados.append('urgencia', document.querySelector('input[name="urgencia"]:checked').value);
+            dados.append('arquivoStl', $('arquivoStl').files[0]);
+            const resposta = await fetch(API + '/orders', { method: 'POST', headers: { Authorization: 'Bearer ' + lerSessao().token }, body: dados });
+            if (!resposta.ok) return $('erro').textContent = (await resposta.json()).erro;
+            e.target.reset();
+            $('erro').textContent = '';
+            location.hash = '';
+            carregar();
+        });
+
+        carregar();
+    }
+
+    function iniciarDetalhePedido() {
+        CS.fetchAutenticado('/orders/' + new URLSearchParams(location.search).get('id')).then((r) => r.json()).then(({ pedido: p }) => {
+            $('detalhe-selo').className = 'selo selo-' + STATUS[p.status][0];
+            Object.entries({
+                'detalhe-selo': STATUS[p.status][1],
+                'detalhe-codigo': p.codigo,
+                'detalhe-titulo': p.peca,
+                'detalhe-datas': `Registrado em ${dia(p.createdAt)} • Prazo: ${dia(p.prazo)}`,
+                'dado-paciente': p.paciente,
+                'dado-peca': p.peca,
+                'dado-material': p.material || '—',
+                'dado-prazo': dia(p.prazo),
+                'dado-urgencia': p.urgencia,
+                'dado-lab': p.fornecedorId ? p.fornecedorId.nomeInstituicao : 'Aguardando laboratório',
+                'dado-medidas': p.observacoesTecnicas || '—',
+                'dado-arquivo-nome': p.arquivoUrl.split('/').pop()
+            }).forEach(([id, texto]) => { $(id).textContent = texto; });
+            $('dado-arquivo').href = API.replace('/api', '') + p.arquivoUrl;
+            const atual = p.status === 'recusado' ? -1 : Object.keys(STATUS).indexOf(p.status);
+            document.querySelectorAll('.progresso li').forEach((li, i) => {
+                li.classList.toggle('feito', i <= atual);
+                li.firstChild.textContent = i <= atual ? '✓' : i + 1;
+            });
+        }).catch(() => { $('detalhe-titulo').textContent = 'Pedido não encontrado'; });
+    }
+
     function iniciarHome(form) {
         const $ = (id) => document.getElementById(id);
         const campos = {
@@ -94,7 +163,6 @@
         const erroGeral = $('erro-acesso');
         let modo = 'login';
 
-        // UFs
         UFS.forEach((uf) => {
             const op = document.createElement('option');
             op.value = uf;
@@ -110,7 +178,6 @@
 
         const perfilSelecionado = () => document.querySelector('input[name="perfil"]:checked')?.value || 'aacd';
 
-        // --- mensagens de erro ---
         function erroCampo(nome, mensagem) {
             const el = $('erro-' + nome);
             if (!el) return;
@@ -129,7 +196,6 @@
             erroGeral.hidden = !mensagem;
         }
 
-        // --- alternar Entrar / Criar conta ---
         function definirModo(novo) {
             modo = novo;
             const cadastro = modo === 'cadastro';
@@ -158,13 +224,11 @@
         document.querySelectorAll('.abas button').forEach((b) => b.addEventListener('click', () => definirModo(b.dataset.modo)));
         document.querySelectorAll('input[name="perfil"]').forEach((r) => r.addEventListener('change', atualizarRotuloNome));
 
-        // "Acessar" / "Começar agora" levam ao formulário
         ['abrir-acesso', 'comecar'].forEach((id) => {
             const a = $(id);
             if (a) a.addEventListener('click', () => setTimeout(() => campos.email.focus(), 300));
         });
 
-        // --- botão só habilita com e-mail e senha preenchidos ---
         function atualizarBotao() {
             botao.disabled = !(campos.email.value.trim() && campos.senha.value.trim());
         }
@@ -172,7 +236,6 @@
         campos.senha.addEventListener('input', atualizarBotao);
         atualizarBotao();
 
-        // --- mostrar/ocultar senha e aviso de Caps Lock ---
         const verSenha = $('ver-senha');
         verSenha.addEventListener('click', () => {
             const mostrar = campos.senha.type === 'password';
@@ -192,7 +255,6 @@
             mostrarAviso('A recuperação de senha ainda não está disponível. Fale com conectasaude@maua.br.', 'info');
         });
 
-        // --- validação no navegador (o servidor valida de novo) ---
         function validar() {
             limparErros();
             let ok = true;
@@ -211,7 +273,6 @@
             return ok;
         }
 
-        // --- envio ---
         form.addEventListener('submit', async (event) => {
             event.preventDefault();
             if (!validar()) return;
@@ -246,7 +307,7 @@
 
                 salvarSessao(dados.token, dados.usuario);
                 mostrarAviso(cadastro ? 'Conta criada! Entrando…' : 'Bem-vindo! Entrando…', 'ok');
-                // O destino é decidido pelo perfil gravado no banco, não pela opção marcada na tela
+
                 window.location.href = HOME_DO_PERFIL[dados.usuario.perfil] || 'html/aacd.html';
             } catch (erro) {
                 mostrarAviso('Não foi possível conectar ao servidor. Verifique se o back-end está rodando.');

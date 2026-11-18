@@ -3,12 +3,14 @@ const express = require('express');
 const dotenv = require('dotenv');
 const cors = require('cors');
 const jwt = require('jsonwebtoken');
+const multer = require('multer');
 
 dotenv.config();
 
 const connectDB = require('./Config/db');
 const User = require('./Models/user');
 const Message = require('./Models/Message');
+const Order = require('./Models/order');
 
 if (!process.env.JWT_SECRET) {
   console.error('Falta JWT_SECRET no arquivo .env (veja .env.example).');
@@ -144,6 +146,71 @@ app.get('/api/auth/me', exigirLogin, async (req, res) => {
     res.json({ sucesso: true, usuario: usuarioPublico(usuario) });
   } catch (error) {
     res.status(500).json({ erro: 'Erro interno.' });
+  }
+});
+
+// ---------- Pedidos da instituição ----------
+const pastaUploads = path.join(__dirname, 'uploads');
+app.use('/uploads', express.static(pastaUploads));
+
+const upload = multer({
+  storage: multer.diskStorage({
+    destination: pastaUploads,
+    filename: (req, file, cb) => cb(null, Date.now() + '.stl')
+  }),
+  limits: { fileSize: 50 * 1024 * 1024 },
+  fileFilter: (req, file, cb) => cb(null, file.originalname.toLowerCase().endsWith('.stl'))
+});
+
+// Meus pedidos
+app.get('/api/orders', exigirLogin, async (req, res) => {
+  const pedidos = await Order.find({ clienteId: req.auth.id })
+    .populate('fornecedorId', 'nomeInstituicao')
+    .sort({ createdAt: -1 });
+  res.json({ sucesso: true, pedidos });
+});
+
+// Um pedido meu
+app.get('/api/orders/:id', exigirLogin, async (req, res) => {
+  try {
+    const pedido = await Order.findOne({ _id: req.params.id, clienteId: req.auth.id })
+      .populate('fornecedorId', 'nomeInstituicao');
+    if (!pedido) return res.status(404).json({ erro: 'Pedido não encontrado.' });
+    res.json({ sucesso: true, pedido });
+  } catch (error) {
+    res.status(404).json({ erro: 'Pedido não encontrado.' });
+  }
+});
+
+// Novo pedido (formulário com arquivo .stl)
+function exigirInstituicao(req, res, next) {
+  if (req.auth.perfil !== 'cliente') {
+    return res.status(403).json({ erro: 'Somente instituições podem enviar pedidos.' });
+  }
+  next();
+}
+
+app.post('/api/orders', exigirLogin, exigirInstituicao, upload.single('arquivoStl'), async (req, res) => {
+  try {
+    const { paciente, peca, material, prazo, medidas, urgencia } = req.body;
+    if (!paciente || !peca || !prazo || !req.file) {
+      return res.status(400).json({ erro: 'Preencha código do paciente, tipo de peça, prazo e anexe o arquivo .stl.' });
+    }
+
+    const total = await Order.countDocuments();
+    const pedido = await Order.create({
+      codigo: `CS-${new Date().getFullYear()}-${String(total + 1).padStart(4, '0')}`,
+      clienteId: req.auth.id,
+      paciente, peca, prazo, urgencia,
+      material: material || undefined,
+      observacoesTecnicas: medidas,
+      arquivoUrl: '/uploads/' + req.file.filename
+    });
+    res.status(201).json({ sucesso: true, pedido });
+  } catch (error) {
+    if (error.name === 'ValidationError') return res.status(400).json({ erro: 'Dados inválidos.' });
+    console.error(error);
+    res.status(500).json({ erro: 'Erro interno ao registrar o pedido.' });
   }
 });
 
