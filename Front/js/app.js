@@ -2,12 +2,7 @@
     'use strict';
 
     // ---------- Configuração ----------
-    // Se o front for aberto pelo próprio servidor (http://localhost:5000) usa caminho relativo;
-    // se for aberto por Live Server / arquivo, aponta para o back-end local.
-    const API = (location.protocol.startsWith('http') && location.port === '5000')
-        ? '/api'
-        : 'http://localhost:5000/api';
-
+    const API = 'http://localhost:5000/api';
     const CHAVE_SESSAO = 'conectasaude.sessao';
 
     // O front usa "aacd"/"fablab"; o banco usa "cliente"/"fornecedor"
@@ -143,7 +138,7 @@
                 b.classList.toggle('ativa', ativa);
                 b.setAttribute('aria-pressed', String(ativa));
             });
-            ['campo-nome', 'campo-local', 'campo-logo', 'campo-termo'].forEach((id) => { $(id).hidden = !cadastro; });
+            ['campo-nome', 'campo-local', 'campo-termo'].forEach((id) => { $(id).hidden = !cadastro; });
             document.querySelector('.link-esqueci').hidden = cadastro;
             $('titulo-acesso').textContent = cadastro ? 'Crie sua conta' : 'Acesse a plataforma';
             $('sub-acesso').textContent = cadastro
@@ -195,37 +190,6 @@
 
         document.querySelector('.link-esqueci').addEventListener('click', () => {
             mostrarAviso('A recuperação de senha ainda não está disponível. Fale com conectasaude@maua.br.', 'info');
-        });
-
-        // --- logo (apenas pré-visualização por enquanto; não é enviada ao servidor) ---
-        const inputLogo = $('logo');
-        $('logo-escolher').addEventListener('click', () => inputLogo.click());
-        $('logo-remover').addEventListener('click', () => {
-            inputLogo.value = '';
-            $('logo-previa').style.backgroundImage = '';
-            $('logo-remover').hidden = true;
-            const e = $('erro-logo'); e.hidden = true;
-        });
-        inputLogo.addEventListener('change', () => {
-            const arq = inputLogo.files[0];
-            const e = $('erro-logo');
-            e.hidden = true;
-            if (!arq) return;
-            if (!['image/png', 'image/jpeg', 'image/webp'].includes(arq.type) || arq.size > 5 * 1024 * 1024) {
-                e.textContent = 'Use PNG, JPG ou WebP de até 5 MB.';
-                e.hidden = false;
-                inputLogo.value = '';
-                return;
-            }
-            const leitor = new FileReader();
-            leitor.onload = () => {
-                const previa = $('logo-previa');
-                previa.style.backgroundImage = `url(${leitor.result})`;
-                previa.style.backgroundSize = 'cover';
-                previa.style.backgroundPosition = 'center';
-                $('logo-remover').hidden = false;
-            };
-            leitor.readAsDataURL(arq);
         });
 
         // --- validação no navegador (o servidor valida de novo) ---
