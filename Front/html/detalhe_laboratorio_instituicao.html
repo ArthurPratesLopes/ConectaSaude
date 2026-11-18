@@ -34,14 +34,12 @@
       <div class="lab-detalhe-id">
         <span class="lab-icone lab-icone-grande"><img class="icone" src="../img/icone-laboratorio.png" alt=""></span>
         <div>
-          <p class="lab-tipo">Laboratório universitário</p>
-          <h1 id="titulo-lab">Laboratório Mauá 01</h1>
-          <p class="lab-cidade">São Caetano do Sul, SP</p>
+          <h1 id="titulo-lab">Carregando…</h1>
+          <p class="lab-cidade" id="lab-cidade"></p>
         </div>
       </div>
 
       <div class="lab-detalhe-acao">
-        <span class="lab-status">Disponível</span>
         <a href="#registrar" class="botao-principal">Enviar solicitação <span aria-hidden="true">›</span></a>
       </div>
     </section>
@@ -51,48 +49,20 @@
       <section class="lab-imp-cartao" aria-labelledby="titulo-imp">
         <div class="lab-imp-topo">
           <h2 id="titulo-imp">Impressoras disponíveis</h2>
-          <p>2 equipamentos cadastrados</p>
+          <p id="lab-qtd"></p>
         </div>
 
-        <ul class="lab-imp-lista">
-          <li class="lab-imp">
-            <span class="lab-icone lab-icone-3d" aria-hidden="true">3D</span>
-            <div class="lab-imp-info">
-              <h3>Prusa MK4</h3>
-              <p>FDM · Volume: 250 × 210 × 220 mm</p>
-              <p><b>Materiais:</b> PLA, PETG</p>
-            </div>
-            <span class="lab-status">Disponível</span>
-          </li>
-
-          <li class="lab-imp">
-            <span class="lab-icone lab-icone-3d" aria-hidden="true">3D</span>
-            <div class="lab-imp-info">
-              <h3>Ultimaker S3</h3>
-              <p>FDM · Volume: 230 × 190 × 200 mm</p>
-              <p><b>Materiais:</b> PLA, PETG, TPU</p>
-            </div>
-            <span class="lab-status lab-status-parcial">Em produção</span>
-          </li>
-        </ul>
+        <ul class="lab-imp-lista" id="lab-impressoras"></ul>
       </section>
       <!-- CONTATO -->
       <aside class="lab-contato-cartao" aria-labelledby="titulo-contato">
-        <span class="lab-avatar" aria-hidden="true">MC</span>
+        <span class="lab-avatar" id="lab-avatar" aria-hidden="true"></span>
         <h2 id="titulo-contato">Informações de contato</h2>
 
         <dl class="lab-dados">
           <div>
-            <dt>Responsável</dt>
-            <dd>Mariana Costa</dd>
-          </div>
-          <div>
             <dt>E-mail</dt>
-            <dd>fablab@maua.br</dd>
-          </div>
-          <div>
-            <dt>Telefone</dt>
-            <dd>(11) 4239-3000</dd>
+            <dd id="lab-email"></dd>
           </div>
         </dl>
 
@@ -164,10 +134,6 @@
           <label for="arquivoStl">Arquivo da peça (.stl) <em>*</em></label>
           <input type="file" id="arquivoStl" name="arquivoStl" accept=".stl">
           <small class="dica">Envie o modelo 3D em formato .stl.</small>
-          <div class="envio-progresso" id="envioProgresso" hidden>
-            <progress id="envioBarra" max="100" value="0" aria-label="Progresso do envio do arquivo"></progress>
-            <span id="envioTexto" role="status">0%</span>
-          </div>
         </div>
         <fieldset class="urgencia">
           <legend>Urgência</legend>
@@ -177,15 +143,6 @@
             <label class="pilula"><input type="radio" name="urgencia" value="Urgente"><span>Urgente</span></label>
           </div>
         </fieldset>
-
-        <div class="campo">
-          <label for="lab">Laboratório preferencial</label>
-          <select id="lab">
-            <option value="">Qualquer laboratório compatível</option>
-            <option>FabLab Poli USP</option>
-            <option>FabLab da Mauá</option>
-          </select>
-        </div>
 
         <p class="erro" id="erro" role="alert"></p>
         <p class="sucesso" id="sucesso" role="status"></p>

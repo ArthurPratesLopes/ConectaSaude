@@ -11,6 +11,7 @@ const connectDB = require('./Config/db');
 const User = require('./Models/user');
 const Message = require('./Models/Message');
 const Order = require('./Models/order');
+const Printer = require('./Models/printer');
 
 if (!process.env.JWT_SECRET) {
   console.error('Falta JWT_SECRET no arquivo .env (veja .env.example).');
@@ -162,10 +163,23 @@ const upload = multer({
   fileFilter: (req, file, cb) => cb(null, file.originalname.toLowerCase().endsWith('.stl'))
 });
 
+app.get('/api/laboratorios', exigirLogin, async (req, res) => {
+  const [labs, impressoras] = await Promise.all([
+    User.find({ perfil: 'fornecedor' }).sort('nomeInstituicao').lean(),
+    Printer.find().lean()
+  ]);
+  res.json({ sucesso: true, laboratorios: labs.map((l) => ({ ...l, impressoras: impressoras.filter((i) => String(i.fornecedorId) === String(l._id)) })) });
+});
+
+const filtroPedidos = (req) => req.auth.perfil === 'fornecedor'
+  ? { $or: [{ fornecedorId: req.auth.id }, { fornecedorId: null }] }
+  : { clienteId: req.auth.id };
+
 // Meus pedidos
 app.get('/api/orders', exigirLogin, async (req, res) => {
-  const pedidos = await Order.find({ clienteId: req.auth.id })
+  const pedidos = await Order.find(filtroPedidos(req))
     .populate('fornecedorId', 'nomeInstituicao')
+    .populate('clienteId', 'nomeInstituicao')
     .sort({ createdAt: -1 });
   res.json({ sucesso: true, pedidos });
 });
@@ -173,13 +187,24 @@ app.get('/api/orders', exigirLogin, async (req, res) => {
 // Um pedido meu
 app.get('/api/orders/:id', exigirLogin, async (req, res) => {
   try {
-    const pedido = await Order.findOne({ _id: req.params.id, clienteId: req.auth.id })
-      .populate('fornecedorId', 'nomeInstituicao');
+    const pedido = await Order.findOne({ _id: req.params.id, ...filtroPedidos(req) })
+      .populate('fornecedorId', 'nomeInstituicao')
+      .populate('clienteId', 'nomeInstituicao');
     if (!pedido) return res.status(404).json({ erro: 'Pedido não encontrado.' });
     res.json({ sucesso: true, pedido });
   } catch (error) {
     res.status(404).json({ erro: 'Pedido não encontrado.' });
   }
+});
+
+app.patch('/api/orders/:id/status', exigirLogin, async (req, res) => {
+  if (req.auth.perfil !== 'fornecedor') return res.status(403).json({ erro: 'Somente laboratórios podem alterar o status.' });
+  const pedido = await Order.findOne({ _id: req.params.id, ...filtroPedidos(req) }).catch(() => null);
+  if (!pedido || !Order.schema.path('status').enumValues.includes(req.body.status)) return res.status(400).json({ erro: 'Pedido ou status inválido.' });
+  pedido.status = req.body.status;
+  pedido.fornecedorId = req.auth.id;
+  await pedido.save();
+  res.json({ sucesso: true });
 });
 
 // Novo pedido (formulário com arquivo .stl)
@@ -192,7 +217,7 @@ function exigirInstituicao(req, res, next) {
 
 app.post('/api/orders', exigirLogin, exigirInstituicao, upload.single('arquivoStl'), async (req, res) => {
   try {
-    const { paciente, peca, material, prazo, medidas, urgencia } = req.body;
+    const { paciente, peca, material, prazo, medidas, urgencia, fornecedorId } = req.body;
     if (!paciente || !peca || !prazo || !req.file) {
       return res.status(400).json({ erro: 'Preencha código do paciente, tipo de peça, prazo e anexe o arquivo .stl.' });
     }
@@ -201,6 +226,7 @@ app.post('/api/orders', exigirLogin, exigirInstituicao, upload.single('arquivoSt
     const pedido = await Order.create({
       codigo: `CS-${new Date().getFullYear()}-${String(total + 1).padStart(4, '0')}`,
       clienteId: req.auth.id,
+      fornecedorId: fornecedorId || undefined,
       paciente, peca, prazo, urgencia,
       material: material || undefined,
       observacoesTecnicas: medidas,
@@ -214,50 +240,19 @@ app.post('/api/orders', exigirLogin, exigirInstituicao, upload.single('arquivoSt
   }
 });
 
-// ---------- Mensagens (inalterado) ----------
-app.post('/api/messages', async (req, res) => {
-  try {
-    const { orderId, remetenteId, texto } = req.body;
+const meuPedido = (id, usuarioId) => Order.findOne({ _id: id, $or: [{ clienteId: usuarioId }, { fornecedorId: usuarioId }] }).catch(() => null);
 
-    if (!orderId || !remetenteId || !texto) {
-      return res.status(400).json({
-        erro: 'orderId, remetenteId e texto sao obrigatorios.'
-      });
-    }
-
-    const mensagem = await Message.create({
-      orderId,
-      remetenteId,
-      texto
-    });
-
-    res.status(201).json({
-      sucesso: true,
-      mensagem
-    });
-  } catch (error) {
-    res.status(500).json({
-      erro: error.message
-    });
-  }
+app.get('/api/messages/:orderId', exigirLogin, async (req, res) => {
+  if (!(await meuPedido(req.params.orderId, req.auth.id))) return res.status(404).json({ erro: 'Pedido não encontrado.' });
+  const mensagens = await Message.find({ orderId: req.params.orderId }).populate('remetenteId', 'nomeInstituicao').sort({ createdAt: 1 });
+  res.json({ sucesso: true, mensagens });
 });
 
-
-app.get('/api/messages/:orderId', async (req, res) => {
-  try {
-    const mensagens = await Message.find({ orderId: req.params.orderId })
-      .populate('remetenteId', 'nomeInstituicao perfil')
-      .sort({ createdAt: 1 });
-
-    res.json({
-      sucesso: true,
-      mensagens
-    });
-  } catch (error) {
-    res.status(500).json({
-      erro: error.message
-    });
-  }
+app.post('/api/messages', exigirLogin, async (req, res) => {
+  const { orderId, texto } = req.body;
+  if (!texto || !texto.trim() || !(await meuPedido(orderId, req.auth.id))) return res.status(400).json({ erro: 'Mensagem ou pedido inválido.' });
+  const mensagem = await Message.create({ orderId, remetenteId: req.auth.id, texto: texto.trim() });
+  res.status(201).json({ sucesso: true, mensagem });
 });
 
 const PORT = process.env.PORT || 5000;

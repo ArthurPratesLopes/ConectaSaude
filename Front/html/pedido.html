@@ -7,6 +7,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/home.css">
   <link rel="stylesheet" href="../css/pedidos.css">
+  <link rel="stylesheet" href="../css/chat.css">
   <link rel="stylesheet" href="../css/interacoes.css">
 </head>
 <body>
@@ -42,10 +43,10 @@
         <li><span class="bolinha">•</span><span class="etapa">Registrado</span></li>
         <li><span class="bolinha">•</span><span class="etapa">Aceito</span></li>
         <li><span class="bolinha">•</span><span class="etapa">Impressão</span></li>
-        <li><span class="bolinha">•</span><span class="etapa">Entregue</span></li>
+        <li><span class="bolinha">•</span><span class="etapa">Pronto</span></li>
       </ol>
     </section>
-    <div>
+    <div class="detalhe-grade-pedido">
 
     <div class="detalhe-coluna">
         <section class="detalhe-cartao" aria-labelledby="titulo-dados">
@@ -92,6 +93,23 @@
       </dl>
     </section>
         </div>
+
+    <section class="chat" aria-labelledby="titulo-chat">
+      <div class="chat-topo">
+        <div>
+          <h2 id="titulo-chat">Comunicação da solicitação</h2>
+          <p id="chat-sub"></p>
+        </div>
+      </div>
+
+      <div class="chat-mensagens" id="chat-mensagens" aria-live="polite"></div>
+
+      <div class="chat-envio">
+        <label class="so-leitor" for="chat-texto">Mensagem</label>
+        <textarea id="chat-texto" rows="2" placeholder="Escreva uma mensagem sobre esta solicitação..."></textarea>
+        <button type="button" class="botao-principal" id="chat-enviar">Enviar</button>
+      </div>
+    </section>
 
     </div>
   </main>

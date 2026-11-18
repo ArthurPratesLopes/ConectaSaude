@@ -32,11 +32,11 @@
 
 <div class="painel-topo">
   <div>
-    <span class="sobretitulo">Solicitação CS-2026-0138</span>
+    <span class="sobretitulo" id="sol-codigo"></span>
     <h1>Visualizar solicitação</h1>
     <p>Confira todos os dados enviados pela Instituição e atualize o andamento da produção.</p>
   </div>
-  <span class="selo selo-nova">Nova</span>
+  <span class="selo" id="sol-selo"></span>
 </div>
 
 <!-- ACOMPANHAMENTO DA PRODUÇÃO (largura toda) -->
@@ -46,104 +46,86 @@
       <span class="caixa-icone"><img class="icone" src="../img/impressora.png" alt=""></span>
       <div>
         <h2 id="titulo-andamento">Acompanhamento da produção</h2>
-        <p>As alterações ficam registradas automaticamente no histórico.</p>
+        <p>Atualize a etapa conforme a produção avança.</p>
       </div>
     </div>
 
     <div class="acompanhamento-status">
       <label for="status-atual">Status atual</label>
       <select id="status-atual">
-        <option selected disabled>Selecione a etapa</option>
-        <option>Aceita</option>
-        <option>Em produção</option>
-        <option>Pronta para entrega</option>
-        <option>Entregue</option>
+        <option value="analise" disabled>Selecione a etapa</option>
+        <option value="aceito">Aceita</option>
+        <option value="producao">Em produção</option>
+        <option value="pronto">Pronta para entrega</option>
+        <option value="recusado" disabled>Recusada</option>
       </select>
     </div>
   </div>
 
   <ol class="stepper" aria-label="Etapas da produção">
-    <li class="atual">
-      <span class="stepper-bolinha">1</span>
-      <span class="stepper-nome">1. Aceita</span>
-    </li>
-    <li>
-      <span class="stepper-bolinha">2</span>
-      <span class="stepper-nome">2. Em produção</span>
-    </li>
-    <li>
-      <span class="stepper-bolinha">3</span>
-      <span class="stepper-nome">3. Pronta</span>
-    </li>
-    <li>
-      <span class="stepper-bolinha">✓</span>
-      <span class="stepper-nome">4. Entregue</span>
-    </li>
+    <li><span class="stepper-bolinha">1</span><span class="stepper-nome">1. Aceita</span></li>
+    <li><span class="stepper-bolinha">2</span><span class="stepper-nome">2. Em produção</span></li>
+    <li><span class="stepper-bolinha">✓</span><span class="stepper-nome">3. Pronta</span></li>
   </ol>
 
-  <div class="acompanhamento-historico">
-    <b>Histórico:</b>
-    <span class="chip-historico">Nova <small>8 jun, 14:20</small></span>
-  </div>
 </section>
 <!-- DUAS COLUNAS: dados da solicitação + chat -->
 <div class="detalhe-grade-2">
 
   <section class="detalhe-cartao" aria-labelledby="titulo-dados">
     <span class="sobretitulo">Dados da solicitação</span>
-    <h2 class="detalhe-titulo" id="titulo-dados">Tala de dedo</h2>
-    <p class="detalhe-recebida">Recebida de Instituição São Paulo · 8 jun, 14:20</p>
+    <h2 class="detalhe-titulo" id="titulo-dados"></h2>
+    <p class="detalhe-recebida" id="sol-recebida"></p>
 
     <dl class="dados dados-2col">
       <div>
         <dt>Código do paciente</dt>
-        <dd>PAC-0913</dd>
+        <dd id="sol-paciente"></dd>
       </div>
       <div>
         <dt>Instituição solicitante</dt>
-        <dd>Instituição São Paulo</dd>
+        <dd id="sol-inst"></dd>
       </div>
       <div>
         <dt>Tipo de peça/prótese/órtese</dt>
-        <dd>Tala de dedo</dd>
+        <dd id="sol-peca"></dd>
       </div>
       <div>
         <dt>Material solicitado</dt>
-        <dd>PETG</dd>
+        <dd id="sol-material"></dd>
       </div>
       <div>
         <dt>Quantidade</dt>
-        <dd>1 unidade</dd>
+        <dd id="sol-quantidade"></dd>
       </div>
       <div>
         <dt>Prazo necessário</dt>
-        <dd>30 jun 2026</dd>
+        <dd id="sol-prazo"></dd>
       </div>
       <div>
         <dt>Urgência</dt>
-        <dd>Normal</dd>
+        <dd id="sol-urgencia"></dd>
       </div>
       <div>
         <dt>Laboratório responsável</dt>
-        <dd>Laboratório Mauá 01</dd>
+        <dd id="sol-lab"></dd>
       </div>
     </dl>
 
     <div class="detalhe-bloco">
       <span class="detalhe-rotulo">Observações e especificações técnicas</span>
-      <p class="detalhe-obs">Produzir conforme o modelo anexado, mantendo preenchimento de 35% e acabamento sem arestas nas superfícies de contato. Validar as medidas antes de iniciar a impressão.</p>
+      <p class="detalhe-obs" id="sol-obs"></p>
     </div>
 
     <div class="detalhe-bloco">
       <span class="detalhe-rotulo">Arquivo para impressão</span>
-      <div class="arquivo-cartao" id="arquivo-cartao" data-arquivo-url="../arquivos/modelo-exemplo.stl">
+      <div class="arquivo-cartao">
         <span class="arquivo-tipo">STL</span>
         <div class="arquivo-info">
-          <span class="arquivo-nome">tala_dedo.stl</span>
-          <small>Arquivo 3D · 1,3 MB</small>
+          <span class="arquivo-nome" id="arquivo-nome"></span>
+          <small>Arquivo 3D</small>
         </div>
-        <button type="button" class="botao-contorno" id="arquivo-visualizar">Visualizar arquivo</button>
-        <a href="../arquivos/modelo-exemplo.stl" class="botao-contorno" id="arquivo-baixar" download="tala_dedo.stl">Baixar arquivo</a>
+        <a href="#" class="botao-contorno" id="arquivo-baixar" download>Baixar arquivo</a>
       </div>
     </div>
 
@@ -151,32 +133,21 @@
   </section>
 
   <!-- CHAT -->
-  <section class="chat" aria-labelledby="titulo-chat" data-solicitacao="CS-2026-0138">
+  <section class="chat" aria-labelledby="titulo-chat">
     <div class="chat-topo">
       <div>
         <h2 id="titulo-chat">Comunicação da solicitação</h2>
-        <p>CS-2026-0138 · Conversa com Instituição São Paulo</p>
+        <p id="chat-sub"></p>
       </div>
-      <span class="chat-online">Online</span>
     </div>
 
     <div class="chat-mensagens" id="chat-mensagens" aria-live="polite">
-      <div class="mensagem mensagem-recebida">
-        <span class="mensagem-autor">Instituição São Paulo</span>
-        <p>Olá! O modelo anexado está na escala correta. Caso precise, posso confirmar as especificações técnicas.</p>
-        <small>10:48</small>
-      </div>
-      <div class="mensagem mensagem-enviada">
-        <span class="mensagem-autor">Você</span>
-        <p>Perfeito. Vamos analisar o arquivo e atualizar o andamento por aqui.</p>
-        <small>10:52 · ✓ Lida</small>
-      </div>
     </div>
 
     <div class="chat-envio">
       <label class="so-leitor" for="chat-texto">Mensagem</label>
       <textarea id="chat-texto" rows="2" placeholder="Escreva uma mensagem sobre esta solicitação..."></textarea>
-      <button type="button" class="botao-principal" id="chat-enviar" disabled>Enviar →</button>
+      <button type="button" class="botao-principal" id="chat-enviar">Enviar →</button>
     </div>
   </section>
 
