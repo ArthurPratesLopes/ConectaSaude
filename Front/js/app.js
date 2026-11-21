@@ -477,4 +477,36 @@
             }
         });
     }
+    // ---- Acessibilidade: VLibras (tradutor de Libras do governo) e UserWay ----
+    // O VLibras funciona sem cadastro. O UserWay precisa de um ID de conta gratuito
+    // (https://userway.org/code): cole o ID abaixo para ativar; vazio = não carrega.
+    const USERWAY_ID = '0bH9G4qEju';
+
+    function carregarAcessibilidade() {
+        if (!document.querySelector('[vw]')) {
+            const vw = document.createElement('div');
+            vw.setAttribute('vw', '');
+            vw.className = 'enabled';
+            vw.innerHTML = '<div vw-access-button class="active"></div>'
+                + '<div vw-plugin-wrapper><div class="vw-plugin-top-wrapper"></div></div>';
+            document.body.appendChild(vw);
+
+            const libras = document.createElement('script');
+            libras.src = 'https://vlibras.gov.br/app/vlibras-plugin.js';
+            libras.onload = () => new window.VLibras.Widget('https://vlibras.gov.br/app');
+            document.body.appendChild(libras);
+        }
+
+        if (USERWAY_ID && !document.querySelector('script[data-account]')) {
+            const uw = document.createElement('script');
+            uw.src = 'https://cdn.userway.org/widget.js';
+            uw.setAttribute('data-account', USERWAY_ID);
+            uw.setAttribute('data-position', '6');
+            uw.async = true;
+            document.body.appendChild(uw);
+        }
+    }
+
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', carregarAcessibilidade);
+    else carregarAcessibilidade();
 })();
