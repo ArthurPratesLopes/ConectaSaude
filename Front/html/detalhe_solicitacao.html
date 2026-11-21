@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Visualizar solicitação</title>
+  <title>Visualizar pedido</title>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../css/home.css">
   <link rel="stylesheet" href="../css/pedidos.css">
@@ -21,19 +21,19 @@
     </a>
 
       <nav aria-label="Navegação principal">
-  <a href="solicitacoes.html" aria-current="page">Solicitações recebidas</a>
+  <a href="solicitacoes.html" aria-current="page">Pedidos recebidos</a>
 </nav>
 
     <a href="../index.html" class="botao-acessar" id="botao-sair">Sair</a>
   </header>
 
   <main class="painel">
-<a href="solicitacoes.html" class="voltar">← Voltar para solicitações</a>
+<a href="solicitacoes.html" class="voltar">← Voltar para pedidos</a>
 
 <div class="painel-topo">
   <div>
     <span class="sobretitulo" id="sol-codigo"></span>
-    <h1>Visualizar solicitação</h1>
+    <h1>Visualizar pedido</h1>
     <p>Confira todos os dados enviados pela Instituição e atualize o andamento da produção.</p>
   </div>
   <span class="selo" id="sol-selo"></span>
@@ -54,18 +54,18 @@
       <label for="status-atual">Status atual</label>
       <select id="status-atual">
         <option value="analise" disabled>Selecione a etapa</option>
-        <option value="aceito">Aceita</option>
+        <option value="aceito">Aceito</option>
         <option value="producao">Em produção</option>
-        <option value="pronto">Pronta para entrega</option>
-        <option value="recusado" disabled>Recusada</option>
+        <option value="pronto">Pronto para entrega</option>
+        <option value="recusado" disabled>Recusado</option>
       </select>
     </div>
   </div>
 
   <ol class="stepper" aria-label="Etapas da produção">
-    <li><span class="stepper-bolinha">1</span><span class="stepper-nome">1. Aceita</span></li>
+    <li><span class="stepper-bolinha">1</span><span class="stepper-nome">1. Aceito</span></li>
     <li><span class="stepper-bolinha">2</span><span class="stepper-nome">2. Em produção</span></li>
-    <li><span class="stepper-bolinha">✓</span><span class="stepper-nome">3. Pronta</span></li>
+    <li><span class="stepper-bolinha">✓</span><span class="stepper-nome">3. Pronto</span></li>
   </ol>
 
 </section>
@@ -73,7 +73,7 @@
 <div class="detalhe-grade-2">
 
   <section class="detalhe-cartao" aria-labelledby="titulo-dados">
-    <span class="sobretitulo">Dados da solicitação</span>
+    <span class="sobretitulo">Dados do pedido</span>
     <h2 class="detalhe-titulo" id="titulo-dados"></h2>
     <p class="detalhe-recebida" id="sol-recebida"></p>
 
@@ -129,14 +129,14 @@
       </div>
     </div>
 
-    <button type="button" class="botao-cancelar-contorno" id="recusar-solicitacao">Recusar solicitação</button>
+    <button type="button" class="botao-cancelar-contorno" id="recusar-solicitacao">Recusar pedido</button>
   </section>
 
   <!-- CHAT -->
   <section class="chat" aria-labelledby="titulo-chat">
     <div class="chat-topo">
       <div>
-        <h2 id="titulo-chat">Comunicação da solicitação</h2>
+        <h2 id="titulo-chat">Comunicação do pedido</h2>
         <p id="chat-sub"></p>
       </div>
     </div>
@@ -146,7 +146,7 @@
 
     <div class="chat-envio">
       <label class="so-leitor" for="chat-texto">Mensagem</label>
-      <textarea id="chat-texto" rows="2" placeholder="Escreva uma mensagem sobre esta solicitação..."></textarea>
+      <textarea id="chat-texto" rows="2" placeholder="Escreva uma mensagem sobre este pedido..."></textarea>
       <button type="button" class="botao-principal" id="chat-enviar">Enviar →</button>
     </div>
   </section>
