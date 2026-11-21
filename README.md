@@ -86,7 +86,7 @@ O servidor entrega o front-end e a API no mesmo endereço. Evite abrir o `index.
 ### Dados de teste (opcional)
 
 ```
-npm run seed
+npm run popular-banco
 ```
 
 Apaga as coleções e cria usuários, impressoras e pedidos de exemplo. Contas criadas:
@@ -113,18 +113,20 @@ Apaga as coleções e cria usuários, impressoras e pedidos de exemplo. Contas c
 ```
 ConectaSaude/
 ├── Backend/
-│   ├── Config/db.js        conexão com o MongoDB
-│   ├── Models/             User, Printer, Order, Message
-│   ├── server.js           rotas e servidor
-│   ├── seed.js             dados de exemplo
+│   ├── Configuracao/banco.js       conexão com o MongoDB
+│   ├── Intermediarios/             autenticação e autorização
+│   ├── Modelos/                    usuário, impressora, pedido e mensagem
+│   ├── Rotas/                      rotas da API
+│   ├── servidor.js                 inicialização das rotas e do servidor
+│   ├── dadosExemplo.js             dados de exemplo
 │   ├── package.json
 │   └── .env
 └── Front/
-    ├── index.html          login e cadastro
+    ├── index.html          entrada e cadastro
     ├── html/               telas internas
     ├── css/
     ├── img/
-    └── js/app.js           login, sessão e proteção das páginas
+    └── js/aplicativo.js            sessão, autenticação e proteção das páginas
 ```
 
 ---
@@ -138,4 +140,4 @@ ConectaSaude/
 | `Falta JWT_SECRET no arquivo .env` | Adicione a linha `JWT_SECRET=...` ao `.env` |
 | `EADDRINUSE` | A porta 5000 já está em uso. Feche o outro processo ou mude `PORT` no `.env` |
 | "Não foi possível conectar ao servidor" no site | O back-end não está rodando. Rode `npm start` |
-| Login antigo parou de funcionar após a atualização | Senhas agora são guardadas com hash. Rode `npm run seed` ou crie a conta de novo |
+| Login antigo parou de funcionar após a atualização | Senhas agora são guardadas com hash. Rode `npm run popular-banco` ou crie a conta de novo |

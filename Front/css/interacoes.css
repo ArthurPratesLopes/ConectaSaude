@@ -9,11 +9,11 @@
 .pedido-aviso {
   list-style: none;
   padding: 32px 24px;
-  border-top: 1px solid var(--line);
+  border-top: 1px solid var(--linha);
   text-align: center;
-  color: var(--muted);
+  color: var(--apagado);
 }
-.pedido-aviso-erro { color: var(--error); }
+.pedido-aviso-erro { color: var(--erro); }
 
 /* aviso rápido, mesmo visual do "Alterações salvas" (cadastro_instituicao.css) */
 .toast[hidden] { display: none; }
@@ -27,31 +27,31 @@
 .toast .icone { width: 18px; height: 18px; filter: invert(1); }
 @keyframes toast-entra { from { opacity: 0; transform: translate(-50%, 10px); } }
 @media (prefers-reduced-motion: reduce) { .toast { animation: none; } }
-.parque .pedido-aviso { padding: 20px; border: 1px dashed var(--line); border-radius: 12px; }
+.parque .pedido-aviso { padding: 20px; border: 1px dashed var(--linha); border-radius: 12px; }
 .link-tentar {
   margin-left: 6px;
   padding: 0;
   border: 0;
   background: none;
-  color: var(--petrol);
+  color: var(--petroleo);
   font: inherit;
   font-weight: 700;
   text-decoration: underline;
   cursor: pointer;
 }
-.detalhe-aviso { margin: 0; color: var(--muted); }
+.detalhe-aviso { margin: 0; color: var(--apagado); }
 .arquivo-indisponivel { opacity: .6; pointer-events: none; }
 
 /* ---------- mensagens e botão no cadastro do laboratório ---------- */
 .cadastro-conteudo .erro {
   min-height: 1.3em;
   margin: 12px 0 0;
-  color: var(--error);
+  color: var(--erro);
   font-size: 13px;
   font-weight: 600;
 }
 .cadastro-conteudo > .erro { margin: 0 0 14px; }
-.form-corpo .botao-envio { margin-top: 8px; }
+.formulario-corpo .botao-envio { margin-top: 8px; }
 
 /* ---------- visualizador 3D ---------- */
 .visualizador {
@@ -62,7 +62,7 @@
   overflow: hidden;
   border-radius: 12px;
   background: linear-gradient(180deg, #eef4f4, #dfeaea);
-  color: var(--muted);
+  color: var(--apagado);
   font-size: 13px;
   text-align: center;
 }
@@ -106,22 +106,22 @@ body.sem-rolagem { overflow: hidden; }
   border: 0;
   border-radius: 50%;
   background: #edf3f3;
-  color: var(--ink);
+  color: var(--tinta);
   font-size: 24px;
   line-height: 1;
   cursor: pointer;
 }
-.sucesso-fechar:hover { background: var(--petrol-soft); }
+.sucesso-fechar:hover { background: var(--petroleo-suave); }
 
 .sucesso-caixa h2 {
   margin: 0 0 8px;
-  color: var(--ink);
+  color: var(--tinta);
   font-size: 26px;
   font-weight: 400;
   letter-spacing: -.03em;
   outline: 0;
 }
-.sucesso-texto { margin: 0 auto 4px; max-width: 440px; color: var(--muted); }
+.sucesso-texto { margin: 0 auto 4px; max-width: 440px; color: var(--apagado); }
 
 .sucesso-visualizador { height: 210px; margin-top: 20px; }
 
@@ -130,14 +130,14 @@ body.sem-rolagem { overflow: hidden; }
   gap: 10px;
   margin: 20px 0 0;
   padding: 16px 18px;
-  border: 1px solid var(--line);
+  border: 1px solid var(--linha);
   border-radius: 12px;
-  background: var(--bg);
+  background: var(--fundo);
   text-align: left;
 }
 .sucesso-resumo div { display: flex; justify-content: space-between; gap: 16px; }
-.sucesso-resumo dt { flex: none; color: var(--muted); font-size: 12px; }
-.sucesso-resumo dd { margin: 0; min-width: 0; color: var(--ink); font-size: 14px; font-weight: 600; text-align: right; overflow-wrap: anywhere; }
+.sucesso-resumo dt { flex: none; color: var(--apagado); font-size: 12px; }
+.sucesso-resumo dd { margin: 0; min-width: 0; color: var(--tinta); font-size: 14px; font-weight: 600; text-align: right; overflow-wrap: anywhere; }
 
 .sucesso-acoes { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-top: 24px; }
 .sucesso-acoes .botao-principal { margin-top: 0; border: 0; font: inherit; font-weight: 700; cursor: pointer; }
@@ -163,12 +163,12 @@ body.sem-rolagem { overflow: hidden; }
   min-height: 40px; min-width: 220px; padding: 0 12px; border: 1px solid #d5dede; border-radius: 8px;
   font: inherit; font-size: 13px; background: #fff; color: inherit;
 }
-.pedidos-ferramentas input[type="search"]:focus { outline: 2px solid var(--petrol, #006767); outline-offset: 1px; }
+.pedidos-ferramentas input[type="search"]:focus { outline: 2px solid var(--petroleo, #006767); outline-offset: 1px; }
 .botao-csv { min-height: 40px; padding: 0 14px; font-size: 13px; }
 .envio-progresso { display: flex; align-items: center; gap: 10px; margin-top: 8px; }
 .envio-progresso[hidden] { display: none; }
-.envio-progresso progress { flex: 1; height: 10px; accent-color: var(--petrol, #006767); }
-.envio-progresso span { min-width: 120px; font-size: 12px; font-weight: 600; color: var(--muted, #5d6b6b); }
+.envio-progresso progress { flex: 1; height: 10px; accent-color: var(--petroleo, #006767); }
+.envio-progresso span { min-width: 120px; font-size: 12px; font-weight: 600; color: var(--apagado, #5d6b6b); }
 @media (max-width: 720px) {
   .pedidos-ferramentas { justify-content: stretch; }
   .pedidos-ferramentas input[type="search"] { flex: 1 1 100%; min-width: 0; }
@@ -180,19 +180,19 @@ body.sem-rolagem { overflow: hidden; }
 .modal-largo { width: min(760px, 100%); }
 .modal-caixa h2 { padding-right: 44px; }
 .modal-caixa .sucesso-texto { margin: 0 0 16px; max-width: none; }
-.modal-campo label { display: block; margin-bottom: 6px; color: var(--ink); font-size: 13px; font-weight: 700; }
+.modal-campo label { display: block; margin-bottom: 6px; color: var(--tinta); font-size: 13px; font-weight: 700; }
 .modal-campo textarea {
   width: 100%; min-height: 96px; padding: 12px 14px; resize: vertical;
-  border: 1px solid var(--line); border-radius: 8px; font: inherit; color: var(--text); background: #fff;
+  border: 1px solid var(--linha); border-radius: 8px; font: inherit; color: var(--texto); background: #fff;
 }
-.modal-campo textarea:focus { outline: 2px solid var(--petrol); outline-offset: 1px; }
+.modal-campo textarea:focus { outline: 2px solid var(--petroleo); outline-offset: 1px; }
 .modal-caixa .sucesso-acoes { justify-content: flex-end; }
 .botao-perigo {
   padding: 14px 22px; border: 0; border-radius: 8px; background: var(--terra); color: #fff;
   font: inherit; font-weight: 700; cursor: pointer;
 }
 .botao-perigo:hover { background: var(--terra-dark); }
-.modal-dica { margin: 10px 0 0; color: var(--muted); font-size: 12px; }
+.modal-dica { margin: 10px 0 0; color: var(--apagado); font-size: 12px; }
 .modal-caixa .visualizador { height: min(420px, 56vh); }
 
 /* ---------- solicitação recusada ---------- */
@@ -203,7 +203,7 @@ body.sem-rolagem { overflow: hidden; }
 .recusa-aviso b { display: block; margin-bottom: 4px; color: #b3261e; }
 .recusa-aviso p { margin: 0; overflow-wrap: anywhere; }
 .recusa-aviso p + p { margin-top: 6px; }
-.acompanhamento.recusada .stepper { display: none; }
+.acompanhamento.recusada .indicador-etapas { display: none; }
 .acompanhamento.recusada .chip-historico-recusada { background: #fbe4e1; color: #b3261e; }
 
 @media (max-width: 600px) {

@@ -47,7 +47,7 @@
 }
 
 .solicitacao-dado small,
-.solicitacao-status small {
+.solicitacao-situacao small {
   display: block;
   margin-bottom: 6px;
   color: #6b7777;
@@ -59,7 +59,7 @@
   font-size: 14px;
 }
 
-.solicitacao-status select {
+.solicitacao-situacao select {
   min-width: 190px;
   min-height: 44px;
   padding: 0 12px;
@@ -334,19 +334,19 @@ header nav .aba-contador { margin-left: 8px; }
 /* ---------- SOLICITAÇÕES RECEBIDAS: quadro com 4 colunas ---------- */
 
 /* ícones PNG desta tela (traço fino, como no protótipo) */
-.ik {
+.icone-pequeno {
   display: block;
   flex: none;
   width: 20px;
   height: 20px;
 }
 
-.ik-14 { width: 14px; height: 14px; }
-.ik-15 { width: 15px; height: 15px; }
-.ik-18 { width: 18px; height: 18px; }
+.icone-pequeno-14 { width: 14px; height: 14px; }
+.icone-pequeno-15 { width: 15px; height: 15px; }
+.icone-pequeno-18 { width: 18px; height: 18px; }
 
 /* campo de busca, no canto direito do topo */
-.kanban-busca {
+.quadro-busca {
   display: flex;
   align-items: center;
   gap: 9px;
@@ -359,12 +359,12 @@ header nav .aba-contador { margin-left: 8px; }
   border-radius: 9px;
 }
 
-.kanban-busca:focus-within {
+.quadro-busca:focus-within {
   outline: 3px solid #f0ac3d;
   outline-offset: 2px;
 }
 
-.kanban-busca input {
+.quadro-busca input {
   width: 100%;
   min-height: 46px;
   border: 0;
@@ -375,12 +375,12 @@ header nav .aba-contador { margin-left: 8px; }
 }
 
 /* o quadro */
-.kanban {
+.quadro {
   /* tamanhos dos textos do cartão (iguais ao protótipo): para aumentar a leitura, mude só aqui */
-  --kanban-texto-pedido: 9px;
-  --kanban-texto-rotulo: 8px;
-  --kanban-texto-campo: 9px;
-  --kanban-texto-link: 8px;
+  --quadro-texto-pedido: 9px;
+  --quadro-texto-rotulo: 8px;
+  --quadro-texto-campo: 9px;
+  --quadro-texto-link: 8px;
 
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -448,7 +448,7 @@ header nav .aba-contador { margin-left: 8px; }
 }
 
 /* cartão de cada solicitação */
-.cartao-kanban {
+.cartao-quadro {
   padding: 15px;
   background: #fff;
   border: 1px solid #d9e3e4;
@@ -456,35 +456,35 @@ header nav .aba-contador { margin-left: 8px; }
   box-shadow: 0 4px 12px rgba(20, 67, 67, 0.05);
 }
 
-.cartao-kanban-topo {
+.cartao-quadro-topo {
   display: grid;
   grid-template-columns: 1fr auto;
   align-items: start;
   gap: 10px;
 }
 
-.cartao-kanban h3 {
+.cartao-quadro h3 {
   margin: 0 0 8px;
   color: #263636;
   font-size: 14px;
   font-weight: 400;
 }
 
-.cartao-kanban-linha,
-.cartao-kanban-prazo {
+.cartao-quadro-linha,
+.cartao-quadro-prazo {
   display: flex;
   align-items: center;
   gap: 6px;
   margin: 0;
   color: #6b7777;
-  font-size: var(--kanban-texto-pedido);
+  font-size: var(--quadro-texto-pedido);
 }
 
-.cartao-kanban-linha { line-height: 1.5; }
+.cartao-quadro-linha { line-height: 1.5; }
 
-.cartao-kanban-prazo { margin-top: 12px; }
+.cartao-quadro-prazo { margin-top: 12px; }
 
-.cartao-kanban-seta {
+.cartao-quadro-seta {
   display: grid;
   place-items: center;
   flex: none;
@@ -497,48 +497,48 @@ header nav .aba-contador { margin-left: 8px; }
   text-decoration: none;
 }
 
-.cartao-kanban-seta:hover {
+.cartao-quadro-seta:hover {
   border-color: #006767;
   background: #e1f1f0;
 }
 
-.cartao-kanban-status {
+.cartao-quadro-situacao {
   display: block;
   margin-top: 12px;
   padding-top: 10px;
   border-top: 1px solid #d9e3e4;
 }
 
-.cartao-kanban-status small {
+.cartao-quadro-situacao small {
   display: block;
   margin-bottom: 5px;
   color: #6b7777;
-  font-size: var(--kanban-texto-rotulo);
+  font-size: var(--quadro-texto-rotulo);
 }
 
-.cartao-kanban-status select {
+.cartao-quadro-situacao select {
   width: 100%;
   min-height: 44px;
   padding: 0 8px;
   color: #263636;
-  font-size: var(--kanban-texto-campo);
+  font-size: var(--quadro-texto-campo);
   background: #fff;
   border: 1px solid #b8c7c8;
   border-radius: 7px;
 }
 
-.cartao-kanban-acoes {
+.cartao-quadro-acoes {
   display: flex;
   justify-content: space-between;
   align-items: center;
   gap: 8px;
   margin-top: 10px;
-  font-size: var(--kanban-texto-link);
+  font-size: var(--quadro-texto-link);
   font-weight: 700;
 }
 
-.cartao-kanban-acoes a,
-.cartao-kanban-acoes button {
+.cartao-quadro-acoes a,
+.cartao-quadro-acoes button {
   display: inline-flex;
   align-items: center;
   min-height: 44px;
@@ -549,20 +549,20 @@ header nav .aba-contador { margin-left: 8px; }
   cursor: pointer;
 }
 
-.cartao-kanban-acoes a {
+.cartao-quadro-acoes a {
   color: #006767;
   text-decoration: none;
 }
 
-.cartao-kanban-acoes button { color: var(--error, #d94335); }
+.cartao-quadro-acoes button { color: var(--erro, #d94335); }
 
-.cartao-kanban-acoes a:hover,
-.cartao-kanban-acoes button:hover {
+.cartao-quadro-acoes a:hover,
+.cartao-quadro-acoes button:hover {
   text-decoration: underline;
 }
 
 /* coluna sem solicitações (ou busca sem resultado) */
-.kanban-vazio {
+.quadro-vazio {
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -573,7 +573,7 @@ header nav .aba-contador { margin-left: 8px; }
   font-size: 9px;
 }
 
-.kanban-vazio[hidden] { display: none; }
+.quadro-vazio[hidden] { display: none; }
 
 /* ---------- EDITAR CADASTRO ---------- */
 
@@ -602,7 +602,7 @@ header nav .aba-contador { margin-left: 8px; }
   gap: 24px;
 }
 
-.edicao-grade .form-cartao {
+.edicao-grade .formulario-cartao {
   margin-bottom: 0;
 }
 
@@ -734,21 +734,21 @@ header nav .aba-contador { margin-left: 8px; }
 }
 
 /* ---------- barra de etapas na horizontal ---------- */
-.stepper {
+.indicador-etapas {
   list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
 }
 
-.stepper li {
+.indicador-etapas li {
   position: relative;
   flex: 1;
   text-align: center;
 }
 
 /* linha que liga uma etapa à anterior */
-.stepper li + li::before {
+.indicador-etapas li + li::before {
   content: "";
   position: absolute;
   top: 28px;
@@ -758,12 +758,12 @@ header nav .aba-contador { margin-left: 8px; }
   background: #d9e3e4;
 }
 
-.stepper .feito::before,
-.stepper .atual::before {
+.indicador-etapas .feito::before,
+.indicador-etapas .atual::before {
   background: #006767;
 }
 
-.stepper-bolinha {
+.indicador-etapas-bolinha {
   position: relative;
   z-index: 1;
   display: grid;
@@ -780,31 +780,31 @@ header nav .aba-contador { margin-left: 8px; }
 }
 
 /* etapa atual: bolinha cheia com um "halo" claro em volta */
-.stepper .feito .stepper-bolinha,
-.stepper .atual .stepper-bolinha {
+.indicador-etapas .feito .indicador-etapas-bolinha,
+.indicador-etapas .atual .indicador-etapas-bolinha {
   background: #006767;
   border-color: #006767;
   color: #fff;
 }
 
-.stepper .atual .stepper-bolinha {
+.indicador-etapas .atual .indicador-etapas-bolinha {
   box-shadow: 0 0 0 6px #e1f1f0;
 }
 
-.stepper-nome {
+.indicador-etapas-nome {
   display: block;
   color: #8a9696;
   font-size: 13px;
   font-weight: 600;
 }
 
-.stepper .feito .stepper-nome,
-.stepper .atual .stepper-nome {
+.indicador-etapas .feito .indicador-etapas-nome,
+.indicador-etapas .atual .indicador-etapas-nome {
   color: #263636;
   font-weight: 700;
 }
 
-.stepper-sub {
+.indicador-etapas-sub {
   display: block;
   margin-top: 2px;
   color: #8a9696;
@@ -842,12 +842,12 @@ header nav .aba-contador { margin-left: 8px; }
   font-size: 12px;
 }
 
-.acompanhamento-status {
+.acompanhamento-situacao {
   width: 270px;
   max-width: 100%;
 }
 
-.acompanhamento-status label {
+.acompanhamento-situacao label {
   display: block;
   margin-bottom: 8px;
   color: #263636;
@@ -855,7 +855,7 @@ header nav .aba-contador { margin-left: 8px; }
   font-weight: 700;
 }
 
-.acompanhamento-status select {
+.acompanhamento-situacao select {
   width: 100%;
   min-height: 48px;
   padding: 0 12px;
@@ -865,7 +865,7 @@ header nav .aba-contador { margin-left: 8px; }
   border-radius: 8px;
 }
 
-.acompanhamento .stepper {
+.acompanhamento .indicador-etapas {
   margin-top: 28px;
 }
 
@@ -896,8 +896,8 @@ header nav .aba-contador { margin-left: 8px; }
   font-size: 10px;
   font-weight: 400;
 }
-/* o chat agora fica numa coluna ao lado, então não precisa de margem em cima */
-.chat {
+/* o conversa agora fica numa coluna ao lado, então não precisa de margem em cima */
+.conversa {
   margin-top: 0;
 }
 
@@ -914,16 +914,16 @@ header nav .aba-contador { margin-left: 8px; }
   color: #fff;
 }
 
-.chat-mensagens {
+.conversa-mensagens {
   min-height: 320px;
 }
 
 /* evita que "● Online" quebre em duas linhas */
-.chat-online {
+.conversa-online {
   flex: none;
   white-space: nowrap;
 }
-/* ---------- duas colunas: dados à esquerda, chat à direita ---------- */
+/* ---------- duas colunas: dados à esquerda, conversa à direita ---------- */
 .detalhe-grade-2 {
   display: grid;
   grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
@@ -945,26 +945,26 @@ header nav .aba-contador { margin-left: 8px; }
 }
 /* celular: as etapas ficam uma embaixo da outra */
 @media (max-width: 900px) {
-  .stepper { flex-direction: column; gap: 18px; }
-  .stepper li { display: flex; align-items: center; gap: 14px; text-align: left; }
-  .stepper li + li::before { display: none; }
-  .stepper-bolinha { margin: 0; flex: none; }
+  .indicador-etapas { flex-direction: column; gap: 18px; }
+  .indicador-etapas li { display: flex; align-items: center; gap: 14px; text-align: left; }
+  .indicador-etapas li + li::before { display: none; }
+  .indicador-etapas-bolinha { margin: 0; flex: none; }
 }
 @media (max-width: 900px) {
   .edicao-grade { grid-template-columns: 1fr; }
 }
 /* telas menores: 2 colunas, depois 1 */
 @media (max-width: 1100px) {
-  .kanban { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .quadro { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .coluna { min-height: 520px; }
 }
 
 @media (max-width: 900px) {
-  .kanban-busca { width: 100%; }
+  .quadro-busca { width: 100%; }
 }
 
 @media (max-width: 640px) {
-  .kanban { grid-template-columns: 1fr; }
+  .quadro { grid-template-columns: 1fr; }
   .coluna { min-height: 0; }
 }
 

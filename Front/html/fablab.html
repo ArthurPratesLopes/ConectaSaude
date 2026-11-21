@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Cadastro de laboratório</title>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/home.css">
+  <link rel="stylesheet" href="../css/inicio.css">
   <link rel="stylesheet" href="../css/pedidos.css">
   <link rel="stylesheet" href="../css/laboratorio.css">
     <link rel="stylesheet" href="../css/solicitacoes.css">
@@ -21,6 +21,7 @@
 
       <nav aria-label="Navegação principal">
   <a href="solicitacoes.html">Solicitações recebidas</a>
+  <a href="fablab.html" aria-current="page">Meu laboratório</a>
 </nav>
     <a href="../index.html" class="botao-acessar" id="botao-sair">Sair</a>
     </header>
@@ -39,8 +40,8 @@
   <!-- COLUNA DA ESQUERDA -->
   <div class="edicao-coluna">
 
-    <section class="form-cartao" id="dados" aria-labelledby="titulo-dados-lab">
-      <div class="form-cartao-topo">
+    <section class="formulario-cartao" id="dados" aria-labelledby="titulo-dados-lab">
+      <div class="formulario-cartao-topo">
         <span class="caixa-icone"><img class="icone" src="../img/icone-aacd.png" alt=""></span>
         <div>
           <h2 id="titulo-dados-lab">Editar cadastro</h2>
@@ -48,7 +49,7 @@
         </div>
       </div>
 
-      <div class="form-corpo">
+      <div class="formulario-corpo">
         <div class="campo campo-logo campo-logo-edicao">
           <label for="logo-lab">Logo do laboratório <span class="opcional">(opcional)</span></label>
           <div class="logo-upload">
@@ -112,15 +113,15 @@
       </div>
     </section>
 
-    <section class="form-cartao" id="requisitos" aria-labelledby="titulo-requisitos">
-      <div class="form-cartao-topo">
+    <section class="formulario-cartao" id="requisitos" aria-labelledby="titulo-requisitos">
+      <div class="formulario-cartao-topo">
         <div>
           <h2 id="titulo-requisitos">Requisitos da Instituição</h2>
           <p>Mantenha os critérios de participação atualizados.</p>
         </div>
       </div>
 
-      <div class="form-corpo">
+      <div class="formulario-corpo">
         <ul class="lista-requisitos">
           <li><label><input type="checkbox" name="req" value="area" checked> Área de impressão limpa, ventilada e organizada</label></li>
           <li><label><input type="checkbox" name="req" value="responsavel" checked> Responsável técnico disponível para acompanhar os pedidos</label></li>
@@ -137,8 +138,8 @@
   </div>
 
   <!-- COLUNA DA DIREITA: equipamentos (impressoras) -->
-<section class="form-cartao" id="equipamento" aria-labelledby="titulo-equip">
-  <div class="form-cartao-topo">
+<section class="formulario-cartao" id="equipamento" aria-labelledby="titulo-equip">
+  <div class="formulario-cartao-topo">
     <span class="caixa-icone"><img class="icone" src="../img/impressora.png" alt=""></span>
     <div>
       <h2 id="titulo-equip">Adicionar ou editar impressoras</h2>
@@ -146,7 +147,7 @@
     </div>
   </div>
 
-  <div class="form-corpo">
+  <div class="formulario-corpo">
     <p class="impressoras-topo" id="impressoras-contagem">Impressoras cadastradas (2)</p>
 
     <ul class="parque" id="parque" aria-live="polite">
@@ -265,7 +266,7 @@
       <h2 id="titulo-nova-imp">Adicionar impressora</h2>
       <p class="gaveta-sub">Informe os dados da impressora para combinarmos com os pedidos.</p>
 
-      <form id="form-impressora" novalidate>
+      <form id="formulario-impressora" novalidate>
         <div class="campo-duplo">
           <div class="campo">
             <label for="outra-marca">Marca <em>*</em></label>
@@ -311,6 +312,6 @@
       </form>
     </section>
   </div>
-<script src="../js/app.js"></script>
+<script src="../js/aplicativo.js"></script>
 </body>
 </html>

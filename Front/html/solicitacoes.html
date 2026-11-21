@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Pedidos recebidos</title>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/home.css">
+  <link rel="stylesheet" href="../css/inicio.css">
   <link rel="stylesheet" href="../css/pedidos.css">
   <link rel="stylesheet" href="../css/laboratorio.css">
 <link rel="stylesheet" href="../css/solicitacoes.css">
@@ -22,6 +22,7 @@
 
       <nav aria-label="Navegação principal">
   <a href="solicitacoes.html" aria-current="page">Pedidos recebidos</a>
+  <a href="fablab.html">Meu laboratório</a>
 </nav>
 
     <a href="../index.html" class="botao-acessar" id="botao-sair">Sair</a>
@@ -32,39 +33,39 @@
   <div>
     <span class="sobretitulo">Painel do laboratório</span>
     <h1>Pedidos recebidos</h1>
-    <p>Analise novas demandas e acompanhe o status de cada pedido.</p>
+    <p>Analise novas demandas e acompanhe a situação de cada pedido.</p>
   </div>
-  <label class="kanban-busca">
-    <img class="ik ik-18" src="../img/lupa.png" alt="" width="18" height="18">
+  <label class="quadro-busca">
+    <img class="icone-pequeno icone-pequeno-18" src="../img/lupa.png" alt="" width="18" height="18">
     <input type="search" id="busca-solicitacoes" placeholder="Buscar por pedido..." aria-label="Buscar pedido">
   </label>
 </div>
 
-<section class="kanban" aria-label="Pedidos por status">
+<section class="quadro" aria-label="Pedidos por situação">
   <div class="coluna coluna-novos">
     <div class="coluna-topo">
-      <h2><img class="ik" src="../img/relogio.png" alt="" width="20" height="20"> Novos</h2>
+      <h2><img class="icone-pequeno" src="../img/relogio.png" alt="" width="20" height="20"> Novos</h2>
       <span class="coluna-contador">0</span>
     </div>
     <div class="coluna-corpo"></div>
   </div>
   <div class="coluna coluna-aceito">
     <div class="coluna-topo">
-      <h2><img class="ik" src="../img/play.png" alt="" width="20" height="20"> Aceito</h2>
+      <h2><img class="icone-pequeno" src="../img/reproduzir.png" alt="" width="20" height="20"> Aceito</h2>
       <span class="coluna-contador">0</span>
     </div>
     <div class="coluna-corpo"></div>
   </div>
   <div class="coluna coluna-producao">
     <div class="coluna-topo">
-      <h2><img class="ik" src="../img/impressora.png" alt="" width="20" height="20"> Em Produção</h2>
+      <h2><img class="icone-pequeno" src="../img/impressora.png" alt="" width="20" height="20"> Em Produção</h2>
       <span class="coluna-contador">0</span>
     </div>
     <div class="coluna-corpo"></div>
   </div>
   <div class="coluna coluna-pronto">
     <div class="coluna-topo">
-      <h2><img class="ik" src="../img/check.png" alt="" width="20" height="20"> Pronto</h2>
+      <h2><img class="icone-pequeno" src="../img/check.png" alt="" width="20" height="20"> Pronto</h2>
       <span class="coluna-contador">0</span>
     </div>
     <div class="coluna-corpo"></div>
@@ -90,6 +91,6 @@
       <p class="rodape-copy">© 2026 Instituto Mauá de Tecnologia</p>
     </div>
   </footer>
-<script src="../js/app.js"></script>
+<script src="../js/aplicativo.js"></script>
 </body>
 </html>

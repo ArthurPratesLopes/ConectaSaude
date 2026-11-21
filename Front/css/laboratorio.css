@@ -154,14 +154,14 @@
   text-decoration: underline;
 }
 
-.form-cartao {
+.formulario-cartao {
   margin-bottom: 24px;
   background: white;
   border: 1px solid #d9e3e4;
   border-radius: 16px;
 }
 
-.form-cartao-topo {
+.formulario-cartao-topo {
   display: flex;
   align-items: center;
   gap: 14px;
@@ -169,11 +169,11 @@
   border-bottom: 1px solid #d9e3e4;
 }
 
-.form-cartao-topo > div {
+.formulario-cartao-topo > div {
   flex: 1;
 }
 
-.form-icone {
+.formulario-icone {
   display: grid;
   place-items: center;
   flex: none;
@@ -183,20 +183,20 @@
   background: #e1f1f0;
 }
 
-.form-cartao-topo h2 {
+.formulario-cartao-topo h2 {
   margin: 0;
   color: #263636;
   font-size: 20px;
   font-weight: 400;
 }
 
-.form-cartao-topo p {
+.formulario-cartao-topo p {
   margin: 2px 0 0;
   color: #6b7777;
   font-size: 13px;
 }
 
-.form-corpo {
+.formulario-corpo {
   padding: 8px 28px 28px;
 }
 
@@ -215,7 +215,7 @@
   font-weight: 700;
 }
 
-.form-icone {
+.formulario-icone {
   color: #006767;
   font-size: 13px;
   font-weight: 800;
@@ -259,7 +259,7 @@
   font-size: 12px;
 }
 
-.form-icone.mini {
+.formulario-icone.mini {
   width: 36px;
   height: 36px;
   border-radius: 10px;
@@ -449,12 +449,12 @@
 }
 
 @media (max-width: 600px) {
-  .form-cartao-topo {
+  .formulario-cartao-topo {
     flex-wrap: wrap;
     padding: 20px 18px 16px;
   }
 
-  .form-corpo {
+  .formulario-corpo {
     padding: 8px 18px 22px;
   }
 

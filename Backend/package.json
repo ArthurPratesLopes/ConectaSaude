@@ -1,7 +1,7 @@
 {
   "scripts": {
-    "start": "node server.js",
-    "seed": "node seed.js"
+    "start": "node servidor.js",
+    "popular-banco": "node dadosExemplo.js"
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",

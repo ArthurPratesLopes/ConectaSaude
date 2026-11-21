@@ -1,5 +1,5 @@
-/* ============ CHAT DA SOLICITAÇÃO ============ */
-.chat {
+/* ============ conversa DA SOLICITAÇÃO ============ */
+.conversa {
   margin-top: 24px;
   background: #fff;
   border: 1px solid #d9e3e4;
@@ -7,7 +7,7 @@
   overflow: hidden;
 }
 
-.chat-topo {
+.conversa-topo {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -16,32 +16,32 @@
   border-bottom: 1px solid #d9e3e4;
 }
 
-.chat-topo h2 {
+.conversa-topo h2 {
   margin: 0;
   font-size: 20px;
   font-weight: 500;
   color: #1f2f2f;
 }
 
-.chat-topo p {
+.conversa-topo p {
   margin: 4px 0 0;
   font-size: 12px;
   color: #6b7777;
 }
 
-.chat-online {
+.conversa-online {
   font-size: 12px;
   font-weight: 700;
   color: #006767;
 }
 
-.chat-online::before {
+.conversa-online::before {
   content: "● ";
   font-size: 9px;
   color: #1a8a5a;
 }
 /* ----- área das mensagens ----- */
-.chat-mensagens {
+.conversa-mensagens {
   display: flex;
   flex-direction: column;
   gap: 16px;
@@ -91,7 +91,7 @@
 .mensagem-enviada small { color: #cfe8e6; }
 
 /* ----- caixa de digitar + botão enviar ----- */
-.chat-envio {
+.conversa-envio {
   display: flex;
   align-items: stretch;
   gap: 12px;
@@ -99,7 +99,7 @@
   border-top: 1px solid #d9e3e4;
 }
 
-.chat-envio textarea {
+.conversa-envio textarea {
   flex: 1;
   min-height: 56px;
   padding: 12px;
@@ -110,12 +110,12 @@
   resize: vertical;
 }
 
-.chat-envio textarea:focus {
+.conversa-envio textarea:focus {
   outline: 2px solid #006767;
   outline-offset: 1px;
 }
 
-.chat-envio .botao-principal {
+.conversa-envio .botao-principal {
   margin-top: 0;
   border: 0;
   font: inherit;
@@ -123,7 +123,7 @@
   cursor: pointer;
 }
 
-.chat-envio .botao-principal:disabled {
+.conversa-envio .botao-principal:disabled {
   background: #b9c4c4;
   box-shadow: none;
   cursor: not-allowed;
@@ -143,7 +143,7 @@
 /* celular: balões mais largos e caixa de digitar empilhada */
 @media (max-width: 700px) {
   .mensagem { max-width: 90%; }
-  .chat-envio { flex-direction: column; }
+  .conversa-envio { flex-direction: column; }
 }
 
 /* ----- botão cancelar solicitação (laboratório) ----- */
@@ -165,8 +165,8 @@
   background: #fde8e3;
   color: #cb4928;
 }
-/* o chat agora fica numa coluna ao lado, então não precisa de margem em cima */
-.chat {
+/* o conversa agora fica numa coluna ao lado, então não precisa de margem em cima */
+.conversa {
   margin-top: 0;
 }
 
@@ -183,12 +183,12 @@
   color: #fff;
 }
 
-.chat-mensagens {
+.conversa-mensagens {
   min-height: 320px;
 }
 
 /* evita que "● Online" quebre em duas linhas */
-.chat-online {
+.conversa-online {
   flex: none;
   white-space: nowrap;
 }

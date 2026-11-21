@@ -1,7 +1,7 @@
-const mongoose = require('mongoose');
-const bcrypt = require('bcryptjs');
+const mangusto = require('mongoose');
+const bibliotecaHash = require('bcryptjs');
 
-const userSchema = new mongoose.Schema({
+const esquemaUsuario = new mangusto.Schema({
   nomeInstituicao: {
     type: String,
     required: true,
@@ -34,20 +34,27 @@ const userSchema = new mongoose.Schema({
     required: true,
     trim: true,
     uppercase: true
-  }
+  },
+  cnpj: { type: String, trim: true, default: '' },
+  cep: { type: String, trim: true, default: '' },
+  rua: { type: String, trim: true, default: '' },
+  bairro: { type: String, trim: true, default: '' },
+  numero: { type: String, trim: true, default: '' },
+  complemento: { type: String, trim: true, default: '' },
+  requisitos: [{ type: String }]
 }, {
   timestamps: true
 });
 
 // Antes de salvar, transforma a senha em hash (só quando ela foi criada/alterada)
-userSchema.pre('save', async function () {
+esquemaUsuario.pre('save', async function () {
   if (!this.isModified('senha')) return;
-  this.senha = await bcrypt.hash(this.senha, 10);
+  this.senha = await bibliotecaHash.hash(this.senha, 10);
 });
 
 // Compara a senha digitada com o hash guardado
-userSchema.methods.conferirSenha = function (senhaDigitada) {
-  return bcrypt.compare(senhaDigitada, this.senha);
+esquemaUsuario.methods.conferirSenha = function (senhaDigitada) {
+  return bibliotecaHash.compare(senhaDigitada, this.senha);
 };
 
-module.exports = mongoose.model('User', userSchema);
+module.exports = mangusto.model('Usuario', esquemaUsuario, 'users');

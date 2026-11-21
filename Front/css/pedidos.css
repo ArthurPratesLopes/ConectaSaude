@@ -770,7 +770,7 @@
 }
 
 
-/* ---------- tela do pedido (AACD): dados à esquerda, chat à direita ---------- */
+/* ---------- tela do pedido (AACD): dados à esquerda, conversa à direita ---------- */
 .detalhe-grade-pedido {
   display: grid;
   grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr);
@@ -782,7 +782,7 @@
   min-width: 0;
 }
 
-.detalhe-grade-pedido .chat {
+.detalhe-grade-pedido .conversa {
   margin-top: 0;
 }
 

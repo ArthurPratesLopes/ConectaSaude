@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Visualizar pedido</title>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="../css/home.css">
+  <link rel="stylesheet" href="../css/inicio.css">
   <link rel="stylesheet" href="../css/pedidos.css">
   <link rel="stylesheet" href="../css/laboratorio.css">
   <link rel="stylesheet" href="../css/solicitacoes.css">
   <link rel="stylesheet" href="../css/interacoes.css">
-    <link rel="stylesheet" href="../css/chat.css">
+    <link rel="stylesheet" href="../css/conversa.css">
 </head>
 <body>
 
@@ -22,6 +22,7 @@
 
       <nav aria-label="Navegação principal">
   <a href="solicitacoes.html" aria-current="page">Pedidos recebidos</a>
+  <a href="fablab.html">Meu laboratório</a>
 </nav>
 
     <a href="../index.html" class="botao-acessar" id="botao-sair">Sair</a>
@@ -50,9 +51,9 @@
       </div>
     </div>
 
-    <div class="acompanhamento-status">
-      <label for="status-atual">Status atual</label>
-      <select id="status-atual">
+    <div class="acompanhamento-situacao">
+      <label for="situacao-atual">Situação atual</label>
+      <select id="situacao-atual">
         <option value="analise" disabled>Selecione a etapa</option>
         <option value="aceito">Aceito</option>
         <option value="producao">Em produção</option>
@@ -62,14 +63,14 @@
     </div>
   </div>
 
-  <ol class="stepper" aria-label="Etapas da produção">
-    <li><span class="stepper-bolinha">1</span><span class="stepper-nome">1. Aceito</span></li>
-    <li><span class="stepper-bolinha">2</span><span class="stepper-nome">2. Em produção</span></li>
-    <li><span class="stepper-bolinha">✓</span><span class="stepper-nome">3. Pronto</span></li>
+  <ol class="indicador-etapas" aria-label="Etapas da produção">
+    <li><span class="indicador-etapas-bolinha">1</span><span class="indicador-etapas-nome">1. Aceito</span></li>
+    <li><span class="indicador-etapas-bolinha">2</span><span class="indicador-etapas-nome">2. Em produção</span></li>
+    <li><span class="indicador-etapas-bolinha">✓</span><span class="indicador-etapas-nome">3. Pronto</span></li>
   </ol>
 
 </section>
-<!-- DUAS COLUNAS: dados da solicitação + chat -->
+<!-- DUAS COLUNAS: dados da solicitação + conversa -->
 <div class="detalhe-grade-2">
 
   <section class="detalhe-cartao" aria-labelledby="titulo-dados">
@@ -132,22 +133,22 @@
     <button type="button" class="botao-cancelar-contorno" id="recusar-solicitacao">Recusar pedido</button>
   </section>
 
-  <!-- CHAT -->
-  <section class="chat" aria-labelledby="titulo-chat">
-    <div class="chat-topo">
+  <!-- conversa -->
+  <section class="conversa" aria-labelledby="titulo-conversa">
+    <div class="conversa-topo">
       <div>
-        <h2 id="titulo-chat">Comunicação do pedido</h2>
-        <p id="chat-sub"></p>
+        <h2 id="titulo-conversa">Comunicação do pedido</h2>
+        <p id="conversa-sub"></p>
       </div>
     </div>
 
-    <div class="chat-mensagens" id="chat-mensagens" aria-live="polite">
+    <div class="conversa-mensagens" id="conversa-mensagens" aria-live="polite">
     </div>
 
-    <div class="chat-envio">
-      <label class="so-leitor" for="chat-texto">Mensagem</label>
-      <textarea id="chat-texto" rows="2" placeholder="Escreva uma mensagem sobre este pedido..."></textarea>
-      <button type="button" class="botao-principal" id="chat-enviar">Enviar →</button>
+    <div class="conversa-envio">
+      <label class="so-leitor" for="conversa-texto">Mensagem</label>
+      <textarea id="conversa-texto" rows="2" placeholder="Escreva uma mensagem sobre este pedido..."></textarea>
+      <button type="button" class="botao-principal" id="conversa-enviar">Enviar →</button>
     </div>
   </section>
 
@@ -173,6 +174,6 @@
     </div>
   </footer>
 
-<script src="../js/app.js"></script>
+<script src="../js/aplicativo.js"></script>
 </body>
 </html>

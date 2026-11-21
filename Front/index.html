@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap"
     rel="stylesheet">
-  <link rel="stylesheet" href="css/home.css">
+  <link rel="stylesheet" href="css/inicio.css">
 </head>
 
 <body>
@@ -31,8 +31,8 @@
   </header>
 
   <main id="conteudo">
-    <section class="hero">
-      <div class="hero-texto">
+    <section class="destaque">
+      <div class="destaque-texto">
         <span class="sobretitulo">Tecnologia que transforma</span>
         <h1>Conectando necessidades a soluções que devolvem autonomia.</h1>
         <p>A Conecta Saúde aproxima profissionais de instituições de saúde e laboratórios FabLab para tornar órteses e próteses mais
@@ -40,7 +40,7 @@
                 <a href="#acesso" class="botao-principal" id="comecar">Começar agora</a>
       </div>
 
-      <div class="hero-visual">
+      <div class="destaque-visual">
         <!-- Foto do FabLab: img/fablab.jpg -->
         <img src="img/fablab.jpg"
           alt="Impressora 3D em funcionamento em um laboratório de fabricação digital">
@@ -55,7 +55,7 @@
             <button type="button" data-modo="cadastro" aria-pressed="false">Criar conta</button>
           </div>
 
-          <form id="form-acesso" novalidate>
+          <form id="formulario-acesso" novalidate>
             <fieldset class="perfis">
               <legend>Seu perfil</legend>
               <div class="perfis-opcoes">
@@ -108,18 +108,15 @@
             <div class="campo">
               <label for="senha">Senha</label>
               <div class="campo-senha">
-                <input type="password" id="senha" placeholder="Mínimo de 8 caracteres" autocomplete="current-password"
-                  minlength="8" required aria-describedby="erro-senha aviso-caps">
+                <input type="password" id="senha" placeholder="Digite sua senha" autocomplete="current-password"
+                  required aria-describedby="erro-senha">
                 <button type="button" class="ver-senha" id="ver-senha" aria-pressed="false" aria-label="Mostrar senha">
                   <img class="olho-aberto" src="img/olho.png" alt="" width="20" height="20">
                   <img class="olho-fechado" src="img/olho-fechado.png" alt="" width="20" height="20" style="display:none">
                 </button>
               </div>
-              <small class="campo-erro" id="aviso-caps" role="status" hidden>Caps Lock está ativado.</small>
               <small class="campo-erro" id="erro-senha" hidden></small>
             </div>
-
-            <button type="button" class="link-esqueci">Esqueci minha senha</button>
 
             <div class="termo-bloco" id="campo-termo" hidden>
               <label class="termo">
@@ -134,7 +131,7 @@
 
             <button type="submit" class="botao-entrar" id="botao-acesso" disabled>
               <span class="botao-texto">Entrar</span>
-              <span class="spinner" aria-hidden="true"></span>
+              <span class="indicador-carregamento" aria-hidden="true"></span>
             </button>
             <p class="lgpd"><img class="icone" src="img/cadeado.png" alt="" width="13" height="13"> Ambiente protegido conforme a LGPD</p>
           </form>
@@ -148,7 +145,7 @@
           <span class="sobretitulo">Simples e transparente</span>
           <h2>Da necessidade à entrega, passo a passo</h2>
         </div>
-        <p>Cada etapa é acompanhada pelos dois perfis, com informações claras e status sempre visível.</p>
+        <p>Cada etapa é acompanhada pelos dois perfis, com informações claras e situação sempre visível.</p>
       </div>
 
       <ol class="passos">
@@ -245,7 +242,7 @@
         <p>Ao aceitar e produzir um pedido, o Laboratório se compromete a:</p>
         <ul class="legal-lista">
           <li>avaliar sua capacidade e seu prazo antes de aceitar, e recusar o que não puder cumprir;</li>
-          <li>manter o status do pedido e as informações de suas impressoras atualizados;</li>
+          <li>manter a situação do pedido e as informações de suas impressoras atualizadas;</li>
           <li>produzir conforme o arquivo e as especificações recebidas;</li>
           <li>usar os dados e arquivos do pedido apenas para a produção solicitada, sem reutilizá-los ou repassá-los.</li>
         </ul>
@@ -317,8 +314,8 @@
         <h3><span class="legal-num">2.</span>Dados que coletamos</h3>
         <ul class="legal-lista">
           <li><b>Conta:</b> nome da instituição ou laboratório, e-mail, cidade, UF, perfil e senha (guardada apenas como hash, nunca em texto aberto);</li>
-          <li><b>Pedidos:</b> código do paciente, tipo de peça, material, medidas e observações técnicas, prazo, urgência, quantidade, arquivo .stl, status e validação clínica;</li>
-          <li><b>Mensagens:</b> texto do chat de cada pedido, com data, hora e remetente;</li>
+          <li><b>Pedidos:</b> código do paciente, tipo de peça, material, medidas e observações técnicas, prazo, urgência, quantidade, arquivo .stl, situação e validação clínica;</li>
+          <li><b>Mensagens:</b> texto da conversa de cada pedido, com data, hora e remetente;</li>
           <li><b>Laboratórios:</b> dados das impressoras (marca, modelo, tecnologia, disponibilidade, volume e materiais);</li>
           <li><b>Dados técnicos:</b> datas de criação e alteração dos registros e informações de sessão para mantê-lo conectado.</li>
         </ul>
@@ -326,7 +323,7 @@
 
       <div class="legal-secao">
         <h3><span class="legal-num">3.</span>Dados de pacientes</h3>
-        <p>Pedidos de órteses e próteses se relacionam a informações de saúde, que a LGPD considera dados sensíveis. Por isso, o paciente é identificado apenas por um código interno da Instituição (ex.: “PAC-4821”). É proibido informar nome, CPF, contato ou outro dado que identifique o paciente, inclusive no chat e nos arquivos.</p>
+        <p>Pedidos de órteses e próteses se relacionam a informações de saúde, que a LGPD considera dados sensíveis. Por isso, o paciente é identificado apenas por um código interno da Instituição (ex.: “PAC-4821”). É proibido informar nome, CPF, contato ou outro dado que identifique o paciente, inclusive na conversa e nos arquivos.</p>
         <p>A correspondência entre o código e o paciente fica apenas nos sistemas da Instituição, que é responsável por ter base legal e, quando aplicável, o consentimento do paciente ou de seu responsável.</p>
       </div>
 
@@ -429,7 +426,7 @@
     </div>
   </footer>
 
-<script src="js/app.js"></script>
+<script src="js/aplicativo.js"></script>
 </body>
 
 </html>

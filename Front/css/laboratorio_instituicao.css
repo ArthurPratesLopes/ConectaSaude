@@ -128,7 +128,7 @@
 }
 
 /* "● Disponível" (bolinha + texto) */
-.lab-status {
+.lab-disponibilidade {
   display: inline-flex;
   align-items: center;
   gap: 6px;
@@ -137,14 +137,14 @@
   font-weight: 700;
 }
 
-.lab-status::before {
+.lab-disponibilidade::before {
   content: "";
   width: 8px;
   height: 8px;
   border-radius: 50%;
   background: currentColor;
 }
-.lab-status-parcial {
+.lab-disponibilidade-parcial {
   color: #9a6a00;
 }
 .lab-numeros {

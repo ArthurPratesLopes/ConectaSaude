@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Conecta Saúde - teste de mensagens</title>
+  <style>
+    body { font-family: sans-serif; margin: 30px; display: flex; gap: 20px; }
+    .cartao { background: #fff; padding: 20px; border: 1px solid #ccc; border-radius: 8px; width: 350px; }
+    input, textarea, button { width: 100%; padding: 8px; margin: 6px 0; box-sizing: border-box; }
+    button { background: #0070f3; color: white; border: none; cursor: pointer; font-weight: bold; }
+    .resultado { margin-top: 10px; padding: 8px; border-radius: 4px; font-size: 13px; max-height: 200px; overflow-y: auto; background: #f9f9f9; border: 1px solid #eee; }
+    .item-mensagem { margin-bottom: 8px; padding: 6px; background: #fff; border-radius: 4px; border: 1px solid #ddd; }
+  </style>
+</head>
+<body>
+
+  <div class="cartao">
+    <h3>💬 Enviar Mensagem</h3>
+    <input type="text" id="id-pedido" placeholder="ID do Pedido">
+    <input type="text" id="id-remetente" placeholder="ID do Remetente">
+    <textarea id="texto" placeholder="Digite a mensagem..."></textarea>
+    <button onclick="enviarMensagem()">Enviar</button>
+    <div id="resultado-envio" class="resultado" style="display:none;"></div>
+  </div>
+
+  <div class="cartao">
+    <h3>📋 Histórico da conversa</h3>
+    <input type="text" id="busca-id-pedido" placeholder="ID do Pedido">
+    <button onclick="carregarMensagens()">Carregar Conversa</button>
+    <div id="resultado-conversa" class="resultado"></div>
+  </div>
+
+  <script>
+    const ENDERECO_API = 'http://localhost:5000/api/messages';
+
+    async function enviarMensagem() {
+      const idPedido = document.getElementById('id-pedido').value;
+      const idRemetente = document.getElementById('id-remetente').value;
+      const texto = document.getElementById('texto').value;
+
+      const resposta = await fetch(ENDERECO_API, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ orderId: idPedido, remetenteId: idRemetente, texto })
+      });
+
+      const dados = await resposta.json();
+      const elemento = document.getElementById('resultado-envio');
+      elemento.style.display = 'block';
+      elemento.innerHTML = resposta.ok ? 'Mensagem enviada com sucesso.' : `Erro: ${dados.erro}`;
+
+      if (resposta.ok) {
+        document.getElementById('texto').value = '';
+        document.getElementById('busca-id-pedido').value = idPedido;
+        carregarMensagens();
+      }
+    }
+
+    async function carregarMensagens() {
+      const idPedido = document.getElementById('busca-id-pedido').value;
+      const resposta = await fetch(`${ENDERECO_API}/${idPedido}`);
+      const dados = await resposta.json();
+      const elemento = document.getElementById('resultado-conversa');
+
+      if (!resposta.ok) {
+        elemento.innerHTML = `Erro: ${dados.erro}`;
+        return;
+      }
+
+      if (dados.mensagens.length === 0) {
+        elemento.innerHTML = 'Nenhuma mensagem encontrada.';
+        return;
+      }
+
+      elemento.innerHTML = dados.mensagens.map(mensagem => `
+        <div class="item-mensagem">
+          <strong>${mensagem.remetenteId ? mensagem.remetenteId.nomeInstituicao : 'Usuário'}:</strong> ${mensagem.texto}
+        </div>
+      `).join('');
+    }
+  </script>
+</body>
+</html>

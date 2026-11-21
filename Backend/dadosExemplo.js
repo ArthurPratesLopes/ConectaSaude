@@ -1,27 +1,27 @@
-const mongoose = require('mongoose');
-const dotenv = require('dotenv');
+const mangusto = require('mongoose');
+const carregadorAmbiente = require('dotenv');
 
-const User = require('./Models/user');
-const Printer = require('./Models/printer');
-const Order = require('./Models/order');
-const Message = require('./Models/Message');
+const Usuario = require('./Modelos/usuario');
+const Impressora = require('./Modelos/impressora');
+const Pedido = require('./Modelos/pedido');
+const Mensagem = require('./Modelos/mensagem');
 
-dotenv.config();
+carregadorAmbiente.config();
 
-const mongoURI = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/printbridge';
+const enderecoMongo = process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/printbridge';
 
-const seedDB = async () => {
+const popularBanco = async () => {
   try {
-    await mongoose.connect(mongoURI);
+    await mangusto.connect(enderecoMongo);
     console.log('Conectado.');
 
-    await User.deleteMany({});
-    await Printer.deleteMany({});
-    await Order.deleteMany({});
-    await Message.deleteMany({});
+    await Usuario.deleteMany({});
+    await Impressora.deleteMany({});
+    await Pedido.deleteMany({});
+    await Mensagem.deleteMany({});
     console.log('Coleções limpas.');
 
-    const clienteAACD = await User.create({
+    const clienteAACD = await Usuario.create({
       nomeInstituicao: 'AACD Central',
       email: 'contato@aacd.org.br',
       senha: '12345678',
@@ -30,7 +30,7 @@ const seedDB = async () => {
       estado: 'SP'
     });
 
-    const fornecedorFabLab = await User.create({
+    const fornecedorFabLab = await Usuario.create({
       nomeInstituicao: 'FabLab Mauá',
       email: 'fablab@maua.br',
       senha: '12345678',
@@ -40,7 +40,7 @@ const seedDB = async () => {
     });
     console.log('Usuários criados.');
 
-    const impressora1 = await Printer.create({
+    const impressora1 = await Impressora.create({
       fornecedorId: fornecedorFabLab._id,
       marca: 'Ender',
       modelo: 'Ender 3 V2',
@@ -51,7 +51,7 @@ const seedDB = async () => {
       descricao: 'Impressora FDM otimizada para filamentos flexíveis e peças assistivas.'
     });
 
-    const impressora2 = await Printer.create({
+    const impressora2 = await Impressora.create({
       fornecedorId: fornecedorFabLab._id,
       marca: 'Anycubic',
       modelo: 'Photon Mono X',
@@ -63,7 +63,7 @@ const seedDB = async () => {
     });
     console.log('Impressoras criadas.');
 
-    const pedidoExemplo = await Order.create({
+    const pedidoExemplo = await Pedido.create({
       clienteId: clienteAACD._id,
       fornecedorId: fornecedorFabLab._id,
       impressoraId: impressora1._id,
@@ -81,7 +81,7 @@ const seedDB = async () => {
     });
     console.log('Pedido criado.');
 
-    await Message.create({
+    await Mensagem.create({
       orderId: pedidoExemplo._id,
       remetenteId: clienteAACD._id,
       texto: 'Olá! Enviamos o modelo com preenchimento de 30% em TPU. Conseguem atender o prazo?'
@@ -91,10 +91,10 @@ const seedDB = async () => {
     console.log('OK');
     process.exit(0);
 
-  } catch (error) {
-    console.error(`Erro: ${error.message}`);
+  } catch (erro) {
+    console.error(`Erro: ${erro.message}`);
     process.exit(1);
   }
 };
 
-seedDB();
+popularBanco();
