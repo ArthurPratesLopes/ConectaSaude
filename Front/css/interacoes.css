@@ -14,6 +14,19 @@
   color: var(--muted);
 }
 .pedido-aviso-erro { color: var(--error); }
+
+/* aviso rápido, mesmo visual do "Alterações salvas" (cadastro_instituicao.css) */
+.toast[hidden] { display: none; }
+.toast {
+  position: fixed; z-index: 90; left: 50%; bottom: 28px; transform: translateX(-50%);
+  display: flex; align-items: center; gap: 10px; max-width: calc(100% - 32px);
+  padding: 13px 20px; background: #0d3b3b; color: #fff; border-radius: 12px;
+  box-shadow: 0 16px 40px rgba(10, 38, 38, .3); font-size: 13px; font-weight: 700;
+  animation: toast-entra .25s ease-out;
+}
+.toast .icone { width: 18px; height: 18px; filter: invert(1); }
+@keyframes toast-entra { from { opacity: 0; transform: translate(-50%, 10px); } }
+@media (prefers-reduced-motion: reduce) { .toast { animation: none; } }
 .parque .pedido-aviso { padding: 20px; border: 1px dashed var(--line); border-radius: 12px; }
 .link-tentar {
   margin-left: 6px;
