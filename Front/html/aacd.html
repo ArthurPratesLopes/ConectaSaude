@@ -28,9 +28,9 @@
       <div>
         <span class="sobretitulo">Painel da Instituição</span>
         <h1>Pedidos de fabricação</h1>
-        <p>Acompanhe as necessidades registradas e o andamento de cada produção.</p>
+        <p>Acompanhe os pedidos enviados e o andamento de cada produção.</p>
       </div>
-      <a href="#registrar" class="botao-principal">Enviar Solicitação<span>›</span></a>
+      <a href="#registrar" class="botao-principal">Novo pedido<span aria-hidden="true">›</span></a>
     </div>
 <ul class="resumo resumo-5" aria-label="Resumo dos pedidos">
   <li>
@@ -96,8 +96,8 @@
     <a href="#" class="gaveta-fundo" aria-label="Fechar o formulário"></a>
     <section class="gaveta-painel" role="dialog" aria-labelledby="titulo-registrar">
       <a href="#" class="gaveta-fechar" aria-label="Fechar">×</a>
-      <span class="sobretitulo">Novo pedido</span>
-      <h2 id="titulo-registrar">Registrar necessidade</h2>
+      <span class="sobretitulo">Pedido de fabricação</span>
+      <h2 id="titulo-registrar">Novo pedido</h2>
       <p class="gaveta-sub">Preencha os dados técnicos para encontrar um laboratório compatível.</p>
             <form id="formPedido" novalidate>
         <div class="campo-duplo">
@@ -135,7 +135,7 @@
           <textarea id="medidas" rows="4" placeholder="Descreva dimensões, tolerâncias e recomendações clínicas."></textarea>
         </div>
         <div class="campo">
-          <label for="arquivoStl">Arquivo da peça (.stl) <em>*</em></label>
+          <label for="arquivoStl">Arquivo 3D da peça (.stl) <em>*</em></label>
           <input type="file" id="arquivoStl" name="arquivoStl" accept=".stl">
           <small class="dica">Envie o modelo 3D em formato .stl.</small>
         </div>
@@ -159,5 +159,6 @@
     </section>
   </div>
 <script src="../js/app.js"></script>
+  <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 </body>
 </html>
