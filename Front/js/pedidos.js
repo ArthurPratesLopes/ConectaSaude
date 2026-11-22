@@ -7,7 +7,7 @@
         $('formulario-pedido').addEventListener('submit', async (evento) => {
             evento.preventDefault();
             const dados = new FormData();
-            ['paciente', 'peca', 'material', 'prazo', 'medidas'].forEach((id) => dados.append(id, $(id).value));
+            ['paciente', 'peca', 'material', 'prazo', 'medidas', 'quantidade'].forEach((id) => dados.append(id, $(id).value));
             dados.append('urgencia', document.querySelector('input[name="urgencia"]:checked').value);
             dados.append('arquivoStl', $('arquivoStl').files[0]);
             dados.append('fornecedorId', fornecedorId);
@@ -68,11 +68,20 @@
         carregar();
     }
 
+    // pinta as bolinhas do andamento: Registrado, Aceito, Impressão, Pronto
+    function pintarAndamento(situacao) {
+        const ultimaEtapa = { analise: 0, aceito: 1, producao: 2, pronto: 3, recusado: 0 }[situacao] || 0;
+        document.querySelectorAll('.progresso li').forEach((etapa, indice) => {
+            etapa.classList.toggle('feito', indice <= ultimaEtapa);
+        });
+    }
+
     function iniciarDetalhePedido() {
         if (!$('detalhe-codigo')) return;
         const id = new URLSearchParams(location.search).get('id');
         plataforma.fetchAutenticado('/orders/' + id).then((resposta) => resposta.json()).then(({ pedido }) => {
             $('detalhe-selo').className = 'selo selo-' + plataforma.ROTULOS_SITUACAO[pedido.status][0];
+            pintarAndamento(pedido.status);
             Object.entries({
                 'detalhe-selo': plataforma.ROTULOS_SITUACAO[pedido.status][1],
                 'detalhe-codigo': pedido.codigo,
@@ -81,6 +90,7 @@
                 'dado-paciente': pedido.paciente,
                 'dado-peca': pedido.peca,
                 'dado-material': pedido.material || '—',
+                'dado-quantidade': pedido.quantidade || 1,
                 'dado-prazo': plataforma.formatarData(pedido.prazo),
                 'dado-urgencia': plataforma.ROTULOS_URGENCIA[pedido.urgencia] || pedido.urgencia,
                 'dado-lab': pedido.fornecedorId ? pedido.fornecedorId.nomeInstituicao : 'Aguardando laboratório',
