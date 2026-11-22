@@ -58,13 +58,29 @@
           </div>
         </div>
         <nav aria-label="Links do rodapé">
-          <a href="#privacidade">Privacidade</a>
-          <a href="#termos">Termos de uso</a>
+          <button type="button" class="link-legal" command="show-modal" commandfor="janela-privacidade">Privacidade</button>
+          <button type="button" class="link-legal" command="show-modal" commandfor="janela-termos">Termos de uso</button>
         </nav>
       </div>
       <p class="rodape-copy">© 2026 Instituto Mauá de Tecnologia</p>
     </div>
   </footer>
+
+<!-- Pop-up: Termos de Uso (abre pelos botões com commandfor="janela-termos") -->
+<dialog class="janela-legal" id="janela-termos" closedby="any" aria-label="Termos de Uso">
+  <iframe src="termos.html" title="Termos de Uso" loading="lazy"></iframe>
+  <div class="legal-rodape">
+    <button type="button" class="legal-fechar" command="close" commandfor="janela-termos">Fechar</button>
+  </div>
+</dialog>
+
+<!-- Pop-up: Política de Privacidade (abre pelos botões com commandfor="janela-privacidade") -->
+<dialog class="janela-legal" id="janela-privacidade" closedby="any" aria-label="Política de Privacidade">
+  <iframe src="privacidade.html" title="Política de Privacidade" loading="lazy"></iframe>
+  <div class="legal-rodape">
+    <button type="button" class="legal-fechar" command="close" commandfor="janela-privacidade">Fechar</button>
+  </div>
+</dialog>
 
 <script src="../js/aplicativo.js"></script>
 </body>
