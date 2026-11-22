@@ -82,7 +82,7 @@
                 'dado-peca': pedido.peca,
                 'dado-material': pedido.material || '—',
                 'dado-prazo': plataforma.formatarData(pedido.prazo),
-                'dado-urgencia': pedido.urgencia,
+                'dado-urgencia': plataforma.ROTULOS_URGENCIA[pedido.urgencia] || pedido.urgencia,
                 'dado-lab': pedido.fornecedorId ? pedido.fornecedorId.nomeInstituicao : 'Aguardando laboratório',
                 'dado-medidas': pedido.observacoesTecnicas || '—',
                 'dado-arquivo-nome': pedido.arquivoUrl.split('/').pop()
