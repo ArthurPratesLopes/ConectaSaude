@@ -46,7 +46,9 @@
             $('titulo-lab').textContent = laboratorio.nomeInstituicao;
             $('lab-cidade').textContent = `${laboratorio.cidade}, ${laboratorio.estado}`;
             $('lab-avatar').textContent = laboratorio.nomeInstituicao.slice(0, 2).toUpperCase();
+            $('lab-responsavel').textContent = laboratorio.responsavel || 'Não informado';
             $('lab-email').textContent = laboratorio.email;
+            $('lab-telefone').textContent = laboratorio.telefone || 'Não informado';
             $('lab-qtd').textContent = laboratorio.impressoras.length + ' equipamentos cadastrados';
             $('lab-impressoras').innerHTML = laboratorio.impressoras.map((impressora) => `<li class="lab-imp">
                 <span class="lab-icone lab-icone-3d">3D</span>
