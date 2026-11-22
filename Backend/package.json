@@ -1,7 +1,8 @@
 {
   "scripts": {
     "start": "node servidor.js",
-    "popular-banco": "node dadosExemplo.js"
+    "popular-banco": "node dadosExemplo.js",
+    "test": "jest"
   },
   "dependencies": {
     "bcryptjs": "^3.0.2",
@@ -11,5 +12,10 @@
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.11.2",
     "multer": "^2.4.0"
+  },
+  "devDependencies": {
+    "@cucumber/cucumber": "^13.3.0",
+    "jest": "^30.5.2",
+    "supertest": "^7.3.2"
   }
 }
