@@ -4,14 +4,14 @@
     const ENDERECO_API = 'http://localhost:5000/api';
     const CHAVE_SESSAO = 'conectasaude.sessao';
     const USERWAY_ID = '0bH9G4qEju';
-    const PAGINAS_PUBLICAS = ['index.html', 'cadastro_instituicao.html'];
+    const PAGINAS_PUBLICAS = ['index.html'];
     const PAGINAS_INICIAIS = {
         cliente: 'html/aacd.html',
         fornecedor: 'html/fablab.html',
         admin: 'html/aacd.html'
     };
     const PAGINAS_PERMITIDAS = {
-        cliente: ['aacd.html', 'pedido.html', 'laboratorio_instituicao.html', 'detalhe_laboratorio_instituicao.html'],
+        cliente: ['aacd.html', 'pedido.html', 'laboratorio_instituicao.html', 'detalhe_laboratorio_instituicao.html', 'cadastro_instituicao.html'],
         fornecedor: ['fablab.html', 'solicitacoes.html', 'detalhe_solicitacao.html']
     };
 
@@ -96,6 +96,41 @@
         }
     }
 
+    // ---- Termos de Uso e Política de Privacidade: pop-up aberto por qualquer elemento com data-legal ----
+    const TEXTOS_LEGAIS = {
+        termos: ['Termos de Uso', 'termos.html'],
+        privacidade: ['Política de Privacidade', 'privacidade.html']
+    };
+
+    function abrirJanelaLegal(tipo) {
+        const [titulo, arquivo] = TEXTOS_LEGAIS[tipo];
+        let janela = document.getElementById('janela-' + tipo);
+        if (!janela) {
+            // na página inicial os arquivos ficam em html/, nas demais ficam na mesma pasta
+            const naRaiz = location.pathname.endsWith('/index.html') || location.pathname.endsWith('/');
+            janela = document.createElement('dialog');
+            janela.className = 'janela-legal';
+            janela.id = 'janela-' + tipo;
+            janela.setAttribute('aria-label', titulo);
+            janela.innerHTML = `<iframe src="${naRaiz ? 'html/' : ''}${arquivo}" title="${titulo}"></iframe>`
+                + '<div class="legal-rodape"><button type="button" class="legal-fechar">Fechar</button></div>';
+            janela.querySelector('.legal-fechar').addEventListener('click', () => janela.close());
+            // clicar fora da janela (no fundo escuro) também fecha
+            janela.addEventListener('click', (evento) => { if (evento.target === janela) janela.close(); });
+            document.body.appendChild(janela);
+        }
+        janela.showModal();
+    }
+
+    function configurarJanelasLegais() {
+        document.addEventListener('click', (evento) => {
+            const gatilho = evento.target.closest('[data-legal]');
+            if (!gatilho || !TEXTOS_LEGAIS[gatilho.dataset.legal]) return;
+            evento.preventDefault();
+            abrirJanelaLegal(gatilho.dataset.legal);
+        });
+    }
+
     function protegerPagina(pagina) {
         const sessao = lerSessao();
         if (!sessao) {
@@ -146,6 +181,7 @@
 
         carregarAcessibilidade();
         configurarBotaoSair();
+        configurarJanelasLegais();
 
         if (!PAGINAS_PUBLICAS.includes(pagina) && !protegerPagina(pagina)) return;
         if (!modulo) return;
