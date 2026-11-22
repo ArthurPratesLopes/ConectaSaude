@@ -48,6 +48,8 @@
             pronto: ['entregue', 'Pronto'],
             recusado: ['recusado', 'Recusado']
         },
+        // o banco guarda Normal/Prioritário/Urgente; na tela aparece Baixa/Média/Alta
+        ROTULOS_URGENCIA: { Normal: 'Baixa', Prioritário: 'Média', Urgente: 'Alta' },
         lerSessao,
         salvarSessao,
         limparSessao,
