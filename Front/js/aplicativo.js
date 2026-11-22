@@ -90,7 +90,7 @@
             const uw = document.createElement('script');
             uw.src = 'https://cdn.userway.org/widget.js';
             uw.setAttribute('data-account', USERWAY_ID);
-            uw.setAttribute('data-position', '3'); // esquerda, centralizado na vertical
+            uw.setAttribute('data-position', '6'); // esquerda, centralizado na vertical
             uw.async = true;
             document.body.appendChild(uw);
         }
