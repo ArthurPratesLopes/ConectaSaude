@@ -192,6 +192,9 @@ h1 {
 .termo { display: flex; align-items: flex-start; gap: 10px; font-size: 12px; line-height: 1.5; cursor: pointer; }
 .termo input { flex: none; width: 18px; height: 18px; margin: 1px 0 0; accent-color: var(--petroleo); }
 .termo a { color: var(--petroleo); font-weight: 700; }
+/* botões que abrem o pop-up de termos/privacidade, com cara de link */
+.link-legal { padding: 0; border: 0; background: none; font: inherit; cursor: pointer; }
+.termo .link-legal { color: var(--petroleo); font-weight: 700; text-decoration: underline; }
 
 /* avisos do servidor / informativos */
 .aviso {
@@ -252,14 +255,12 @@ h1 {
 .contato h2 { margin: 0 0 8px; color: var(--tinta); font-size: 30px; letter-spacing: -.035em; }
 .contato p { margin: 0; color: var(--apagado); }
 .contato-links { display: flex; gap: 16px; }
-.contato-links a {
+.contato-links div {
   display: flex; align-items: center; justify-content: center; min-width: 250px; padding: 18px;
   text-align: center;
   background: #fff; border: 1px solid var(--linha); border-radius: 12px;
-  color: var(--petroleo); text-decoration: none;
-  transition: border-color .2s, box-shadow .2s;
+  color: var(--petroleo);
 }
-.contato-links a:hover { border-color: var(--petroleo); box-shadow: var(--sombra); }
 .contato-links small { display: block; margin-bottom: 3px; color: var(--apagado); font-size: 12px; }
 .contato-links b { font-size: 16px; }
 
@@ -274,19 +275,20 @@ h1 {
 .rodape nav { display: flex; align-items: center; gap: 28px; }
 .rodape nav a { color: #d5e3e3; font-size: 12px; text-decoration: none; }
 .rodape nav a:hover { color: #fff; text-decoration: underline; }
+.rodape nav .link-legal { color: #d5e3e3; font-size: 12px; }
+.rodape nav .link-legal:hover { color: #fff; text-decoration: underline; }
 .rodape-copy { margin: 16px 0 0; color: #a9c1c1; font-size: 11px; }
 
 @keyframes aparece { from { opacity: 0; } to { opacity: 1; } }
 
-/* ---------- Termos de Uso e Política de Privacidade (janela criada por js/legal.js) ---------- */
-.janela-legal { width: min(780px, calc(100% - 32px)); max-height: 88vh; padding: 0; overflow: hidden; border: 0; border-radius: 16px; background: #fff; box-shadow: 0 22px 60px rgba(10, 38, 38, .3); }
+/* ---------- Termos de Uso e Política de Privacidade (pop-up em HTML: html/termos.html e html/privacidade.html) ---------- */
+.janela-legal { width: min(780px, calc(100% - 32px)); height: 88vh; max-height: 88vh; padding: 0; overflow: hidden; border: 0; border-radius: 16px; background: #fff; box-shadow: 0 22px 60px rgba(10, 38, 38, .3); }
 .janela-legal[open] { display: flex; flex-direction: column; animation: aparece .2s ease; }
 .janela-legal::backdrop { background: rgba(10, 38, 38, .6); }
-.legal-cabeca { padding: 24px 32px 14px; border-bottom: 1px solid var(--linha); }
-.legal-cabeca h2 { margin: 0 0 4px; color: var(--tinta); font-size: 22px; }
+.janela-legal iframe { flex: 1; min-height: 0; width: 100%; border: 0; }
+.legal-pagina { padding: 28px 32px 16px; background: #fff; line-height: 1.65; }
+.legal-pagina h1 { margin: 0 0 4px; color: var(--tinta); font-size: 22px; }
 .legal-meta { margin: 0; color: var(--apagado); font-size: 12px; }
-.legal-corpo { flex: 1; overflow-y: auto; padding: 18px 32px 8px; color: var(--texto); line-height: 1.65; }
-.legal-corpo:focus-visible { outline: 2px solid var(--petroleo); outline-offset: -2px; }
 .legal-preambulo { margin: 0 0 18px; padding: 12px 14px; background: var(--petroleo-suave); border-radius: 10px; color: var(--tinta); font-size: 13px; }
 .legal-secao h3 { margin: 22px 0 8px; color: var(--petroleo-escuro); font-size: 15px; }
 .legal-secao p { margin: 0 0 8px; text-align: justify; hyphens: auto; }
@@ -294,7 +296,9 @@ h1 {
 .legal-lista { margin: 0 0 12px; padding-left: 44px; }
 .legal-lista li { margin-bottom: 5px; text-align: justify; }
 .legal-alineas { list-style-type: lower-alpha; }
-.legal-rodape { display: flex; justify-content: flex-end; padding: 14px 32px; border-top: 1px solid var(--linha); background: #fff; }
+.legal-rodape { display: flex; justify-content: flex-end; gap: 10px; padding: 14px 32px; border-top: 1px solid var(--linha); background: #fff; }
+.legal-fechar { min-height: 46px; padding: 0 24px; border: 1px solid var(--linha); border-radius: 8px; background: #fff; color: var(--tinta); font: inherit; font-weight: 700; cursor: pointer; }
+.legal-fechar:hover { background: var(--fundo); }
 .legal-rodape .botao-principal { margin-top: 0; cursor: pointer; border: 0; font: inherit; font-weight: 700; }
 
 /* ---------- usuário logado: bolinha + nome; ao clicar abre "Sair" (js/aplicativo.js) ---------- */
@@ -377,7 +381,7 @@ header .usuario-menu-item .icone { width: 20px; height: 20px; }
   .marca small { display: none; }
   .usuario-textos { display: none; } /* no celular fica só a bolinha */
   .usuario-botao { padding-left: 4px; }
-  .legal-cabeca, .legal-corpo, .legal-rodape { padding-left: 20px; padding-right: 20px; }
+  .legal-pagina, .legal-rodape { padding-left: 20px; padding-right: 20px; }
   .legal-lista { padding-left: 30px; }
   .secao { padding: 52px 18px; }
   .passos { grid-template-columns: 1fr; }
@@ -386,7 +390,7 @@ header .usuario-menu-item .icone { width: 20px; height: 20px; }
   .secao-topo h2, .contato h2 { font-size: 26px; }
   .acesso { padding: 22px 18px 20px; }
   .perfis-opcoes { grid-template-columns: 1fr; }
-  .contato-links a { min-width: 0; }
+  .contato-links div { min-width: 0; }
   .rodape-linha { flex-direction: column; align-items: flex-start; }
 }
 
