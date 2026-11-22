@@ -85,8 +85,8 @@
           </div>
         </div>
         <nav aria-label="Links do rodapé">
-          <a href="#privacidade">Privacidade</a>
-          <a href="#termos">Termos de uso</a>
+          <button type="button" class="link-legal" command="show-modal" commandfor="janela-privacidade">Privacidade</button>
+          <button type="button" class="link-legal" command="show-modal" commandfor="janela-termos">Termos de uso</button>
         </nav>
       </div>
       <p class="rodape-copy">© 2026 Instituto Mauá de Tecnologia</p>
@@ -142,9 +142,9 @@
         <fieldset class="urgencia">
           <legend>Urgência</legend>
           <div class="pilulas">
-            <label class="pilula"><input type="radio" name="urgencia" value="Normal" checked><span>Normal</span></label>
-            <label class="pilula"><input type="radio" name="urgencia" value="Prioritário"><span>Prioritário</span></label>
-            <label class="pilula"><input type="radio" name="urgencia" value="Urgente"><span>Urgente</span></label>
+            <label class="pilula"><input type="radio" name="urgencia" value="Normal" checked><span>Baixa</span></label>
+            <label class="pilula"><input type="radio" name="urgencia" value="Prioritário"><span>Média</span></label>
+            <label class="pilula"><input type="radio" name="urgencia" value="Urgente"><span>Alta</span></label>
           </div>
         </fieldset>
 
@@ -158,6 +158,22 @@
       </form>
     </section>
   </div>
+<!-- Pop-up: Termos de Uso (abre pelos botões com commandfor="janela-termos") -->
+<dialog class="janela-legal" id="janela-termos" closedby="any" aria-label="Termos de Uso">
+  <iframe src="termos.html" title="Termos de Uso" loading="lazy"></iframe>
+  <div class="legal-rodape">
+    <button type="button" class="legal-fechar" command="close" commandfor="janela-termos">Fechar</button>
+  </div>
+</dialog>
+
+<!-- Pop-up: Política de Privacidade (abre pelos botões com commandfor="janela-privacidade") -->
+<dialog class="janela-legal" id="janela-privacidade" closedby="any" aria-label="Política de Privacidade">
+  <iframe src="privacidade.html" title="Política de Privacidade" loading="lazy"></iframe>
+  <div class="legal-rodape">
+    <button type="button" class="legal-fechar" command="close" commandfor="janela-privacidade">Fechar</button>
+  </div>
+</dialog>
+
 <script src="../js/aplicativo.js"></script>
   <div class="toast" id="toast" role="status" aria-live="polite" hidden></div>
 </body>
