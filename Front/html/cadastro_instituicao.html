@@ -47,7 +47,7 @@
         <button type="button" class="logo-botao" id="conta-tentar">Tentar de novo</button>
       </div>
 
-      <form class="formulario-cartao" id="formulario-conta" novalidate aria-labelledby="titulo-conta" aria-busy="true">
+      <form class="formulario-cartao" id="formulario-conta" novalidate aria-labelledby="titulo-conta" aria-busy="false">
         <div class="formulario-cartao-topo">
           <span class="caixa-icone"><img class="icone" src="../img/icone-aacd.png" alt=""></span>
           <div>
@@ -61,29 +61,29 @@
           <div class="formulario-grade">
             <div class="campo">
               <label for="nomeInstituicao">Nome da instituição <em>*</em></label>
-              <input type="text" id="nomeInstituicao" autocomplete="organization" maxlength="120" disabled>
+              <input type="text" id="nomeInstituicao" autocomplete="organization" maxlength="120">
             </div>
             <div class="campo">
               <label for="responsavel">Responsável <em>*</em></label>
-              <input type="text" id="responsavel" autocomplete="name" maxlength="120" disabled>
+              <input type="text" id="responsavel" autocomplete="name" maxlength="120">
             </div>
             <div class="campo">
               <label for="cidade">Cidade <em>*</em></label>
-              <input type="text" id="cidade" autocomplete="address-level2" maxlength="80" disabled>
+              <input type="text" id="cidade" autocomplete="address-level2" maxlength="80">
             </div>
             <div class="campo">
               <label for="estado">UF <em>*</em></label>
-              <select id="estado" autocomplete="address-level1" disabled>
-                <option value="">Selecione</option>
+              <select id="estado" autocomplete="address-level1">
+                <option value="">Selecione</option><option value="AC">AC</option><option value="AL">AL</option><option value="AP">AP</option><option value="AM">AM</option><option value="BA">BA</option><option value="CE">CE</option><option value="DF">DF</option><option value="ES">ES</option><option value="GO">GO</option><option value="MA">MA</option><option value="MT">MT</option><option value="MS">MS</option><option value="MG">MG</option><option value="PA">PA</option><option value="PB">PB</option><option value="PR">PR</option><option value="PE">PE</option><option value="PI">PI</option><option value="RJ">RJ</option><option value="RN">RN</option><option value="RS">RS</option><option value="RO">RO</option><option value="RR">RR</option><option value="SC">SC</option><option value="SP">SP</option><option value="SE">SE</option><option value="TO">TO</option>
               </select>
             </div>
             <div class="campo">
               <label for="email">E-mail <em>*</em></label>
-              <input type="email" id="email" autocomplete="email" disabled>
+              <input type="email" id="email" autocomplete="email">
             </div>
             <div class="campo">
               <label for="telefone">Telefone <em>*</em></label>
-              <input type="tel" id="telefone" autocomplete="tel" inputmode="numeric" placeholder="(11) 3158-2470" disabled>
+              <input type="tel" id="telefone" autocomplete="tel" inputmode="numeric" placeholder="(11) 3158-2470">
             </div>
           </div>
 
@@ -110,10 +110,10 @@
         </div>
 
         <div class="salvar-barra salvar-barra-interna">
-          <span class="salvo-auto" id="conta-estado" aria-live="polite">Carregando…</span>
+          <span class="salvo-auto" id="conta-estado" aria-live="polite"></span>
           <div class="salvar-acoes">
             <button type="button" class="botao-contorno" id="conta-descartar" hidden>Descartar</button>
-            <button type="submit" class="botao-principal botao-petroleo" id="conta-salvar" disabled>Salvar alterações</button>
+            <button type="submit" class="botao-principal botao-petroleo" id="conta-salvar">Salvar alterações</button>
           </div>
         </div>
       </form>
@@ -142,5 +142,8 @@
   </footer>
 
 <script src="../js/aplicativo.js"></script>
+<script>
+  document.getElementById('formulario-conta').addEventListener('submit', (e) => e.preventDefault());
+</script>
 </body>
 </html>
