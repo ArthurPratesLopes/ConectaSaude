@@ -2,8 +2,27 @@
     const plataforma = window.ConectaSaude;
     const $ = plataforma.$;
     const ROTULOS_SITUACAO = { analise: 'Nova', aceito: 'Aceita', producao: 'Em produção', pronto: 'Pronta para entrega' };
-    const atualizarSituacaoPedido = (id, situacao) =>
-        plataforma.fetchAutenticado(`/orders/${id}/status`, { method: 'PATCH', body: JSON.stringify({ status: situacao }) });
+    async function atualizarSituacaoPedido(id, situacao) {
+        try {
+            const resposta = await plataforma.fetchAutenticado(`/orders/${id}/status`, { method: 'PATCH', body: JSON.stringify({ status: situacao }) });
+            if (resposta.ok) return true;
+            alert((await resposta.json().catch(() => ({}))).erro || 'Não foi possível atualizar o pedido.');
+        } catch {
+            alert('Não foi possível conectar ao servidor.');
+        }
+        return false;
+    }
+
+    // pinta as bolinhas do acompanhamento: 1 Aceito, 2 Em produção, 3 Pronto
+    function pintarAcompanhamento(situacao) {
+        const etapaAtual = { aceito: 0, producao: 1, pronto: 2 }[situacao];
+        document.querySelector('.acompanhamento').classList.toggle('recusada', situacao === 'recusado');
+        document.querySelectorAll('.indicador-etapas li').forEach((etapa, indice) => {
+            // pronto = tudo concluído; nas outras situações a etapa atual ganha destaque
+            etapa.classList.toggle('feito', situacao === 'pronto' || indice < etapaAtual);
+            etapa.classList.toggle('atual', situacao !== 'pronto' && indice === etapaAtual);
+        });
+    }
 
     function iniciarConversa(id) {
         if (!$('conversa-mensagens')) return;
@@ -56,6 +75,7 @@
                     </label>
                     <div class="cartao-quadro-acoes">
                         <a href="detalhe_solicitacao.html?id=${pedido._id}">Ver detalhes</a>
+                        ${pedido.status === 'analise' ? `<button type="button" data-aceitar="${pedido._id}">Aceitar</button>` : ''}
                         <button type="button" data-recusar="${pedido._id}">Cancelar</button>
                     </div>
                 </article>`).join('') || '<div class="quadro-vazio"><span>Nenhuma solicitação</span></div>';
@@ -68,7 +88,10 @@
             atualizarSituacaoPedido(evento.target.dataset.id, evento.target.value).then(carregar)
         );
         document.querySelector('.quadro').addEventListener('click', (evento) => {
-            if (evento.target.dataset.recusar) atualizarSituacaoPedido(evento.target.dataset.recusar, 'recusado').then(carregar);
+            if (evento.target.dataset.aceitar) atualizarSituacaoPedido(evento.target.dataset.aceitar, 'aceito').then(carregar);
+            if (evento.target.dataset.recusar && confirm('Recusar este pedido?')) {
+                atualizarSituacaoPedido(evento.target.dataset.recusar, 'recusado').then(carregar);
+            }
         });
         $('busca-solicitacoes').addEventListener('input', desenhar);
         carregar();
@@ -83,6 +106,9 @@
                 const cliente = pedido.clienteId.nomeInstituicao;
                 const [classe] = plataforma.ROTULOS_SITUACAO[pedido.status];
                 $('sol-selo').className = 'selo selo-' + classe;
+                pintarAcompanhamento(pedido.status);
+                $('decisao-pedido').hidden = pedido.status !== 'analise';
+                $('recusa-aviso').hidden = pedido.status !== 'recusado';
                 Object.entries({
                     'sol-selo': ROTULOS_SITUACAO[pedido.status] || plataforma.ROTULOS_SITUACAO[pedido.status][1],
                     'sol-codigo': 'Solicitação ' + pedido.codigo,
@@ -92,6 +118,7 @@
                     'sol-inst': cliente,
                     'sol-peca': pedido.peca,
                     'sol-material': pedido.material || '—',
+                    'sol-quantidade': pedido.quantidade || 1,
                     'sol-prazo': plataforma.formatarData(pedido.prazo),
                     'sol-urgencia': plataforma.ROTULOS_URGENCIA[pedido.urgencia] || pedido.urgencia,
                     'sol-lab': pedido.fornecedorId ? pedido.fornecedorId.nomeInstituicao : 'Aguardando aceite',
@@ -103,7 +130,10 @@
                 $('situacao-atual').value = pedido.status;
             }).catch(() => { $('titulo-dados').textContent = 'Solicitação não encontrada'; });
         $('situacao-atual').addEventListener('change', (evento) => atualizarSituacaoPedido(id, evento.target.value).then(carregar));
-        $('recusar-solicitacao').addEventListener('click', () => atualizarSituacaoPedido(id, 'recusado').then(carregar));
+        $('aceitar-solicitacao').addEventListener('click', () => atualizarSituacaoPedido(id, 'aceito').then(carregar));
+        $('recusar-solicitacao').addEventListener('click', () => {
+            if (confirm('Recusar este pedido?')) atualizarSituacaoPedido(id, 'recusado').then(carregar);
+        });
         carregar();
         iniciarConversa(id);
     }
