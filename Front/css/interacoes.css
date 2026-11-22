@@ -209,3 +209,20 @@ body.sem-rolagem { overflow: hidden; }
 @media (max-width: 600px) {
   .modal-caixa .sucesso-acoes { flex-direction: column-reverse; }
 }
+
+/* ---------- aceitar / recusar pedido (visualizar pedido do laboratório) ---------- */
+.decisao { display: flex; gap: 12px; margin-top: 24px; }
+.decisao[hidden] { display: none; }
+/* os dois botões com o mesmo tamanho e o texto centralizado */
+.decisao button {
+  display: flex; align-items: center; justify-content: center;
+  flex: 1; width: auto; min-height: 48px; margin: 0; padding: 0 22px;
+  border-radius: 8px; font: inherit; font-weight: 700; cursor: pointer;
+}
+/* aceitar = verde-petróleo (confirmação); recusar continua o botão de contorno */
+.decisao .botao-aceitar { border: 1px solid var(--petroleo); background: var(--petroleo); color: #fff; transition: background .2s; }
+.decisao .botao-aceitar:hover { background: var(--petroleo-escuro); }
+.cartao-quadro-acoes button[data-aceitar] { color: #006767; }
+@media (max-width: 600px) {
+  .decisao { flex-direction: column-reverse; }
+}
