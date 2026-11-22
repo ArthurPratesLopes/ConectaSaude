@@ -65,7 +65,7 @@
             $('formulario-pedido').addEventListener('submit', async (evento) => {
                 evento.preventDefault();
                 const dados = new FormData();
-                ['paciente', 'peca', 'material', 'prazo', 'medidas'].forEach((campo) => dados.append(campo, $(campo).value));
+                ['paciente', 'peca', 'material', 'prazo', 'medidas', 'quantidade'].forEach((campo) => dados.append(campo, $(campo).value));
                 dados.append('urgencia', document.querySelector('input[name="urgencia"]:checked').value);
                 dados.append('arquivoStl', $('arquivoStl').files[0]);
                 dados.append('fornecedorId', id);
