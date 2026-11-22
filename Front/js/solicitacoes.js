@@ -93,7 +93,7 @@
                     'sol-peca': pedido.peca,
                     'sol-material': pedido.material || '—',
                     'sol-prazo': plataforma.formatarData(pedido.prazo),
-                    'sol-urgencia': pedido.urgencia,
+                    'sol-urgencia': plataforma.ROTULOS_URGENCIA[pedido.urgencia] || pedido.urgencia,
                     'sol-lab': pedido.fornecedorId ? pedido.fornecedorId.nomeInstituicao : 'Aguardando aceite',
                     'sol-obs': pedido.observacoesTecnicas || '—',
                     'arquivo-nome': pedido.arquivoUrl.split('/').pop(),
@@ -136,6 +136,8 @@
                 const laboratorio = dados.laboratorio;
                 $('razao').value = laboratorio.nomeInstituicao || '';
                 $('cnpj').value = laboratorio.cnpj || '';
+                $('responsavel').value = laboratorio.responsavel || '';
+                $('telefone').value = laboratorio.telefone || '';
                 $('cidade').value = laboratorio.cidade && laboratorio.estado ? `${laboratorio.cidade} / ${laboratorio.estado}` : laboratorio.cidade || '';
                 $('cep').value = laboratorio.cep || '';
                 $('rua').value = laboratorio.rua || '';
@@ -153,6 +155,8 @@
                 body: JSON.stringify({
                     nomeInstituicao: $('razao').value.trim(),
                     cnpj: $('cnpj').value.trim(),
+                    responsavel: $('responsavel').value.trim(),
+                    telefone: $('telefone').value.trim(),
                     cidade: local[0] || '',
                     estado: (local[1] || '').toUpperCase(),
                     cep: $('cep').value.trim(),
