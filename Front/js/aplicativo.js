@@ -3,6 +3,8 @@
 
     const ENDERECO_API = 'http://localhost:5000/api';
     const CHAVE_SESSAO = 'conectasaude.sessao';
+    const USERWAY_ID = '0bH9G4qEju';
+    const PAGINAS_PUBLICAS = ['index.html', 'cadastro_instituicao.html'];
     const PAGINAS_INICIAIS = {
         cliente: 'html/aacd.html',
         fornecedor: 'html/fablab.html',
@@ -39,7 +41,13 @@
     window.ConectaSaude = {
         ENDERECO_API,
         $: (id) => document.getElementById(id),
-        escaparHtml: (valor) => new Option(String(valor)).innerHTML,
+        // escapa também aspas, para ser seguro em atributos HTML
+        escaparHtml: (valor) => String(valor)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;')
+            .replace(/'/g, '&#39;'),
         formatarData: (valor) => new Date(valor).toLocaleDateString('pt-BR', { timeZone: 'UTC' }),
         ROTULOS_SITUACAO: {
             analise: ['registrado', 'Registrado'],
@@ -62,14 +70,39 @@
         }
     };
 
-    function protegerPagina() {
+    // ---- Acessibilidade: VLibras (tradutor de Libras do governo) e UserWay ----
+    function carregarAcessibilidade() {
+        if (!document.querySelector('[vw]')) {
+            const vw = document.createElement('div');
+            vw.setAttribute('vw', '');
+            vw.className = 'enabled';
+            vw.innerHTML = '<div vw-access-button class="active"></div>'
+                + '<div vw-plugin-wrapper><div class="vw-plugin-top-wrapper"></div></div>';
+            document.body.appendChild(vw);
+
+            const libras = document.createElement('script');
+            libras.src = 'https://vlibras.gov.br/app/vlibras-plugin.js';
+            libras.onload = () => new window.VLibras.Widget('https://vlibras.gov.br/app');
+            document.body.appendChild(libras);
+        }
+
+        if (USERWAY_ID && !document.querySelector('script[data-account]')) {
+            const uw = document.createElement('script');
+            uw.src = 'https://cdn.userway.org/widget.js';
+            uw.setAttribute('data-account', USERWAY_ID);
+            uw.setAttribute('data-position', '3'); // esquerda, centralizado na vertical
+            uw.async = true;
+            document.body.appendChild(uw);
+        }
+    }
+
+    function protegerPagina(pagina) {
         const sessao = lerSessao();
         if (!sessao) {
             sessionStorage.setItem('conectasaude.motivo', 'Sessão não encontrada ou expirada. Entre novamente.');
             location.replace('../index.html');
             return false;
         }
-        const pagina = location.pathname.split('/').pop();
         if (PAGINAS_PERMITIDAS[sessao.usuario.perfil]?.includes(pagina) === false) {
             location.replace(PAGINAS_INICIAIS[sessao.usuario.perfil].replace('html/', ''));
             return false;
@@ -89,9 +122,19 @@
         });
     }
 
+    function configurarBotaoSair() {
+        const botaoSair = document.getElementById('botao-sair');
+        if (!botaoSair) return;
+        botaoSair.addEventListener('click', (evento) => {
+            evento.preventDefault();
+            limparSessao();
+            location.href = '../index.html';
+        });
+    }
+
     async function iniciarPagina() {
         const pagina = location.pathname.split('/').pop() || 'index.html';
-        const modulo = ['index.html', 'cadastro_instituicao.html'].includes(pagina)
+        const modulo = PAGINAS_PUBLICAS.includes(pagina)
             ? 'autenticacao'
             : ['aacd.html', 'pedido.html'].includes(pagina)
                 ? 'pedidos'
@@ -101,21 +144,16 @@
                         ? 'solicitacoes'
                         : null;
 
-        if (pagina !== 'index.html' && !protegerPagina()) return;
+        carregarAcessibilidade();
+        configurarBotaoSair();
+
+        if (!PAGINAS_PUBLICAS.includes(pagina) && !protegerPagina(pagina)) return;
         if (!modulo) return;
 
         await carregarScript(modulo);
         window.ConectaSaude[modulo]?.();
     }
 
-    document.addEventListener('DOMContentLoaded', iniciarPagina);
-
-    const botaoSair = document.getElementById('botao-sair');
-    if (botaoSair) {
-        botaoSair.addEventListener('click', (evento) => {
-            evento.preventDefault();
-            limparSessao();
-            location.href = '../index.html';
-        });
-    }
+    if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', iniciarPagina);
+    else iniciarPagina();
 })();
