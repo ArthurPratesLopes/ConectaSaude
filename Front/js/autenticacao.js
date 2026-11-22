@@ -84,9 +84,15 @@
         document.querySelectorAll('input[name="perfil"]').forEach((radio) => radio.addEventListener('change', atualizarRotuloNome));
         campos.email.addEventListener('input', atualizarBotao);
         campos.senha.addEventListener('input', atualizarBotao);
-        $('ver-senha').addEventListener('click', () => {
+        $('ver-senha').addEventListener('click', (evento) => {
             const exibirSenha = campos.senha.type === 'password';
+            const botaoOlho = evento.currentTarget;
             campos.senha.type = exibirSenha ? 'text' : 'password';
+            // olho aberto = senha escondida; olho fechado = senha visível
+            botaoOlho.querySelector('.olho-aberto').style.display = exibirSenha ? 'none' : '';
+            botaoOlho.querySelector('.olho-fechado').style.display = exibirSenha ? '' : 'none';
+            botaoOlho.setAttribute('aria-pressed', String(exibirSenha));
+            botaoOlho.setAttribute('aria-label', exibirSenha ? 'Ocultar senha' : 'Mostrar senha');
         });
 
         const motivo = sessionStorage.getItem('conectasaude.motivo');
